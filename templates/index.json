@@ -383,7 +383,13 @@
         "mobile_padding_top": 120,
         "mobile_padding_bottom": 72,
         "desktop_padding_top": 120,
-        "desktop_padding_bottom": 96
+        "desktop_padding_bottom": 96,
+        "connector_curve": 10,
+        "connector_width": 38,
+        "connector_height": 132,
+        "connector_thickness": 12,
+        "connector_dash_length": 24,
+        "connector_gap_length": 24
       }
     }
   },

@@ -12,6 +12,11 @@
     --dv-category-card-bg: {{ section.settings.card_background }};
     --dv-category-button-bg: {{ section.settings.button_background }};
     --dv-category-button-text: {{ section.settings.button_text_color }};
+    --dv-category-connector-width: {{ section.settings.connector_width }}px;
+    --dv-category-connector-height: {{ section.settings.connector_height }}px;
+    --dv-category-connector-thickness: {{ section.settings.connector_thickness }}px;
+    --dv-category-connector-dash: {{ section.settings.connector_dash_length }}px;
+    --dv-category-connector-gap: {{ section.settings.connector_gap_length }}px;
     --dv-category-max-width: {{ section.settings.max_width }}px;
     --dv-category-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
     --dv-category-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
@@ -73,7 +78,25 @@
           {% endif %}
 
           {% unless forloop.last %}
-            <div class="dv-category__connector" aria-hidden="true"></div>
+            {% liquid
+              assign connector_center = 30
+              assign connector_curve = section.settings.connector_curve
+              assign connector_right = connector_center | plus: connector_curve
+              assign connector_left = connector_center | minus: connector_curve
+            %}
+            <svg
+              class="dv-category__connector"
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 60 180"
+              preserveAspectRatio="none"
+            >
+              <path
+                class="dv-category__connector-path"
+                d="M30 0 C {{ connector_right }} 36 {{ connector_left }} 72 30 108 C {{ connector_right }} 132 {{ connector_left }} 156 30 180"
+                pathLength="180"
+              />
+            </svg>
           {% endunless %}
         </div>
       {% endfor %}
@@ -196,16 +219,20 @@
   }
 
   #{{ section_anchor }} .dv-category__connector {
-    width: 13px;
-    height: clamp(92px, 18vw, 150px);
+    display: block;
+    width: var(--dv-category-connector-width);
+    height: clamp(92px, 18vw, var(--dv-category-connector-height));
     margin: -2px auto clamp(34px, 9vw, 66px);
-    background-image: repeating-linear-gradient(
-      to bottom,
-      var(--dv-category-accent) 0,
-      var(--dv-category-accent) 25px,
-      transparent 25px,
-      transparent 51px
-    );
+    overflow: visible;
+  }
+
+  #{{ section_anchor }} .dv-category__connector-path {
+    fill: none;
+    stroke: var(--dv-category-accent);
+    stroke-width: var(--dv-category-connector-thickness);
+    stroke-linecap: butt;
+    stroke-dasharray: var(--dv-category-connector-dash) var(--dv-category-connector-gap);
+    vector-effect: non-scaling-stroke;
   }
 
   @media screen and (min-width: 750px) {
@@ -243,6 +270,13 @@
     { "type": "color", "id": "card_background", "label": "Default card background", "default": "#fbefd9" },
     { "type": "color", "id": "button_background", "label": "Button background", "default": "#c99739" },
     { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#ffffff" },
+    { "type": "header", "content": "Curved connector" },
+    { "type": "range", "id": "connector_curve", "label": "Curve amount", "min": 0, "max": 24, "step": 2, "unit": "px", "default": 10 },
+    { "type": "range", "id": "connector_width", "label": "Connector width", "min": 16, "max": 80, "step": 2, "unit": "px", "default": 38 },
+    { "type": "range", "id": "connector_height", "label": "Connector height", "min": 80, "max": 220, "step": 4, "unit": "px", "default": 132 },
+    { "type": "range", "id": "connector_thickness", "label": "Dash thickness", "min": 4, "max": 18, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "connector_dash_length", "label": "Dash length", "min": 12, "max": 40, "step": 2, "unit": "px", "default": 24 },
+    { "type": "range", "id": "connector_gap_length", "label": "Dash gap", "min": 10, "max": 42, "step": 2, "unit": "px", "default": 24 },
     { "type": "range", "id": "max_width", "label": "Content max width", "min": 640, "max": 1400, "step": 20, "unit": "px", "default": 760 },
     { "type": "range", "id": "mobile_padding_top", "label": "Mobile top padding", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 120 },
     { "type": "range", "id": "mobile_padding_bottom", "label": "Mobile bottom padding", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 72 },
