@@ -488,12 +488,75 @@
         "desktop_padding_bottom": 96,
         "product_card_background": "#fffdf9"
       }
+    },
+    "dv_gold_promise": {
+      "type": "dv-gold-promise",
+      "blocks": {
+        "promise_pure_quality": {
+          "type": "promise_point",
+          "settings": {
+            "icon": "leaf",
+            "heading": "PURE & QUALITY INGREDIENTS",
+            "text": "<p>Carefully sourced and selected to maintain natural quality, purity, and freshness in every pack.</p>"
+          }
+        },
+        "promise_hygienic": {
+          "type": "promise_point",
+          "settings": {
+            "icon": "sanitized",
+            "heading": "HYGIENICALLY PACKED",
+            "text": "<p>Processed and packed under strict hygiene standards to ensure safety, cleanliness, and trust.</p>"
+          }
+        },
+        "promise_consistent": {
+          "type": "promise_point",
+          "settings": {
+            "icon": "badge",
+            "heading": "CONSISTENT TASTE & QUALITY",
+            "text": "<p>Free from unnecessary additives—only honest ingredients you can trust.</p>"
+          }
+        },
+        "promise_healthier": {
+          "type": "promise_point",
+          "settings": {
+            "icon": "family",
+            "heading": "HEALTHIER EVERYDAY CHOICE",
+            "text": "<p>Made for families who prefer safe, honest, and dependable food products for daily use.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "promise_pure_quality",
+        "promise_hygienic",
+        "promise_consistent",
+        "promise_healthier"
+      ],
+      "name": "DV Gold promise",
+      "settings": {
+        "heading": "THE DV PROMISE",
+        "text": "",
+        "show_heading_accent": true,
+        "color_scheme": "scheme-1",
+        "background_color": "#fbf1e4",
+        "heading_color": "#9b2d32",
+        "text_color": "#191512",
+        "body_color": "#191512",
+        "accent_color": "#c99700",
+        "icon_background": "#f8e8c9",
+        "icon_border_color": "#e6ca8f",
+        "max_width": 1040,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 56,
+        "desktop_padding_top": 64,
+        "desktop_padding_bottom": 84
+      }
     }
   },
   "order": [
     "dv_gold_hero_carousel",
     "dv_gold_shop_by_category",
     "dv_gold_seasonal_specials",
+    "dv_gold_promise",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
