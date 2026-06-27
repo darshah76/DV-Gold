@@ -155,8 +155,9 @@
         {% endif %}
 
         {% if product_card_count > 0 %}
-          <div class="dv-seasonal-specials__products-wrap">
-            <div class="dv-seasonal-specials__product-grid" role="list" aria-label="Featured products">
+          <div class="dv-seasonal-specials__products-wrap" data-dv-seasonal-products>
+            {% assign product_slide_index = 0 %}
+            <div class="dv-seasonal-specials__product-grid" role="list" aria-label="Featured products" data-dv-seasonal-products-track>
               {% for block in section.blocks %}
               {% if block.type == 'side_product' %}
                 {% liquid
@@ -172,7 +173,8 @@
                   endif
                 %}
 
-                <article class="dv-seasonal-specials__product-card" role="listitem" {{ block.shopify_attributes }}>
+                {% assign product_slide_index = product_slide_index | plus: 1 %}
+                <article class="dv-seasonal-specials__product-card" role="listitem" data-dv-seasonal-products-slide data-slide-index="{{ product_slide_index | minus: 1 }}" {{ block.shopify_attributes }}>
                   <a class="dv-seasonal-specials__product-media" href="{{ product_link | default: routes.all_products_collection_url }}">
                     {% if block.settings.image != blank %}
                       {{
@@ -248,10 +250,21 @@
               {% endfor %}
             </div>
 
-            {% if section.settings.show_product_dots and section.settings.product_dot_count > 0 %}
-              <div class="dv-seasonal-specials__product-dots" aria-hidden="true">
-                {% for index in (1..section.settings.product_dot_count) %}
-                  <span class="dv-seasonal-specials__product-dot{% if forloop.first %} is-active{% endif %}"></span>
+            {% if section.settings.show_product_dots and product_card_count > 1 %}
+              {% assign product_dot_index = 0 %}
+              <div class="dv-seasonal-specials__product-dots" role="tablist" aria-label="Featured product cards">
+                {% for block in section.blocks %}
+                  {% if block.type == 'side_product' %}
+                    <button
+                      class="dv-seasonal-specials__product-dot{% if product_dot_index == 0 %} is-active{% endif %}"
+                      type="button"
+                      data-dv-seasonal-products-dot
+                      data-slide-index="{{ product_dot_index }}"
+                      aria-label="Show product card {{ product_dot_index | plus: 1 }}"
+                      aria-selected="{% if product_dot_index == 0 %}true{% else %}false{% endif %}"
+                    ></button>
+                    {% assign product_dot_index = product_dot_index | plus: 1 %}
+                  {% endif %}
                 {% endfor %}
               </div>
             {% endif %}
@@ -463,9 +476,16 @@
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__product-grid {
-    display: grid;
+    display: flex;
     gap: 20px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__product-grid::-webkit-scrollbar {
+    display: none;
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__product-card {
@@ -473,9 +493,11 @@
     border: 1px solid rgba(154, 107, 53, 0.18);
     border-radius: 4px;
     display: flex;
+    flex: 0 0 100%;
     flex-direction: column;
-    min-width: 0;
-    padding: clamp(14px, 4vw, 16px);
+    min-width: 100%;
+    padding: clamp(18px, 4.5vw, 24px);
+    scroll-snap-align: start;
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__product-media {
@@ -568,13 +590,18 @@
   #{{ section_anchor }} .dv-seasonal-specials__product-dot {
     background: var(--dv-seasonal-heading);
     border-radius: 50%;
+    appearance: none;
+    border: 0;
+    cursor: pointer;
     display: block;
     height: 10px;
-    opacity: 0.9;
+    opacity: 0.45;
+    padding: 0;
     width: 10px;
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__product-dot.is-active {
+    opacity: 1;
     transform: scale(1.08);
   }
 
@@ -614,6 +641,62 @@
   }
 </style>
 
+<script>
+  (() => {
+    const initSeasonalProducts = (root = document) => {
+      root.querySelectorAll('[data-dv-seasonal-products]').forEach((carousel) => {
+        if (carousel.dataset.dvSeasonalProductsInitialized === 'true') return;
+
+        const track = carousel.querySelector('[data-dv-seasonal-products-track]');
+        const slides = Array.from(carousel.querySelectorAll('[data-dv-seasonal-products-slide]'));
+        const dots = Array.from(carousel.querySelectorAll('[data-dv-seasonal-products-dot]'));
+
+        if (!track || slides.length < 2 || dots.length === 0) return;
+
+        carousel.dataset.dvSeasonalProductsInitialized = 'true';
+
+        const setActiveDot = (activeIndex) => {
+          dots.forEach((dot, index) => {
+            const isActive = index === activeIndex;
+            dot.classList.toggle('is-active', isActive);
+            dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          });
+        };
+
+        dots.forEach((dot) => {
+          dot.addEventListener('click', () => {
+            const index = Number(dot.dataset.slideIndex || 0);
+            const slide = slides[index];
+            if (!slide) return;
+
+            track.scrollTo({ left: slide.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+            setActiveDot(index);
+          });
+        });
+
+        track.addEventListener('scroll', () => {
+          const activeIndex = slides.reduce((closestIndex, slide, index) => {
+            const currentDistance = Math.abs(slide.offsetLeft - track.offsetLeft - track.scrollLeft);
+            const closestSlide = slides[closestIndex];
+            const closestDistance = Math.abs(closestSlide.offsetLeft - track.offsetLeft - track.scrollLeft);
+            return currentDistance < closestDistance ? index : closestIndex;
+          }, 0);
+
+          setActiveDot(activeIndex);
+        }, { passive: true });
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => initSeasonalProducts());
+    } else {
+      initSeasonalProducts();
+    }
+
+    document.addEventListener('shopify:section:load', (event) => initSeasonalProducts(event.target));
+  })();
+</script>
+
 {% schema %}
 {
   "name": "DV Gold seasonal specials",
@@ -638,7 +721,6 @@
     { "type": "color", "id": "button_background", "label": "Button background", "default": "#c99739" },
     { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#ffffff" },
     { "type": "checkbox", "id": "show_product_dots", "label": "Show product carousel dots", "default": true },
-    { "type": "range", "id": "product_dot_count", "label": "Product carousel dots", "min": 1, "max": 6, "step": 1, "default": 4 },
     { "type": "range", "id": "max_width", "label": "Content max width", "min": 640, "max": 1400, "step": 20, "unit": "px", "default": 940 },
     { "type": "range", "id": "mobile_padding_top", "label": "Mobile top padding", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 72 },
     { "type": "range", "id": "mobile_padding_bottom", "label": "Mobile bottom padding", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 72 },
