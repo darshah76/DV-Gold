@@ -368,6 +368,8 @@
         "mobile_card_width": 86,
         "desktop_card_width": 380,
         "card_gap": 28,
+        "enable_endless_scroll": true,
+        "endless_scroll_speed": 30,
         "card_radius": 10,
         "max_width": 1240,
         "mobile_padding_top": 64,
