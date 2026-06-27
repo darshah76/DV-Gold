@@ -89,189 +89,35 @@
       }
     },
     "product_list_fa6P9H": {
-      "type": "product-list",
-      "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "t:names.header",
-          "static": true,
-          "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_list_text_YFtzcL": {
-              "type": "_product-list-text",
-              "name": "t:names.collection_title",
-              "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_list_button_MWeP9V": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "View all",
-                "open_in_new_tab": false,
-                "style_class": "button-unstyled",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
-          ]
-        },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
-          "settings": {
-            "product_card_gap": 4,
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_677WP3": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_YXxMTj": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "paragraph",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_JQzVV4": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
-          ]
-        }
-      },
-      "name": "t:names.featured_collection",
+      "type": "dv-gold-all-products",
+      "name": "DV Gold all products",
       "settings": {
         "collection": "all",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
+        "heading": "ALL PRODUCT",
+        "filter_label": "Filter",
+        "filter_link": "shopify://collections/all",
+        "all_label": "All",
+        "all_link": "shopify://collections/all",
         "max_products": 8,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "show_description": true,
+        "description_length": 55,
+        "show_quick_add": true,
+        "enable_endless_scroll": true,
+        "endless_scroll_speed": 30,
+        "color_scheme": "scheme-1",
+        "background_color": "#fbf1e4",
+        "card_background": "#ffffff",
+        "image_background": "#f7ecde",
+        "heading_color": "#9b2d32",
+        "text_color": "#4d4038",
+        "accent_color": "#c99700",
+        "desktop_card_width": 240,
+        "card_gap": 30,
+        "max_width": 1240,
+        "mobile_padding_top": 48,
+        "mobile_padding_bottom": 48,
+        "desktop_padding_top": 72,
+        "desktop_padding_bottom": 72
       }
     },
     "dv_gold_hero_carousel": {
@@ -426,8 +272,8 @@
             "badge_text": "HOT SELLING COMBO",
             "title": "FESTIVE HERITAGE HAMPER",
             "description": "<p>A curated blend of premium Tea, Spices and Handpicked Dry Fruits for special occasions.</p>",
-            "compare_at_price_text": "₹2,499.00",
-            "price_text": "₹1,999.00",
+            "compare_at_price_text": "\u20b92,499.00",
+            "price_text": "\u20b91,999.00",
             "button_action": "link",
             "button_label": "ADD TO CART",
             "link": "shopify://collections/all"
@@ -439,7 +285,7 @@
             "product": "",
             "title": "DV GOLD TEA",
             "description": "<p>Premium quality tea blend</p>",
-            "price_text": "₹320.00",
+            "price_text": "\u20b9320.00",
             "button_action": "link",
             "button_label": "+",
             "link": "shopify://collections/all"
@@ -451,7 +297,7 @@
             "product": "",
             "title": "DV GOLD TEA",
             "description": "<p>Premium quality tea blend</p>",
-            "price_text": "₹320.00",
+            "price_text": "\u20b9320.00",
             "button_action": "link",
             "button_label": "+",
             "link": "shopify://collections/all"
@@ -513,7 +359,7 @@
           "settings": {
             "icon": "badge",
             "heading": "CONSISTENT TASTE & QUALITY",
-            "text": "<p>Free from unnecessary additives—only honest ingredients you can trust.</p>"
+            "text": "<p>Free from unnecessary additives\u2014only honest ingredients you can trust.</p>"
           }
         },
         "promise_healthier": {
