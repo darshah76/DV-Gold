@@ -478,7 +478,7 @@
         "badge_text_color": "#ffffff",
         "button_background": "#c99739",
         "button_text_color": "#ffffff",
-        "max_width": 940,
+        "max_width": 1100,
         "mobile_padding_top": 72,
         "mobile_padding_bottom": 72,
         "desktop_padding_top": 96,
