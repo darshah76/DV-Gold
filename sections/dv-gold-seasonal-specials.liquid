@@ -155,7 +155,12 @@
         {% endif %}
 
         {% if product_card_count > 0 %}
-          <div class="dv-seasonal-specials__products-wrap" data-dv-seasonal-products>
+          <div
+            class="dv-seasonal-specials__products-wrap"
+            data-dv-seasonal-products
+            data-autoplay="{{ section.settings.product_autoplay }}"
+            data-autoplay-speed="{{ section.settings.product_autoplay_speed | times: 1000 }}"
+          >
             {% assign product_slide_index = 0 %}
             <div class="dv-seasonal-specials__product-grid" role="list" aria-label="Featured products" data-dv-seasonal-products-track>
               {% for block in section.blocks %}
@@ -655,7 +660,11 @@
 
         carousel.dataset.dvSeasonalProductsInitialized = 'true';
 
+        let activeSlideIndex = 0;
+        let autoplayTimer;
+
         const setActiveDot = (activeIndex) => {
+          activeSlideIndex = activeIndex;
           dots.forEach((dot, index) => {
             const isActive = index === activeIndex;
             dot.classList.toggle('is-active', isActive);
@@ -663,14 +672,37 @@
           });
         };
 
+        const scrollToSlide = (index, behavior = 'smooth') => {
+          const slide = slides[index];
+          if (!slide) return;
+
+          track.scrollTo({ left: slide.offsetLeft - track.offsetLeft, behavior });
+          setActiveDot(index);
+        };
+
+        const stopAutoplay = () => {
+          if (autoplayTimer) window.clearInterval(autoplayTimer);
+        };
+
+        const startAutoplay = () => {
+          stopAutoplay();
+
+          if (carousel.dataset.autoplay !== 'true') return;
+
+          const autoplaySpeed = Number(carousel.dataset.autoplaySpeed || 0);
+          if (!autoplaySpeed || autoplaySpeed < 1000) return;
+
+          autoplayTimer = window.setInterval(() => {
+            const nextIndex = (activeSlideIndex + 1) % slides.length;
+            scrollToSlide(nextIndex);
+          }, autoplaySpeed);
+        };
+
         dots.forEach((dot) => {
           dot.addEventListener('click', () => {
             const index = Number(dot.dataset.slideIndex || 0);
-            const slide = slides[index];
-            if (!slide) return;
-
-            track.scrollTo({ left: slide.offsetLeft - track.offsetLeft, behavior: 'smooth' });
-            setActiveDot(index);
+            scrollToSlide(index);
+            startAutoplay();
           });
         });
 
@@ -684,6 +716,12 @@
 
           setActiveDot(activeIndex);
         }, { passive: true });
+
+        carousel.addEventListener('mouseenter', stopAutoplay);
+        carousel.addEventListener('mouseleave', startAutoplay);
+        carousel.addEventListener('focusin', stopAutoplay);
+        carousel.addEventListener('focusout', startAutoplay);
+        startAutoplay();
       });
     };
 
@@ -721,6 +759,8 @@
     { "type": "color", "id": "button_background", "label": "Button background", "default": "#c99739" },
     { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#ffffff" },
     { "type": "checkbox", "id": "show_product_dots", "label": "Show product carousel dots", "default": true },
+    { "type": "checkbox", "id": "product_autoplay", "label": "Auto-scroll product carousel", "default": true },
+    { "type": "range", "id": "product_autoplay_speed", "label": "Product carousel auto-scroll time", "min": 2, "max": 12, "step": 1, "unit": "s", "default": 4 },
     { "type": "range", "id": "max_width", "label": "Content max width", "min": 640, "max": 1400, "step": 20, "unit": "px", "default": 940 },
     { "type": "range", "id": "mobile_padding_top", "label": "Mobile top padding", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 72 },
     { "type": "range", "id": "mobile_padding_bottom", "label": "Mobile bottom padding", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 72 },
