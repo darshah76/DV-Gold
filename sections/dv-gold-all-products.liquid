@@ -30,6 +30,11 @@
     --dv-all-padding-top-desktop: {{ section.settings.desktop_padding_top }}px;
     --dv-all-padding-bottom-desktop: {{ section.settings.desktop_padding_bottom }}px;
     --dv-all-scroll-speed: {{ section.settings.endless_scroll_speed }};
+    --dv-history-bg: {{ section.settings.history_background }};
+    --dv-history-heading: {{ section.settings.history_heading_color }};
+    --dv-history-text: {{ section.settings.history_text_color }};
+    --dv-history-card-bg: {{ section.settings.history_card_background }};
+    --dv-history-card-border: {{ section.settings.history_card_border }};
   "
 >
   <div class="dv-all-products__inner">
@@ -113,6 +118,42 @@
             {% endfor %}
           </div>
         {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+
+  {% if section.settings.history_enabled %}
+    <div class="dv-all-products__history">
+      <div class="dv-all-products__history-inner">
+        {% if section.settings.history_heading != blank %}
+          <h2 class="dv-all-products__history-heading">{{ section.settings.history_heading }}</h2>
+        {% endif %}
+
+        <div class="dv-all-products__history-content">
+          <div class="dv-all-products__history-image-card">
+            {% if section.settings.history_image != blank %}
+              {{
+                section.settings.history_image
+                | image_url: width: 1200
+                | image_tag:
+                  class: 'dv-all-products__history-image',
+                  loading: 'lazy',
+                  sizes: '(min-width: 750px) 45vw, 90vw',
+                  widths: '360, 540, 720, 900, 1200',
+                  alt: section.settings.history_image.alt
+              }}
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'dv-all-products__history-placeholder' }}
+            {% endif %}
+          </div>
+
+          {% if section.settings.history_body != blank %}
+            <div class="dv-all-products__history-body rte">
+              {{ section.settings.history_body }}
+            </div>
+          {% endif %}
+        </div>
       </div>
     </div>
   {% endif %}
@@ -339,6 +380,77 @@
     padding-inline: clamp(10px, 2vw, 18px);
   }
 
+
+
+  #{{ section_anchor }} .dv-all-products__history {
+    background: var(--dv-history-bg);
+    color: var(--dv-history-text);
+    padding-block: {{ section.settings.history_padding_top_mobile }}px {{ section.settings.history_padding_bottom_mobile }}px;
+  }
+
+  #{{ section_anchor }} .dv-all-products__history-inner {
+    width: min(100% - 32px, var(--dv-all-max-width));
+    margin-inline: auto;
+  }
+
+  #{{ section_anchor }} .dv-all-products__history-heading {
+    margin: 0 0 28px;
+    color: var(--dv-history-heading);
+    font-family: var(--font-heading--family);
+    font-size: clamp(3rem, 10vw, 5.6rem);
+    font-weight: 700;
+    line-height: 0.95;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  #{{ section_anchor }} .dv-all-products__history-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+
+  #{{ section_anchor }} .dv-all-products__history-image-card {
+    width: min(100%, 520px);
+    overflow: hidden;
+    border: 1px solid var(--dv-history-card-border);
+    border-radius: 2px;
+    background: var(--dv-history-card-bg);
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(70, 45, 20, 0.06);
+  }
+
+  #{{ section_anchor }} .dv-all-products__history-image,
+  #{{ section_anchor }} .dv-all-products__history-placeholder {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  #{{ section_anchor }} .dv-all-products__history-placeholder {
+    aspect-ratio: 4 / 3;
+    background: var(--dv-history-card-bg);
+  }
+
+  #{{ section_anchor }} .dv-all-products__history-body {
+    max-width: 680px;
+    margin: 0;
+    color: var(--dv-history-text);
+    font-size: clamp(1.6rem, 4vw, 1.9rem);
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  #{{ section_anchor }} .dv-all-products__history-body > * {
+    margin-block: 0 1em;
+  }
+
+  #{{ section_anchor }} .dv-all-products__history-body > :last-child {
+    margin-block-end: 0;
+  }
+
   @keyframes dv-all-products-features-marquee-{{ section.id }} {
     from {
       transform: translateX(0);
@@ -362,6 +474,34 @@
   @media screen and (min-width: 750px) {
     #{{ section_anchor }} {
       padding-block: var(--dv-all-padding-top-desktop) var(--dv-all-padding-bottom-desktop);
+    }
+
+
+
+    #{{ section_anchor }} .dv-all-products__history {
+      padding-block: {{ section.settings.history_padding_top_desktop }}px {{ section.settings.history_padding_bottom_desktop }}px;
+    }
+
+    #{{ section_anchor }} .dv-all-products__history-heading {
+      margin-block-end: 42px;
+    }
+
+    #{{ section_anchor }} .dv-all-products__history-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: clamp(40px, 6vw, 92px);
+    }
+
+    #{{ section_anchor }} .dv-all-products__history-image-card {
+      width: 100%;
+      max-width: 600px;
+      justify-self: end;
+    }
+
+    #{{ section_anchor }} .dv-all-products__history-body {
+      max-width: 560px;
+      text-align: left;
     }
 
     #{{ section_anchor }} .dv-all-products__carousel {
@@ -452,6 +592,19 @@
     { "type": "color", "id": "features_marquee_background", "label": "Features marquee background", "default": "#8b0008" },
     { "type": "color", "id": "features_marquee_color", "label": "Features marquee text", "default": "#c99700" },
     { "type": "color", "id": "features_marquee_dot_color", "label": "Features marquee dot", "default": "#c99700" },
+    { "type": "checkbox", "id": "history_enabled", "label": "Show DV history", "default": true },
+    { "type": "inline_richtext", "id": "history_heading", "label": "History heading", "default": "THE DV HISTORY" },
+    { "type": "image_picker", "id": "history_image", "label": "History image" },
+    { "type": "richtext", "id": "history_body", "label": "History body", "default": "<p>Share the story behind DV Gold, from its beginnings to the craft and care behind every product.</p>" },
+    { "type": "color", "id": "history_background", "label": "History background", "default": "#fbf1e4" },
+    { "type": "color", "id": "history_card_background", "label": "History image card background", "default": "#fff8ef" },
+    { "type": "color", "id": "history_card_border", "label": "History image card border", "default": "#ead8c3" },
+    { "type": "color", "id": "history_heading_color", "label": "History heading", "default": "#9b2d32" },
+    { "type": "color", "id": "history_text_color", "label": "History text", "default": "#4d4038" },
+    { "type": "range", "id": "history_padding_top_mobile", "label": "History mobile padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "history_padding_bottom_mobile", "label": "History mobile padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "history_padding_top_desktop", "label": "History desktop padding top", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "history_padding_bottom_desktop", "label": "History desktop padding bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
     { "type": "color", "id": "background_color", "label": "Background", "default": "#fbf1e4" },
     { "type": "color", "id": "card_background", "label": "Card background", "default": "#ffffff" },
