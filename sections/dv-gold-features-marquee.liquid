@@ -1,0 +1,97 @@
+{% liquid
+  assign section_anchor = 'dv-gold-features-marquee-' | append: section.id
+  assign marquee_features = section.settings.features_marquee_text | split: ','
+%}
+
+<section
+  id="{{ section_anchor }}"
+  class="dv-features-marquee color-{{ section.settings.color_scheme }}"
+  aria-label="{{ section.settings.features_marquee_accessibility_label | escape }}"
+>
+  {% if section.settings.features_marquee_text != blank %}
+    <div class="dv-features-marquee__track">
+      {% for repeat in (1..2) %}
+        <div class="dv-features-marquee__group" aria-hidden="{% if repeat == 1 %}false{% else %}true{% endif %}">
+          {% for feature in marquee_features %}
+            {% assign stripped_feature = feature | strip %}
+            {% if stripped_feature != blank %}
+              <span class="dv-features-marquee__text">{{ stripped_feature }}</span>
+              <span class="dv-features-marquee__dot" aria-hidden="true">•</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>
+
+<style>
+  #{{ section_anchor }} {
+    width: 100%;
+    overflow: hidden;
+    background: {{ section.settings.features_marquee_background }};
+    color: {{ section.settings.features_marquee_color }};
+  }
+
+  #{{ section_anchor }} .dv-features-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: dv-features-marquee-{{ section.id }} {{ section.settings.features_marquee_speed }}s linear infinite;
+    will-change: transform;
+  }
+
+  #{{ section_anchor }} .dv-features-marquee__group {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    min-width: max-content;
+  }
+
+  #{{ section_anchor }} .dv-features-marquee__text,
+  #{{ section_anchor }} .dv-features-marquee__dot {
+    flex: 0 0 auto;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  #{{ section_anchor }} .dv-features-marquee__text {
+    padding-block: {{ section.settings.vertical_padding }}px;
+    padding-inline: clamp(24px, 5vw, 52px);
+  }
+
+  #{{ section_anchor }} .dv-features-marquee__dot {
+    color: {{ section.settings.features_marquee_dot_color }};
+    padding-inline: clamp(10px, 2vw, 18px);
+  }
+
+  @keyframes dv-features-marquee-{{ section.id }} {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #{{ section_anchor }} .dv-features-marquee__track { animation: none; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "DV Gold features marquee",
+  "settings": [
+    { "type": "text", "id": "features_marquee_text", "label": "Features marquee text", "default": "ETHICALLY SOURCED,ARTISANAL BLEND,PREMIUM QUALITY" },
+    { "type": "text", "id": "features_marquee_accessibility_label", "label": "Features marquee accessibility label", "default": "Product features" },
+    { "type": "range", "id": "features_marquee_speed", "label": "Features marquee duration", "min": 8, "max": 60, "step": 1, "unit": "s", "default": 18 },
+    { "type": "range", "id": "vertical_padding", "label": "Vertical padding", "min": 12, "max": 48, "step": 2, "unit": "px", "default": 28 },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "color", "id": "features_marquee_background", "label": "Features marquee background", "default": "#8b0008" },
+    { "type": "color", "id": "features_marquee_color", "label": "Features marquee text", "default": "#c99700" },
+    { "type": "color", "id": "features_marquee_dot_color", "label": "Features marquee dot", "default": "#c99700" }
+  ],
+  "presets": [
+    { "name": "DV Gold features marquee" }
+  ]
+}
+{% endschema %}
