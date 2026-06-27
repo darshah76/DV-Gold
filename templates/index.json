@@ -432,10 +432,36 @@
             "button_label": "ADD TO CART",
             "link": "shopify://collections/all"
           }
+        },
+        "product_card_1": {
+          "type": "side_product",
+          "settings": {
+            "product": "",
+            "title": "DV GOLD TEA",
+            "description": "<p>Premium quality tea blend</p>",
+            "price_text": "₹320.00",
+            "button_action": "link",
+            "button_label": "+",
+            "link": "shopify://collections/all"
+          }
+        },
+        "product_card_2": {
+          "type": "side_product",
+          "settings": {
+            "product": "",
+            "title": "DV GOLD TEA",
+            "description": "<p>Premium quality tea blend</p>",
+            "price_text": "₹320.00",
+            "button_action": "link",
+            "button_label": "+",
+            "link": "shopify://collections/all"
+          }
         }
       },
       "block_order": [
-        "combo_festive_heritage"
+        "combo_festive_heritage",
+        "product_card_1",
+        "product_card_2"
       ],
       "name": "DV Gold seasonal specials",
       "settings": {
@@ -456,7 +482,8 @@
         "mobile_padding_top": 72,
         "mobile_padding_bottom": 72,
         "desktop_padding_top": 96,
-        "desktop_padding_bottom": 96
+        "desktop_padding_bottom": 96,
+        "product_card_background": "#fffdf9"
       }
     }
   },
