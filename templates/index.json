@@ -362,12 +362,36 @@
             "card_rotation": 3,
             "card_background": "#fbefd9"
           }
+        },
+        "category_dry_fruits": {
+          "type": "category",
+          "settings": {
+            "title": "DRY FRUITS",
+            "button_label": "SHOP NOW",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "card_rotation": -3,
+            "card_background": "#fbefd9"
+          }
+        },
+        "category_farali_items": {
+          "type": "category",
+          "settings": {
+            "title": "FARALI ITEMS",
+            "button_label": "SHOP NOW",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "card_rotation": 2,
+            "card_background": "#fbefd9"
+          }
         }
       },
       "block_order": [
         "category_tea",
         "category_spice",
-        "category_powder"
+        "category_powder",
+        "category_dry_fruits",
+        "category_farali_items"
       ],
       "name": "DV Gold shop by category",
       "settings": {
