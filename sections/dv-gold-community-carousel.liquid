@@ -1,0 +1,626 @@
+{% liquid
+  assign section_anchor = 'dv-gold-community-' | append: section.id
+  assign item_count = section.blocks.size
+%}
+
+<section
+  id="{{ section_anchor }}"
+  class="dv-community color-{{ section.settings.color_scheme }}"
+  style="
+    --dv-community-bg: {{ section.settings.background_color }};
+    --dv-community-heading: {{ section.settings.heading_color }};
+    --dv-community-strip-bg: {{ section.settings.strip_background }};
+    --dv-community-strip-text: {{ section.settings.strip_text_color }};
+    --dv-community-card-radius: {{ section.settings.card_radius }}px;
+    --dv-community-card-width-mobile: {{ section.settings.mobile_card_width }}%;
+    --dv-community-card-width-desktop: {{ section.settings.desktop_card_width }}px;
+    --dv-community-gap: {{ section.settings.card_gap }}px;
+    --dv-community-max-width: {{ section.settings.max_width }}px;
+    --dv-community-padding-top-mobile: {{ section.settings.mobile_padding_top }}px;
+    --dv-community-padding-bottom-mobile: {{ section.settings.mobile_padding_bottom }}px;
+    --dv-community-padding-top-desktop: {{ section.settings.desktop_padding_top }}px;
+    --dv-community-padding-bottom-desktop: {{ section.settings.desktop_padding_bottom }}px;
+    --dv-community-scroll-speed: {{ section.settings.endless_scroll_speed }}s;
+  "
+>
+  <div class="dv-community__header">
+    {% if section.settings.heading != blank %}
+      <h2 class="dv-community__heading">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+      <p class="dv-community__subheading">{{ section.settings.subheading | escape }}</p>
+    {% endif %}
+  </div>
+
+  <div class="dv-community__inner">
+    <div
+      class="dv-community__carousel"
+      role="list"
+      aria-label="{{ section.settings.carousel_label | escape }}"
+      data-endless-scroll="{{ section.settings.enable_endless_scroll }}"
+    >
+      {% if item_count > 0 %}
+        {% for block in section.blocks %}
+          {% liquid
+            assign card_link = block.settings.link
+            assign has_video = false
+            if block.settings.video != blank
+              assign has_video = true
+            endif
+          %}
+          <article class="dv-community__card" role="listitem" {{ block.shopify_attributes }}>
+            {% if card_link != blank %}
+              <a
+                class="dv-community__media-link"
+                href="{{ card_link }}"
+                {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+                aria-label="{{ block.settings.accessibility_label | default: block.settings.caption | default: section.settings.carousel_label | escape }}"
+              >
+            {% else %}
+              <div class="dv-community__media-link">
+            {% endif %}
+
+              {% if has_video %}
+                {{
+                  block.settings.video
+                  | video_tag:
+                    autoplay: true,
+                    loop: true,
+                    muted: true,
+                    controls: false,
+                    playsinline: true,
+                    class: 'dv-community__media dv-community__media--video'
+                }}
+              {% elsif block.settings.image != blank %}
+                {{
+                  block.settings.image
+                  | image_url: width: 1000
+                  | image_tag:
+                    class: 'dv-community__media dv-community__media--image',
+                    widths: '320, 480, 640, 800, 1000',
+                    sizes: '(min-width: 990px) 380px, 86vw',
+                    loading: 'lazy',
+                    alt: block.settings.image_alt
+                }}
+              {% else %}
+                <div class="dv-community__placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'dv-community__placeholder-svg' }}
+                  <span>Add social media</span>
+                </div>
+              {% endif %}
+
+            {% if card_link != blank %}
+              </a>
+            {% else %}
+              </div>
+            {% endif %}
+
+            {% if block.settings.caption != blank %}
+              <p class="dv-community__caption">{{ block.settings.caption | escape }}</p>
+            {% endif %}
+          </article>
+        {% endfor %}
+
+        {% if section.settings.enable_endless_scroll %}
+          {% for block in section.blocks %}
+            {% liquid
+              assign card_link = block.settings.link
+              assign has_video = false
+              if block.settings.video != blank
+                assign has_video = true
+              endif
+            %}
+            <article class="dv-community__card dv-community__card--clone" role="listitem" aria-hidden="true">
+              {% if card_link != blank %}
+                <a
+                  class="dv-community__media-link"
+                  href="{{ card_link }}"
+                  tabindex="-1"
+                  {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+                >
+              {% else %}
+                <div class="dv-community__media-link">
+              {% endif %}
+
+                {% if has_video %}
+                  {{
+                    block.settings.video
+                    | video_tag:
+                      autoplay: true,
+                      loop: true,
+                      muted: true,
+                      controls: false,
+                      playsinline: true,
+                      class: 'dv-community__media dv-community__media--video'
+                  }}
+                {% elsif block.settings.image != blank %}
+                  {{
+                    block.settings.image
+                    | image_url: width: 1000
+                    | image_tag:
+                      class: 'dv-community__media dv-community__media--image',
+                      widths: '320, 480, 640, 800, 1000',
+                      sizes: '(min-width: 990px) 380px, 86vw',
+                      loading: 'lazy',
+                      alt: block.settings.image_alt
+                  }}
+                {% else %}
+                  <div class="dv-community__placeholder">
+                    {{ 'image' | placeholder_svg_tag: 'dv-community__placeholder-svg' }}
+                    <span>Add social media</span>
+                  </div>
+                {% endif %}
+
+              {% if card_link != blank %}
+                </a>
+              {% else %}
+                </div>
+              {% endif %}
+            </article>
+          {% endfor %}
+        {% endif %}
+      {% else %}
+        {% for i in (1..3) %}
+          <article class="dv-community__card dv-community__card--placeholder" role="listitem">
+            <div class="dv-community__media-link">
+              <div class="dv-community__placeholder">
+                {{ 'image' | placeholder_svg_tag: 'dv-community__placeholder-svg' }}
+                <span>Add social media {{ i }}</span>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .dv-community {
+    background: var(--dv-community-bg);
+    color: var(--dv-community-strip-text);
+    overflow: hidden;
+    padding-block: var(--dv-community-padding-top-mobile) var(--dv-community-padding-bottom-mobile);
+  }
+
+  .dv-community__header {
+    text-align: center;
+  }
+
+  .dv-community__heading {
+    color: var(--dv-community-heading);
+    font-family: var(--font-heading--family);
+    font-size: clamp(3.4rem, 9vw, 6.4rem);
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    line-height: 1.12;
+    margin: 0 auto 24px;
+    max-width: 920px;
+    padding-inline: 24px;
+    text-transform: uppercase;
+  }
+
+  .dv-community__subheading {
+    background: var(--dv-community-strip-bg);
+    color: var(--dv-community-strip-text);
+    font-size: clamp(1.8rem, 4.2vw, 2.4rem);
+    line-height: 1.2;
+    margin: 0;
+    padding: 8px 16px;
+    text-align: center;
+  }
+
+  .dv-community__inner {
+    margin-inline: auto;
+    max-width: var(--dv-community-max-width);
+    padding-block-start: 32px;
+    width: 100%;
+  }
+
+  .dv-community__carousel {
+    display: flex;
+    gap: var(--dv-community-gap);
+    margin-inline: auto;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding: 0 max(28px, calc((100vw - var(--dv-community-max-width)) / 2)) 18px;
+    scroll-padding-inline: 28px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .dv-community__carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dv-community__card {
+    flex: 0 0 var(--dv-community-card-width-mobile);
+    max-width: var(--dv-community-card-width-mobile);
+    scroll-snap-align: center;
+  }
+
+  .dv-community__media-link {
+    background: #f4dfbd;
+    border-radius: var(--dv-community-card-radius);
+    box-shadow: 0 12px 26px rgba(70, 45, 20, 0.14);
+    color: inherit;
+    display: block;
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+  }
+
+  a.dv-community__media-link {
+    cursor: pointer;
+  }
+
+  .dv-community__media-link::after {
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: inherit;
+    content: '';
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .dv-community__media,
+  .dv-community__placeholder {
+    aspect-ratio: 4 / 5.35;
+    display: block;
+    height: auto;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .dv-community__media {
+    pointer-events: none;
+  }
+
+  .dv-community__media--video {
+    height: 100%;
+  }
+
+  .dv-community__placeholder {
+    align-items: center;
+    color: #9b2d32;
+    display: flex;
+    flex-direction: column;
+    font-weight: 700;
+    gap: 12px;
+    justify-content: center;
+    min-height: 420px;
+    padding: 28px;
+    text-align: center;
+  }
+
+  .dv-community__placeholder-svg {
+    opacity: 0.35;
+    width: 72%;
+  }
+
+  .dv-community__caption {
+    color: var(--dv-community-strip-text);
+    font-size: 1.4rem;
+    margin: 12px 0 0;
+    text-align: center;
+  }
+
+  .dv-community__card--clone {
+    display: none;
+    pointer-events: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .dv-community {
+      padding-block: var(--dv-community-padding-top-desktop) var(--dv-community-padding-bottom-desktop);
+    }
+
+    .dv-community__inner {
+      padding-block-start: 48px;
+    }
+
+    .dv-community__carousel {
+      padding-bottom: 22px;
+      scroll-padding-inline: max(48px, calc((100vw - var(--dv-community-max-width)) / 2));
+    }
+
+    .dv-community__carousel[data-endless-scroll='true'] {
+      margin-inline: 0;
+      overflow: visible;
+      padding-inline: 0;
+      scroll-snap-type: none;
+      width: max-content;
+      animation: dv-community-marquee var(--dv-community-scroll-speed) linear infinite;
+    }
+
+    .dv-community__carousel[data-endless-scroll='true']:hover,
+    .dv-community__carousel[data-endless-scroll='true']:focus-within {
+      animation-play-state: paused;
+    }
+
+    .dv-community__card {
+      flex-basis: var(--dv-community-card-width-desktop);
+      max-width: var(--dv-community-card-width-desktop);
+      scroll-snap-align: start;
+    }
+
+    .dv-community__carousel[data-endless-scroll='true'] .dv-community__card--clone {
+      display: block;
+      scroll-snap-align: none;
+    }
+
+    @keyframes dv-community-marquee {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(calc(-50% - (var(--dv-community-gap) / 2)));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .dv-community__carousel[data-endless-scroll='true'] {
+        animation: none;
+        overflow-x: auto;
+        padding-inline: max(48px, calc((100vw - var(--dv-community-max-width)) / 2));
+        scroll-snap-type: x mandatory;
+        width: auto;
+      }
+
+      .dv-community__carousel[data-endless-scroll='true'] .dv-community__card--clone {
+        display: none;
+      }
+    }
+  }
+{% endstylesheet %}
+
+<script>
+  (() => {
+    const initCommunityVideos = (section) => {
+      const videos = Array.from(section.querySelectorAll('video'));
+      videos.forEach((video) => {
+        video.muted = true;
+        video.defaultMuted = true;
+        video.playsInline = true;
+        video.setAttribute('muted', '');
+        video.setAttribute('playsinline', '');
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(() => {});
+        }
+      });
+    };
+
+    document.querySelectorAll('.dv-community').forEach(initCommunityVideos);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "DV Gold social carousel",
+  "tag": "section",
+  "class": "section-dv-gold-community-carousel",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "BE PART OF OUR COMMUNITY"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading strip text",
+      "default": "Social Media Links"
+    },
+    {
+      "type": "text",
+      "id": "carousel_label",
+      "label": "Carousel accessibility label",
+      "default": "DV Gold social media links"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#fbf5ee"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#9b2d32"
+    },
+    {
+      "type": "color",
+      "id": "strip_background",
+      "label": "Subheading strip background",
+      "default": "#f6ead9"
+    },
+    {
+      "type": "color",
+      "id": "strip_text_color",
+      "label": "Subheading text color",
+      "default": "#191512"
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_width",
+      "label": "Mobile card width",
+      "min": 72,
+      "max": 92,
+      "step": 1,
+      "unit": "%",
+      "default": 86
+    },
+    {
+      "type": "range",
+      "id": "desktop_card_width",
+      "label": "Desktop card width",
+      "min": 280,
+      "max": 520,
+      "step": 10,
+      "unit": "px",
+      "default": 380
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Card gap",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_endless_scroll",
+      "label": "Enable endless desktop scroll",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "endless_scroll_speed",
+      "label": "Endless scroll duration",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "s",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum content width",
+      "min": 900,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1240
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile padding top",
+      "min": 24,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile padding bottom",
+      "min": 24,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "label": "Desktop padding top",
+      "min": 32,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "label": "Desktop padding bottom",
+      "min": 32,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    }
+  ],
+  "blocks": [
+    {
+      "type": "social_media",
+      "name": "Social media item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "info": "Video takes priority over the image and autoplays muted."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text",
+          "default": "DV Gold social media post"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Optional caption"
+        },
+        {
+          "type": "text",
+          "id": "accessibility_label",
+          "label": "Link accessibility label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Social media link"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "Open link in a new tab",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DV Gold social carousel",
+      "blocks": [
+        {
+          "type": "social_media"
+        },
+        {
+          "type": "social_media"
+        },
+        {
+          "type": "social_media"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
