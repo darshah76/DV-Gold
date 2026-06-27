@@ -415,11 +415,82 @@
         "connector_dash_length": 18,
         "connector_gap_length": 28
       }
+    },
+    "dv_gold_seasonal_specials": {
+      "type": "dv-gold-seasonal-specials",
+      "blocks": {
+        "combo_festive_heritage": {
+          "type": "combo",
+          "settings": {
+            "product": "",
+            "badge_text": "HOT SELLING COMBO",
+            "title": "FESTIVE HERITAGE HAMPER",
+            "description": "<p>A curated blend of premium Tea, Spices and Handpicked Dry Fruits for special occasions.</p>",
+            "compare_at_price_text": "₹2,499.00",
+            "price_text": "₹1,999.00",
+            "button_action": "link",
+            "button_label": "ADD TO CART",
+            "link": "shopify://collections/all"
+          }
+        },
+        "product_card_1": {
+          "type": "side_product",
+          "settings": {
+            "product": "",
+            "title": "DV GOLD TEA",
+            "description": "<p>Premium quality tea blend</p>",
+            "price_text": "₹320.00",
+            "button_action": "link",
+            "button_label": "+",
+            "link": "shopify://collections/all"
+          }
+        },
+        "product_card_2": {
+          "type": "side_product",
+          "settings": {
+            "product": "",
+            "title": "DV GOLD TEA",
+            "description": "<p>Premium quality tea blend</p>",
+            "price_text": "₹320.00",
+            "button_action": "link",
+            "button_label": "+",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "combo_festive_heritage",
+        "product_card_1",
+        "product_card_2"
+      ],
+      "name": "DV Gold seasonal specials",
+      "settings": {
+        "heading": "FEATURED COMBOS & SEASONAL SPECIALS",
+        "show_heading_accent": true,
+        "color_scheme": "scheme-1",
+        "background_color": "#fbf5ee",
+        "card_background": "#fffaf2",
+        "heading_color": "#9b2d32",
+        "text_color": "#191512",
+        "muted_text_color": "#737b8f",
+        "accent_color": "#c99739",
+        "badge_background": "#ad323c",
+        "badge_text_color": "#ffffff",
+        "button_background": "#c99739",
+        "button_text_color": "#ffffff",
+        "max_width": 940,
+        "mobile_padding_top": 72,
+        "mobile_padding_bottom": 72,
+        "desktop_padding_top": 96,
+        "desktop_padding_bottom": 96,
+        "product_card_background": "#fffdf9"
+      }
     }
   },
   "order": [
     "dv_gold_hero_carousel",
     "dv_gold_shop_by_category",
+    "dv_gold_seasonal_specials",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]

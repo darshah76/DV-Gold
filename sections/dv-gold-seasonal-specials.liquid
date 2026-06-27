@@ -1,0 +1,672 @@
+{% liquid
+  assign section_anchor = 'dv-gold-seasonal-specials-' | append: section.id
+  assign combo_count = 0
+  assign product_card_count = 0
+  for block in section.blocks
+    if block.type == 'combo'
+      assign combo_count = combo_count | plus: 1
+    elsif block.type == 'side_product'
+      assign product_card_count = product_card_count | plus: 1
+    endif
+  endfor
+%}
+
+<section
+  id="{{ section_anchor }}"
+  class="dv-seasonal-specials color-{{ section.settings.color_scheme }}"
+  style="
+    --dv-seasonal-bg: {{ section.settings.background_color }};
+    --dv-seasonal-card-bg: {{ section.settings.card_background }};
+    --dv-seasonal-product-card-bg: {{ section.settings.product_card_background }};
+    --dv-seasonal-heading: {{ section.settings.heading_color }};
+    --dv-seasonal-text: {{ section.settings.text_color }};
+    --dv-seasonal-muted: {{ section.settings.muted_text_color }};
+    --dv-seasonal-accent: {{ section.settings.accent_color }};
+    --dv-seasonal-badge-bg: {{ section.settings.badge_background }};
+    --dv-seasonal-badge-text: {{ section.settings.badge_text_color }};
+    --dv-seasonal-button-bg: {{ section.settings.button_background }};
+    --dv-seasonal-button-text: {{ section.settings.button_text_color }};
+    --dv-seasonal-max-width: {{ section.settings.max_width }}px;
+    --dv-seasonal-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
+    --dv-seasonal-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    --dv-seasonal-desktop-padding-top: {{ section.settings.desktop_padding_top }}px;
+    --dv-seasonal-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+  "
+>
+  <div class="dv-seasonal-specials__inner">
+    {% if section.settings.heading != blank %}
+      <div class="dv-seasonal-specials__heading-wrap">
+        <h2 class="dv-seasonal-specials__heading">{{ section.settings.heading }}</h2>
+        {% if section.settings.show_heading_accent %}
+          <span class="dv-seasonal-specials__heading-accent" aria-hidden="true"></span>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if combo_count > 0 or product_card_count > 0 %}
+      <div class="dv-seasonal-specials__layout">
+        {% if combo_count > 0 %}
+          <div class="dv-seasonal-specials__combo-list" role="list" aria-label="Combo specials">
+            {% for block in section.blocks %}
+              {% if block.type == 'combo' %}
+                {% liquid
+                  assign selected_product = block.settings.product
+                  assign product_variant = selected_product.selected_or_first_available_variant
+                  assign card_link = block.settings.link
+                  if card_link == blank and selected_product != blank
+                    assign card_link = selected_product.url
+                  endif
+                  assign button_label = block.settings.button_label
+                  assign button_action = block.settings.button_action
+                  assign card_title = block.settings.title
+                  if card_title == blank and selected_product != blank
+                    assign card_title = selected_product.title
+                  endif
+                %}
+
+                <article class="dv-seasonal-specials__card" role="listitem" {{ block.shopify_attributes }}>
+                  <div class="dv-seasonal-specials__media">
+                    {% if block.settings.image != blank %}
+                      {{
+                        block.settings.image
+                        | image_url: width: 1400
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '360, 540, 720, 900, 1100, 1400',
+                          sizes: '(min-width: 990px) 640px, calc(100vw - 60px)',
+                          class: 'dv-seasonal-specials__image',
+                          alt: block.settings.image.alt
+                      }}
+                    {% elsif selected_product.featured_image != blank %}
+                      {{
+                        selected_product.featured_image
+                        | image_url: width: 1400
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '360, 540, 720, 900, 1100, 1400',
+                          sizes: '(min-width: 990px) 640px, calc(100vw - 60px)',
+                          class: 'dv-seasonal-specials__image',
+                          alt: selected_product.featured_image.alt
+                      }}
+                    {% else %}
+                      <div class="dv-seasonal-specials__placeholder" aria-hidden="true">
+                        {{ 'product-1' | placeholder_svg_tag: 'dv-seasonal-specials__placeholder-svg' }}
+                      </div>
+                    {% endif %}
+
+                    {% if block.settings.badge_text != blank %}
+                      <span class="dv-seasonal-specials__badge">{{ block.settings.badge_text }}</span>
+                    {% endif %}
+                  </div>
+
+                  <div class="dv-seasonal-specials__content">
+                    {% if card_title != blank %}
+                      <h3 class="dv-seasonal-specials__title">{{ card_title }}</h3>
+                    {% endif %}
+
+                    {% if block.settings.description != blank %}
+                      <div class="dv-seasonal-specials__description rte">{{ block.settings.description }}</div>
+                    {% endif %}
+
+                    <div class="dv-seasonal-specials__purchase-row">
+                      <div class="dv-seasonal-specials__prices" aria-label="Price">
+                        {% if block.settings.compare_at_price_text != blank %}
+                          <span class="dv-seasonal-specials__compare-price">{{ block.settings.compare_at_price_text }}</span>
+                        {% elsif selected_product.compare_at_price_max > selected_product.price %}
+                          <span class="dv-seasonal-specials__compare-price">{{ selected_product.compare_at_price_max | money }}</span>
+                        {% endif %}
+
+                        {% if block.settings.price_text != blank %}
+                          <span class="dv-seasonal-specials__price">{{ block.settings.price_text }}</span>
+                        {% elsif selected_product != blank %}
+                          <span class="dv-seasonal-specials__price">{{ selected_product.price | money }}</span>
+                        {% endif %}
+                      </div>
+
+                      {% if button_label != blank %}
+                        {% if button_action == 'add_to_cart' and product_variant != blank %}
+                          <form method="post" action="{{ routes.cart_add_url }}" class="dv-seasonal-specials__form">
+                            <input type="hidden" name="id" value="{{ product_variant.id }}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button
+                              type="submit"
+                              class="dv-seasonal-specials__button"
+                              {% unless product_variant.available %}disabled{% endunless %}
+                            >
+                              {% if product_variant.available %}
+                                {{ button_label }}
+                              {% else %}
+                                {{ 'products.product.sold_out' | t }}
+                              {% endif %}
+                            </button>
+                          </form>
+                        {% else %}
+                          <a class="dv-seasonal-specials__button" href="{{ card_link | default: routes.all_products_collection_url }}">
+                            {{ button_label }}
+                          </a>
+                        {% endif %}
+                      {% endif %}
+                    </div>
+                  </div>
+                </article>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if product_card_count > 0 %}
+          <div class="dv-seasonal-specials__product-grid" role="list" aria-label="Featured products">
+            {% for block in section.blocks %}
+              {% if block.type == 'side_product' %}
+                {% liquid
+                  assign card_product = block.settings.product
+                  assign card_variant = card_product.selected_or_first_available_variant
+                  assign product_link = block.settings.link
+                  if product_link == blank and card_product != blank
+                    assign product_link = card_product.url
+                  endif
+                  assign product_title = block.settings.title
+                  if product_title == blank and card_product != blank
+                    assign product_title = card_product.title
+                  endif
+                %}
+
+                <article class="dv-seasonal-specials__product-card" role="listitem" {{ block.shopify_attributes }}>
+                  <a class="dv-seasonal-specials__product-media" href="{{ product_link | default: routes.all_products_collection_url }}">
+                    {% if block.settings.image != blank %}
+                      {{
+                        block.settings.image
+                        | image_url: width: 600
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '180, 260, 360, 480, 600',
+                          sizes: '(min-width: 990px) 240px, 44vw',
+                          class: 'dv-seasonal-specials__product-image',
+                          alt: block.settings.image.alt
+                      }}
+                    {% elsif card_product.featured_image != blank %}
+                      {{
+                        card_product.featured_image
+                        | image_url: width: 600
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '180, 260, 360, 480, 600',
+                          sizes: '(min-width: 990px) 240px, 44vw',
+                          class: 'dv-seasonal-specials__product-image',
+                          alt: card_product.featured_image.alt
+                      }}
+                    {% else %}
+                      <div class="dv-seasonal-specials__product-placeholder" aria-hidden="true">
+                        {{ 'product-2' | placeholder_svg_tag: 'dv-seasonal-specials__product-placeholder-svg' }}
+                      </div>
+                    {% endif %}
+                  </a>
+
+                  <div class="dv-seasonal-specials__product-content">
+                    {% if product_title != blank %}
+                      <h3 class="dv-seasonal-specials__product-title">{{ product_title }}</h3>
+                    {% endif %}
+                    {% if block.settings.description != blank %}
+                      <div class="dv-seasonal-specials__product-description rte">{{ block.settings.description }}</div>
+                    {% endif %}
+                    <div class="dv-seasonal-specials__product-footer">
+                      {% if block.settings.price_text != blank %}
+                        <span class="dv-seasonal-specials__product-price">{{ block.settings.price_text }}</span>
+                      {% elsif card_product != blank %}
+                        <span class="dv-seasonal-specials__product-price">{{ card_product.price | money }}</span>
+                      {% endif %}
+
+                      {% if block.settings.button_label != blank %}
+                        {% if block.settings.button_action == 'add_to_cart' and card_variant != blank %}
+                          <form method="post" action="{{ routes.cart_add_url }}" class="dv-seasonal-specials__product-form">
+                            <input type="hidden" name="id" value="{{ card_variant.id }}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button
+                              type="submit"
+                              class="dv-seasonal-specials__product-button"
+                              aria-label="{{ block.settings.button_label | escape }} {{ product_title | escape }}"
+                              {% unless card_variant.available %}disabled{% endunless %}
+                            >
+                              {{ block.settings.button_label }}
+                            </button>
+                          </form>
+                        {% else %}
+                          <a
+                            class="dv-seasonal-specials__product-button"
+                            href="{{ product_link | default: routes.all_products_collection_url }}"
+                            aria-label="{{ block.settings.button_label | escape }} {{ product_title | escape }}"
+                          >
+                            {{ block.settings.button_label }}
+                          </a>
+                        {% endif %}
+                      {% endif %}
+                    </div>
+                  </div>
+                </article>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    {% else %}
+      <p class="dv-seasonal-specials__empty">Add combo and product cards in the theme editor.</p>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  #{{ section_anchor }} {
+    background: var(--dv-seasonal-bg);
+    color: var(--dv-seasonal-text);
+    padding-block: var(--dv-seasonal-mobile-padding-top) var(--dv-seasonal-mobile-padding-bottom);
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__inner {
+    margin-inline: auto;
+    width: min(100% - 32px, var(--dv-seasonal-max-width));
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__heading-wrap {
+    margin: 0 auto clamp(34px, 8vw, 58px);
+    text-align: center;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__heading {
+    color: var(--dv-seasonal-heading);
+    font-family: var(--font-heading--family);
+    font-size: clamp(2.8rem, 7vw, 4.4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__heading-accent {
+    background: var(--dv-seasonal-accent);
+    display: block;
+    height: 5px;
+    margin: 16px auto 0;
+    width: 58px;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__layout,
+  #{{ section_anchor }} .dv-seasonal-specials__combo-list {
+    display: grid;
+    gap: 28px;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__card {
+    background: var(--dv-seasonal-card-bg);
+    border-radius: 28px;
+    box-shadow: 0 22px 34px rgba(65, 45, 25, 0.12);
+    overflow: hidden;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__media {
+    aspect-ratio: 1 / 1;
+    background: rgba(154, 107, 53, 0.12);
+    position: relative;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__image,
+  #{{ section_anchor }} .dv-seasonal-specials__placeholder {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__placeholder,
+  #{{ section_anchor }} .dv-seasonal-specials__product-placeholder {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__placeholder-svg,
+  #{{ section_anchor }} .dv-seasonal-specials__product-placeholder-svg {
+    height: 60%;
+    opacity: 0.35;
+    width: 60%;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__badge {
+    background: var(--dv-seasonal-badge-bg);
+    border-radius: 999px;
+    color: var(--dv-seasonal-badge-text);
+    font-size: 1.2rem;
+    font-weight: 800;
+    left: 20px;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    padding: 0.8rem 1.6rem;
+    position: absolute;
+    text-transform: uppercase;
+    top: 20px;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__content {
+    padding: clamp(28px, 7vw, 42px) clamp(28px, 7vw, 42px) clamp(30px, 7vw, 42px);
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__title {
+    color: var(--dv-seasonal-text);
+    font-family: var(--font-heading--family);
+    font-size: clamp(2.3rem, 5.6vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.08;
+    margin: 0 0 0.8rem;
+    text-transform: uppercase;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__description,
+  #{{ section_anchor }} .dv-seasonal-specials__product-description {
+    color: var(--dv-seasonal-muted);
+    font-size: clamp(1.5rem, 3.8vw, 1.8rem);
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__description > *,
+  #{{ section_anchor }} .dv-seasonal-specials__product-description > * {
+    margin-block: 0;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__purchase-row {
+    align-items: end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px 24px;
+    justify-content: space-between;
+    margin-top: 24px;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__prices {
+    display: grid;
+    flex: 1 1 170px;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__compare-price {
+    color: var(--dv-seasonal-muted);
+    font-size: 1.4rem;
+    opacity: 0.7;
+    text-decoration: line-through;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__price {
+    color: var(--dv-seasonal-heading);
+    font-size: clamp(2.4rem, 5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__form {
+    flex: 0 0 auto;
+    margin: 0;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__button {
+    align-items: center;
+    appearance: none;
+    background: var(--dv-seasonal-button-bg);
+    border: 0;
+    border-radius: 12px;
+    color: var(--dv-seasonal-button-text);
+    cursor: pointer;
+    display: inline-flex;
+    flex: 0 0 auto;
+    font: inherit;
+    font-size: 1.4rem;
+    font-weight: 800;
+    justify-content: center;
+    line-height: 1;
+    min-height: 44px;
+    min-width: 148px;
+    padding: 1.2rem 1.8rem;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__button:hover,
+  #{{ section_anchor }} .dv-seasonal-specials__button:focus-visible,
+  #{{ section_anchor }} .dv-seasonal-specials__product-button:hover,
+  #{{ section_anchor }} .dv-seasonal-specials__product-button:focus-visible {
+    box-shadow: 0 8px 14px rgba(70, 43, 18, 0.18);
+    transform: translateY(-1px);
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__button:disabled,
+  #{{ section_anchor }} .dv-seasonal-specials__product-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__product-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__product-card {
+    background: var(--dv-seasonal-product-card-bg);
+    border: 1px solid rgba(154, 107, 53, 0.18);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: clamp(14px, 4vw, 16px);
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__product-media {
+    background: #fbf0e1;
+    border-radius: 6px;
+    display: block;
+    overflow: hidden;
+    text-decoration: none;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__product-image,
+  #{{ section_anchor }} .dv-seasonal-specials__product-placeholder {
+    aspect-ratio: 1 / 1;
+    display: block;
+    height: auto;
+    object-fit: contain;
+    width: 100%;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__product-content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding-top: 20px;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__product-title {
+    color: var(--dv-seasonal-heading);
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.6rem, 3.8vw, 2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 0.6rem;
+    text-transform: uppercase;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__product-description {
+    font-size: clamp(1.4rem, 3.4vw, 1.6rem);
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__product-footer {
+    align-items: end;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 18px;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__product-price {
+    color: var(--dv-seasonal-heading);
+    font-size: clamp(1.8rem, 4vw, 2.2rem);
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__product-form {
+    margin: 0;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__product-button {
+    align-items: center;
+    appearance: none;
+    background: var(--dv-seasonal-button-bg);
+    border: 0;
+    border-radius: 50%;
+    color: var(--dv-seasonal-button-text);
+    cursor: pointer;
+    display: inline-flex;
+    flex: 0 0 auto;
+    font: inherit;
+    font-size: 2rem;
+    font-weight: 700;
+    height: 38px;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 38px;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__empty {
+    color: var(--dv-seasonal-muted);
+    margin: 0;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 420px) {
+    #{{ section_anchor }} .dv-seasonal-specials__purchase-row {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    #{{ section_anchor }} .dv-seasonal-specials__button,
+    #{{ section_anchor }} .dv-seasonal-specials__form {
+      width: 100%;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    #{{ section_anchor }} {
+      padding-block: var(--dv-seasonal-desktop-padding-top) var(--dv-seasonal-desktop-padding-bottom);
+    }
+
+    #{{ section_anchor }} .dv-seasonal-specials__inner {
+      width: min(100% - 64px, var(--dv-seasonal-max-width));
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    #{{ section_anchor }} .dv-seasonal-specials__layout {
+      align-items: start;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "DV Gold seasonal specials",
+  "tag": "section",
+  "class": "section-dv-gold-seasonal-specials",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "FEATURED COMBOS & SEASONAL SPECIALS" },
+    { "type": "checkbox", "id": "show_heading_accent", "label": "Show heading accent", "default": true },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#fbf5ee" },
+    { "type": "color", "id": "card_background", "label": "Combo card background", "default": "#fffaf2" },
+    { "type": "color", "id": "product_card_background", "label": "Product card background", "default": "#fffdf9" },
+    { "type": "color", "id": "heading_color", "label": "Heading, price and product title color", "default": "#9b2d32" },
+    { "type": "color", "id": "text_color", "label": "Combo title text color", "default": "#191512" },
+    { "type": "color", "id": "muted_text_color", "label": "Body and compare price color", "default": "#737b8f" },
+    { "type": "color", "id": "accent_color", "label": "Heading accent color", "default": "#c99739" },
+    { "type": "color", "id": "badge_background", "label": "Badge background", "default": "#ad323c" },
+    { "type": "color", "id": "badge_text_color", "label": "Badge text color", "default": "#ffffff" },
+    { "type": "color", "id": "button_background", "label": "Button background", "default": "#c99739" },
+    { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#ffffff" },
+    { "type": "range", "id": "max_width", "label": "Content max width", "min": 640, "max": 1400, "step": 20, "unit": "px", "default": 940 },
+    { "type": "range", "id": "mobile_padding_top", "label": "Mobile top padding", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "Mobile bottom padding", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "desktop_padding_top", "label": "Desktop top padding", "min": 0, "max": 220, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "desktop_padding_bottom", "label": "Desktop bottom padding", "min": 0, "max": 220, "step": 4, "unit": "px", "default": 96 }
+  ],
+  "blocks": [
+    {
+      "type": "combo",
+      "name": "Combo card",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product for price/link/add to cart" },
+        { "type": "image_picker", "id": "image", "label": "Image override" },
+        { "type": "text", "id": "badge_text", "label": "Badge text", "default": "HOT SELLING COMBO" },
+        { "type": "text", "id": "title", "label": "Product name override", "default": "FESTIVE HERITAGE HAMPER" },
+        { "type": "richtext", "id": "description", "label": "Description", "default": "<p>A curated blend of premium Tea, Spices and Handpicked Dry Fruits for special occasions.</p>" },
+        { "type": "text", "id": "compare_at_price_text", "label": "Compare-at amount override", "default": "₹2,499.00" },
+        { "type": "text", "id": "price_text", "label": "Sale amount override", "default": "₹1,999.00" },
+        {
+          "type": "select",
+          "id": "button_action",
+          "label": "Button action",
+          "options": [
+            { "value": "add_to_cart", "label": "Add selected product to cart" },
+            { "value": "link", "label": "Open link/product page" }
+          ],
+          "default": "add_to_cart"
+        },
+        { "type": "text", "id": "button_label", "label": "Button text", "default": "ADD TO CART" },
+        { "type": "url", "id": "link", "label": "Link override" }
+      ]
+    },
+    {
+      "type": "side_product",
+      "name": "Product card",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product for price/link/add to cart" },
+        { "type": "image_picker", "id": "image", "label": "Image override" },
+        { "type": "text", "id": "title", "label": "Product name override", "default": "DV GOLD TEA" },
+        { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Premium quality tea blend</p>" },
+        { "type": "text", "id": "price_text", "label": "Amount override", "default": "₹320.00" },
+        {
+          "type": "select",
+          "id": "button_action",
+          "label": "Button action",
+          "options": [
+            { "value": "add_to_cart", "label": "Add selected product to cart" },
+            { "value": "link", "label": "Open link/product page" }
+          ],
+          "default": "add_to_cart"
+        },
+        { "type": "text", "id": "button_label", "label": "Button text", "default": "+" },
+        { "type": "url", "id": "link", "label": "Link override" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DV Gold seasonal specials",
+      "blocks": [
+        { "type": "combo" },
+        { "type": "side_product" },
+        { "type": "side_product" }
+      ]
+    }
+  ]
+}
+{% endschema %}
