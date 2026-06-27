@@ -1,0 +1,473 @@
+{% liquid
+  assign section_anchor = 'dv-gold-all-products-' | append: section.id
+  assign products_collection = section.settings.collection
+  assign max_products = section.settings.max_products
+  assign all_link = section.settings.all_link
+  if all_link == blank and products_collection != blank
+    assign all_link = products_collection.url
+  endif
+  assign filter_link = section.settings.filter_link
+  if filter_link == blank and products_collection != blank
+    assign filter_link = products_collection.url
+  endif
+%}
+
+<section
+  id="{{ section_anchor }}"
+  class="dv-all-products color-{{ section.settings.color_scheme }}"
+  style="
+    --dv-all-bg: {{ section.settings.background_color }};
+    --dv-all-heading: {{ section.settings.heading_color }};
+    --dv-all-text: {{ section.settings.text_color }};
+    --dv-all-accent: {{ section.settings.accent_color }};
+    --dv-all-card-bg: {{ section.settings.card_background }};
+    --dv-all-image-bg: {{ section.settings.image_background }};
+    --dv-all-card-width-desktop: {{ section.settings.desktop_card_width }}px;
+    --dv-all-gap: {{ section.settings.card_gap }}px;
+    --dv-all-max-width: {{ section.settings.max_width }}px;
+    --dv-all-padding-top-mobile: {{ section.settings.mobile_padding_top }}px;
+    --dv-all-padding-bottom-mobile: {{ section.settings.mobile_padding_bottom }}px;
+    --dv-all-padding-top-desktop: {{ section.settings.desktop_padding_top }}px;
+    --dv-all-padding-bottom-desktop: {{ section.settings.desktop_padding_bottom }}px;
+    --dv-all-scroll-speed: {{ section.settings.endless_scroll_speed }};
+  "
+>
+  <div class="dv-all-products__inner">
+    <div class="dv-all-products__header">
+      {% if section.settings.heading != blank %}
+        <h2 class="dv-all-products__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      <div class="dv-all-products__actions" aria-label="{{ section.settings.heading | escape }} navigation">
+        {% if section.settings.filter_label != blank %}
+          <a class="dv-all-products__action" href="{{ filter_link | default: '#' }}">{{ section.settings.filter_label }}</a>
+        {% endif %}
+        {% if section.settings.all_label != blank %}
+          <a class="dv-all-products__action" href="{{ all_link | default: '#' }}">{{ section.settings.all_label }}</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div
+      class="dv-all-products__carousel"
+      role="list"
+      aria-label="{{ section.settings.heading | escape }}"
+      data-dv-all-products-track
+      data-endless-scroll="{{ section.settings.enable_endless_scroll }}"
+      data-scroll-speed="{{ section.settings.endless_scroll_speed }}"
+    >
+      {% if products_collection != blank and products_collection.products_count > 0 %}
+        {% for product in products_collection.products limit: max_products %}
+          {% liquid
+            assign product_image = product.featured_image
+            assign product_description = product.description | strip_html | truncate: section.settings.description_length
+            assign selected_variant = product.selected_or_first_available_variant
+          %}
+          <article class="dv-all-products__card" role="listitem">
+            <a class="dv-all-products__image-link" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+              <span class="dv-all-products__view-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M12 5.5c4.2 0 7.5 3.6 8.7 5.2.6.8.6 1.8 0 2.6-1.2 1.6-4.5 5.2-8.7 5.2s-7.5-3.6-8.7-5.2a2.1 2.1 0 0 1 0-2.6C4.5 9.1 7.8 5.5 12 5.5Zm0 2c-3.2 0-6 2.8-7.1 4.1a.6.6 0 0 0 0 .8c1 1.3 3.9 4.1 7.1 4.1s6-2.8 7.1-4.1a.6.6 0 0 0 0-.8c-1-1.3-3.9-4.1-7.1-4.1Zm0 2.1a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8Z" />
+                </svg>
+              </span>
+
+              {% if product_image != blank %}
+                {{
+                  product_image
+                  | image_url: width: 700
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '240, 320, 420, 560, 700',
+                    sizes: '(min-width: 990px) 220px, 42vw',
+                    class: 'dv-all-products__image',
+                    alt: product_image.alt
+                }}
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: 'dv-all-products__placeholder' }}
+              {% endif %}
+            </a>
+
+            <div class="dv-all-products__body">
+              <h3 class="dv-all-products__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+              {% if section.settings.show_description and product_description != blank %}
+                <p class="dv-all-products__description">{{ product_description }}</p>
+              {% endif %}
+              <div class="dv-all-products__footer">
+                <p class="dv-all-products__price">{{ product.price | money }}</p>
+                {% if section.settings.show_quick_add %}
+                  {% form 'product', product, class: 'dv-all-products__form' %}
+                    <input type="hidden" name="id" value="{{ selected_variant.id }}">
+                    <button
+                      class="dv-all-products__add"
+                      type="submit"
+                      {% unless selected_variant.available %}disabled{% endunless %}
+                      aria-label="Add {{ product.title | escape }} to cart"
+                    >
+                      <span aria-hidden="true">+</span>
+                    </button>
+                  {% endform %}
+                {% endif %}
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      {% else %}
+        {% for i in (1..4) %}
+          <article class="dv-all-products__card dv-all-products__card--placeholder" role="listitem">
+            <div class="dv-all-products__image-link">
+              {{ 'product-1' | placeholder_svg_tag: 'dv-all-products__placeholder' }}
+            </div>
+            <div class="dv-all-products__body">
+              <h3 class="dv-all-products__title">Product title</h3>
+              <p class="dv-all-products__description">Choose a Shopify collection to show products here.</p>
+              <div class="dv-all-products__footer">
+                <p class="dv-all-products__price">{{ 0 | money }}</p>
+                <button class="dv-all-products__add" type="button" disabled><span aria-hidden="true">+</span></button>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #{{ section_anchor }} {
+    background: var(--dv-all-bg);
+    color: var(--dv-all-text);
+    padding-block: var(--dv-all-padding-top-mobile) var(--dv-all-padding-bottom-mobile);
+    overflow: hidden;
+  }
+
+  #{{ section_anchor }} .dv-all-products__inner {
+    width: min(100% - 32px, var(--dv-all-max-width));
+    margin-inline: auto;
+  }
+
+  #{{ section_anchor }} .dv-all-products__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-block-end: 32px;
+  }
+
+  #{{ section_anchor }} .dv-all-products__heading {
+    margin: 0;
+    color: var(--dv-all-heading);
+    font-family: var(--font-heading--family);
+    font-size: clamp(2.8rem, 8vw, 4.6rem);
+    font-weight: 700;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  #{{ section_anchor }} .dv-all-products__actions {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    padding-block-start: 8px;
+    white-space: nowrap;
+  }
+
+  #{{ section_anchor }} .dv-all-products__action {
+    color: var(--dv-all-accent);
+    font-size: 1.6rem;
+    line-height: 1;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  #{{ section_anchor }} .dv-all-products__carousel {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--dv-all-gap);
+    padding: 1px 2px 12px;
+  }
+
+  #{{ section_anchor }} .dv-all-products__card {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    background: var(--dv-all-card-bg);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 2px;
+    padding: 14px 14px 15px;
+    box-shadow: 0 1px 2px rgba(70, 45, 20, 0.04);
+  }
+
+  #{{ section_anchor }} .dv-all-products__image-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 7px;
+    background: var(--dv-all-image-bg);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #{{ section_anchor }} .dv-all-products__image,
+  #{{ section_anchor }} .dv-all-products__placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  #{{ section_anchor }} .dv-all-products__view-icon {
+    position: absolute;
+    z-index: 1;
+    top: 6px;
+    right: 6px;
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+    color: #111827;
+  }
+
+  #{{ section_anchor }} .dv-all-products__view-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  #{{ section_anchor }} .dv-all-products__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding-block-start: 20px;
+  }
+
+  #{{ section_anchor }} .dv-all-products__title {
+    margin: 0 0 7px;
+    color: var(--dv-all-heading);
+    font-family: var(--font-heading--family);
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  #{{ section_anchor }} .dv-all-products__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #{{ section_anchor }} .dv-all-products__description {
+    margin: 0 0 18px;
+    color: var(--dv-all-text);
+    font-size: 1.5rem;
+    line-height: 1.28;
+  }
+
+  #{{ section_anchor }} .dv-all-products__footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    margin-block-start: auto;
+  }
+
+  #{{ section_anchor }} .dv-all-products__price {
+    margin: 0;
+    color: var(--dv-all-heading);
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  #{{ section_anchor }} .dv-all-products__form {
+    margin: 0;
+  }
+
+  #{{ section_anchor }} .dv-all-products__add {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 14px;
+    background: var(--dv-all-accent);
+    color: #fff;
+    cursor: pointer;
+    font-size: 2rem;
+    line-height: 1;
+    box-shadow: 0 3px 8px rgba(71, 53, 10, 0.2);
+  }
+
+  #{{ section_anchor }} .dv-all-products__add:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
+  #{{ section_anchor }} .dv-all-products__card.is-clone {
+    pointer-events: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    #{{ section_anchor }} .dv-all-products__carousel {
+      --dv-all-gap: clamp(18px, 6vw, 30px);
+    }
+
+    #{{ section_anchor }} .dv-all-products__card {
+      min-width: 0;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    #{{ section_anchor }} {
+      padding-block: var(--dv-all-padding-top-desktop) var(--dv-all-padding-bottom-desktop);
+    }
+
+    #{{ section_anchor }} .dv-all-products__carousel {
+      display: flex;
+      gap: var(--dv-all-gap);
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 2px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #{{ section_anchor }} .dv-all-products__carousel::-webkit-scrollbar {
+      height: 0;
+    }
+
+    #{{ section_anchor }} .dv-all-products__card {
+      flex: 0 0 var(--dv-all-card-width-desktop);
+      scroll-snap-align: start;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const section = document.getElementById({{ section_anchor | json }});
+    if (!section) return;
+
+    const track = section.querySelector('[data-dv-all-products-track]');
+    if (!track || track.dataset.endlessScroll !== 'true') return;
+
+    const desktopQuery = window.matchMedia('(min-width: 750px)');
+    let frameId = null;
+    let lastTime = null;
+    let isPaused = false;
+
+    const getSpeed = () => Number(track.dataset.scrollSpeed || 30);
+
+    const removeClones = () => {
+      track.querySelectorAll('.is-clone').forEach((clone) => clone.remove());
+    };
+
+    const createClones = () => {
+      if (track.querySelector('.is-clone')) return;
+
+      Array.from(track.children).forEach((card) => {
+        if (!(card instanceof HTMLElement) || card.classList.contains('is-clone')) return;
+
+        const clone = card.cloneNode(true);
+        if (!(clone instanceof HTMLElement)) return;
+
+        clone.classList.add('is-clone');
+        clone.setAttribute('aria-hidden', 'true');
+        clone.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
+        clone.querySelectorAll('a, button, input, select, textarea').forEach((element) => {
+          element.setAttribute('tabindex', '-1');
+        });
+        track.appendChild(clone);
+      });
+    };
+
+    const stop = () => {
+      if (frameId) window.cancelAnimationFrame(frameId);
+      frameId = null;
+      lastTime = null;
+    };
+
+    const tick = (time) => {
+      if (!desktopQuery.matches) {
+        stop();
+        removeClones();
+        track.scrollLeft = 0;
+        return;
+      }
+
+      if (!lastTime) lastTime = time;
+      const delta = time - lastTime;
+      lastTime = time;
+
+      if (!isPaused) {
+        track.scrollLeft += (getSpeed() * delta) / 1000;
+        const resetPoint = track.scrollWidth / 2;
+
+        if (resetPoint > 0 && track.scrollLeft >= resetPoint) {
+          track.scrollLeft -= resetPoint;
+        }
+      }
+
+      frameId = window.requestAnimationFrame(tick);
+    };
+
+    const start = () => {
+      if (!desktopQuery.matches) {
+        removeClones();
+        track.scrollLeft = 0;
+        return;
+      }
+
+      createClones();
+      if (!frameId) frameId = window.requestAnimationFrame(tick);
+    };
+
+    track.addEventListener('mouseenter', () => { isPaused = true; });
+    track.addEventListener('mouseleave', () => { isPaused = false; });
+    track.addEventListener('focusin', () => { isPaused = true; });
+    track.addEventListener('focusout', () => { isPaused = false; });
+    desktopQuery.addEventListener('change', start);
+
+    start();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "DV Gold all products",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "ALL PRODUCT" },
+    { "type": "text", "id": "filter_label", "label": "Filter label", "default": "Filter" },
+    { "type": "url", "id": "filter_link", "label": "Filter link" },
+    { "type": "text", "id": "all_label", "label": "All label", "default": "All" },
+    { "type": "url", "id": "all_link", "label": "All link" },
+    { "type": "range", "id": "max_products", "label": "Maximum products", "min": 2, "max": 24, "step": 1, "default": 8 },
+    { "type": "checkbox", "id": "show_description", "label": "Show product description", "default": true },
+    { "type": "range", "id": "description_length", "label": "Description character limit", "min": 30, "max": 120, "step": 5, "default": 55 },
+    { "type": "checkbox", "id": "show_quick_add", "label": "Show quick add button", "default": true },
+    { "type": "checkbox", "id": "enable_endless_scroll", "label": "Enable endless desktop scroll", "default": true },
+    { "type": "range", "id": "endless_scroll_speed", "label": "Endless scroll speed", "min": 10, "max": 80, "step": 5, "unit": "px/s", "default": 30 },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#fbf1e4" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#ffffff" },
+    { "type": "color", "id": "image_background", "label": "Image background", "default": "#f7ecde" },
+    { "type": "color", "id": "heading_color", "label": "Heading and price", "default": "#9b2d32" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#4d4038" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#c99700" },
+    { "type": "range", "id": "desktop_card_width", "label": "Desktop card width", "min": 180, "max": 360, "step": 10, "unit": "px", "default": 240 },
+    { "type": "range", "id": "card_gap", "label": "Card gap", "min": 8, "max": 48, "step": 2, "unit": "px", "default": 30 },
+    { "type": "range", "id": "max_width", "label": "Content max width", "min": 900, "max": 1600, "step": 20, "unit": "px", "default": 1240 },
+    { "type": "range", "id": "mobile_padding_top", "label": "Mobile padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "Mobile padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "desktop_padding_top", "label": "Desktop padding top", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "desktop_padding_bottom", "label": "Desktop padding bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 }
+  ],
+  "presets": [
+    { "name": "DV Gold all products" }
+  ]
+}
+{% endschema %}
