@@ -332,6 +332,27 @@
         "features_marquee_dot_color": "#c99700"
       }
     },
+    "dv_gold_history": {
+      "type": "dv-gold-history",
+      "name": "DV Gold history",
+      "settings": {
+        "heading": "THE DV HISTORY",
+        "image_alt": "DV Groups history photograph",
+        "text": "<p>DV Groups represents a legacy built on trust, quality, and consistency. With roots dating back to 1957, the brand has grown from traditional tradingorganization into a brand of choice in premium food products.<br/><br/>Our philosophy is simple—deliver authentic products that preserve their natural essence while meeting the evolving needs of today’s consumers<br/></p>",
+        "color_scheme": "scheme-1",
+        "background_color": "#fbf5ee",
+        "heading_color": "#9b2d32",
+        "text_color": "#191512",
+        "image_background": "#fffaf2",
+        "image_border_color": "#f0dfbf",
+        "image_radius": 10,
+        "max_width": 1180,
+        "mobile_padding_top": 48,
+        "mobile_padding_bottom": 84,
+        "desktop_padding_top": 72,
+        "desktop_padding_bottom": 104
+      }
+    },
     "dv_gold_community_carousel": {
       "type": "dv-gold-community-carousel",
       "blocks": {
@@ -394,27 +415,6 @@
         "desktop_padding_bottom": 88
       }
     },
-    "dv_gold_history": {
-      "type": "dv-gold-history",
-      "name": "DV Gold history",
-      "settings": {
-        "heading": "THE DV HISTORY",
-        "image_alt": "DV Groups history photograph",
-        "text": "<p>DV Groups represents a legacy built on trust, quality, and consistency. With roots dating back to 1957, the brand has grown from traditional tradingorganization into a brand of choice in premium food products.<br/><br/>Our philosophy is simple—deliver authentic products that preserve their natural essence while meeting the evolving needs of today’s consumers<br/></p>",
-        "color_scheme": "scheme-1",
-        "background_color": "#fbf5ee",
-        "heading_color": "#9b2d32",
-        "text_color": "#191512",
-        "image_background": "#fffaf2",
-        "image_border_color": "#f0dfbf",
-        "image_radius": 10,
-        "max_width": 1180,
-        "mobile_padding_top": 48,
-        "mobile_padding_bottom": 84,
-        "desktop_padding_top": 72,
-        "desktop_padding_bottom": 104
-      }
-    },
     "dv_gold_bulk_inquiries": {
       "type": "dv-gold-bulk-inquiries",
       "name": "DV Gold bulk inquiries",
@@ -446,9 +446,9 @@
     "dv_gold_seasonal_specials",
     "dv_gold_promise",
     "product_list_fa6P9H",
-    "dv_gold_bulk_inquiries",
     "dv_gold_features_marquee",
     "dv_gold_history",
-    "dv_gold_community_carousel"
+    "dv_gold_community_carousel",
+    "dv_gold_bulk_inquiries"
   ]
 }
