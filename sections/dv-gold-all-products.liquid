@@ -30,6 +30,11 @@
     --dv-all-padding-top-desktop: {{ section.settings.desktop_padding_top }}px;
     --dv-all-padding-bottom-desktop: {{ section.settings.desktop_padding_bottom }}px;
     --dv-all-scroll-speed: {{ section.settings.endless_scroll_speed }};
+    --dv-history-bg: {{ section.settings.history_background }};
+    --dv-history-heading: {{ section.settings.history_heading_color }};
+    --dv-history-text: {{ section.settings.history_text_color }};
+    --dv-history-card-bg: {{ section.settings.history_card_background }};
+    --dv-history-card-border: {{ section.settings.history_card_border }};
   "
 >
   <div class="dv-all-products__inner">
@@ -294,6 +299,34 @@
   @media screen and (min-width: 750px) {
     #{{ section_anchor }} {
       padding-block: var(--dv-all-padding-top-desktop) var(--dv-all-padding-bottom-desktop);
+    }
+
+
+
+    #{{ section_anchor }} .dv-all-products__history {
+      padding-block: {{ section.settings.history_padding_top_desktop }}px {{ section.settings.history_padding_bottom_desktop }}px;
+    }
+
+    #{{ section_anchor }} .dv-all-products__history-heading {
+      margin-block-end: 42px;
+    }
+
+    #{{ section_anchor }} .dv-all-products__history-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: clamp(40px, 6vw, 92px);
+    }
+
+    #{{ section_anchor }} .dv-all-products__history-image-card {
+      width: 100%;
+      max-width: 600px;
+      justify-self: end;
+    }
+
+    #{{ section_anchor }} .dv-all-products__history-body {
+      max-width: 560px;
+      text-align: left;
     }
 
     #{{ section_anchor }} .dv-all-products__carousel {
