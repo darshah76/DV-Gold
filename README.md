@@ -13,6 +13,23 @@ Horizon is the flagship of a new generation of first party Shopify themes. It in
 - **Server-rendered:** HTML must be rendered by Shopify servers using Liquid. Business logic and platform primitives such as translations and money formatting don't belong on the client. Async and on-demand rendering of parts of the page is OK, but we do it sparingly as a progressive enhancement.
 - **Functional, not pixel-perfect:** The Web doesn't require each page to be rendered pixel-perfect by each browser engine. Using semantic markup, progressive enhancement, and clever design, we ensure that themes remain functional regardless of the browser.
 
+
+## DV Gold Shopify GitHub integration
+
+This repository is already structured as a Shopify theme root. Shopify should be connected to the repository root, not a nested subfolder. The required Shopify theme directories are present at the top level:
+
+- `assets/`
+- `config/`
+- `layout/`
+- `locales/`
+- `sections/`
+- `snippets/`
+- `templates/`
+
+There is no nested `theme/`, `shopify-theme/`, or `src/` directory containing a separate theme copy. There is also no `package.json`, Vite, Tailwind, SCSS, or other build pipeline in this repository, so Shopify reads the Liquid, JSON, CSS, JavaScript, and asset files directly from these root folders. No build command is required before pushing theme changes.
+
+If Shopify preview does not update after pushing changes, verify that the Shopify GitHub integration is connected to this repository and branch, then reconnect or resync the GitHub theme from Shopify admin if needed.
+
 ## Getting started
 
 We recommend using the Skeleton Theme as a starting point for a theme development project. [Learn more on Shopify.dev](https://shopify.dev/themes/getting-started/create).
