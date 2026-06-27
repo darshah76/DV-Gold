@@ -9,117 +9,6 @@
  */
 {
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
-      "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "text_color": "{{ settings.color_palette.background }}",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-custom",
-            "custom_button_background": "rgba(0, 0, 0, 0)",
-            "custom_button_text": "{{ settings.color_palette.background }}",
-            "custom_button_border": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
-      ],
-      "name": "t:names.hero",
-      "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
-      }
-    },
-    "product_list_fa6P9H": {
-      "type": "dv-gold-all-products",
-      "name": "DV Gold all products",
-      "settings": {
-        "collection": "all",
-        "heading": "ALL PRODUCT",
-        "filter_label": "Filter",
-        "filter_link": "shopify://collections/all",
-        "all_label": "All",
-        "all_link": "shopify://collections/all",
-        "max_products": 8,
-        "show_description": true,
-        "description_length": 55,
-        "show_quick_add": true,
-        "enable_endless_scroll": true,
-        "endless_scroll_speed": 30,
-        "color_scheme": "scheme-1",
-        "background_color": "#fbf1e4",
-        "card_background": "#ffffff",
-        "image_background": "#f7ecde",
-        "heading_color": "#9b2d32",
-        "text_color": "#4d4038",
-        "accent_color": "#c99700",
-        "desktop_card_width": 240,
-        "card_gap": 30,
-        "max_width": 1240,
-        "mobile_padding_top": 48,
-        "mobile_padding_bottom": 48,
-        "desktop_padding_top": 72,
-        "desktop_padding_bottom": 72
-      }
-    },
     "dv_gold_hero_carousel": {
       "type": "dv-gold-hero-carousel",
       "blocks": {
@@ -249,17 +138,17 @@
         "card_background": "#fbefd9",
         "button_background": "#c99739",
         "button_text_color": "#ffffff",
-        "max_width": 760,
-        "mobile_padding_top": 120,
-        "mobile_padding_bottom": 72,
-        "desktop_padding_top": 120,
-        "desktop_padding_bottom": 96,
         "connector_curve": 8,
         "connector_width": 32,
         "connector_height": 156,
         "connector_thickness": 11,
         "connector_dash_length": 18,
-        "connector_gap_length": 28
+        "connector_gap_length": 28,
+        "max_width": 760,
+        "mobile_padding_top": 120,
+        "mobile_padding_bottom": 72,
+        "desktop_padding_top": 120,
+        "desktop_padding_bottom": 96
       }
     },
     "dv_gold_seasonal_specials": {
@@ -272,8 +161,8 @@
             "badge_text": "HOT SELLING COMBO",
             "title": "FESTIVE HERITAGE HAMPER",
             "description": "<p>A curated blend of premium Tea, Spices and Handpicked Dry Fruits for special occasions.</p>",
-            "compare_at_price_text": "\u20b92,499.00",
-            "price_text": "\u20b91,999.00",
+            "compare_at_price_text": "₹2,499.00",
+            "price_text": "₹1,999.00",
             "button_action": "link",
             "button_label": "ADD TO CART",
             "link": "shopify://collections/all"
@@ -285,7 +174,7 @@
             "product": "",
             "title": "DV GOLD TEA",
             "description": "<p>Premium quality tea blend</p>",
-            "price_text": "\u20b9320.00",
+            "price_text": "₹320.00",
             "button_action": "link",
             "button_label": "+",
             "link": "shopify://collections/all"
@@ -297,7 +186,7 @@
             "product": "",
             "title": "DV GOLD TEA",
             "description": "<p>Premium quality tea blend</p>",
-            "price_text": "\u20b9320.00",
+            "price_text": "₹320.00",
             "button_action": "link",
             "button_label": "+",
             "link": "shopify://collections/all"
@@ -316,6 +205,7 @@
         "color_scheme": "scheme-1",
         "background_color": "#fbf5ee",
         "card_background": "#fffaf2",
+        "product_card_background": "#fffdf9",
         "heading_color": "#9b2d32",
         "text_color": "#191512",
         "muted_text_color": "#737b8f",
@@ -331,8 +221,7 @@
         "mobile_padding_top": 72,
         "mobile_padding_bottom": 72,
         "desktop_padding_top": 96,
-        "desktop_padding_bottom": 96,
-        "product_card_background": "#fffdf9"
+        "desktop_padding_bottom": 96
       }
     },
     "dv_gold_promise": {
@@ -359,7 +248,7 @@
           "settings": {
             "icon": "badge",
             "heading": "CONSISTENT TASTE & QUALITY",
-            "text": "<p>Free from unnecessary additives\u2014only honest ingredients you can trust.</p>"
+            "text": "<p>Free from unnecessary additives—only honest ingredients you can trust.</p>"
           }
         },
         "promise_healthier": {
@@ -397,6 +286,123 @@
         "desktop_padding_bottom": 84
       }
     },
+    "hero_jVaWmY": {
+      "type": "hero",
+      "blocks": {
+        "text_YLPk4p": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<p>Browse our latest products</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "{{ settings.color_palette.background }}",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "button_H9gpTf": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Shop all",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button-custom",
+            "custom_button_background": "rgba(0,0,0,0)",
+            "custom_button_text": "{{ settings.color_palette.background }}",
+            "custom_button_border": "{{ settings.color_palette.background }}",
+            "link_text_color": "",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_YLPk4p",
+        "button_H9gpTf"
+      ],
+      "name": "t:names.hero",
+      "settings": {
+        "media_type_1": "image",
+        "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "media_type_1_mobile": "image",
+        "media_type_2_mobile": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "space-between",
+        "vertical_alignment": "flex-end",
+        "align_baseline": true,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "flex-end",
+        "gap": 24,
+        "section_width": "page-width",
+        "section_height": "medium",
+        "section_height_custom": 50,
+        "background_color": "",
+        "toggle_overlay": true,
+        "overlay_color": "#12121266",
+        "overlay_style": "solid",
+        "gradient_direction": "to bottom",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "padding-block-start": 100,
+        "padding-block-end": 72
+      }
+    },
+    "product_list_fa6P9H": {
+      "type": "dv-gold-all-products",
+      "name": "DV Gold all products",
+      "settings": {
+        "collection": "all",
+        "heading": "ALL PRODUCT",
+        "filter_label": "Filter",
+        "filter_link": "shopify://collections/all",
+        "all_label": "All",
+        "all_link": "shopify://collections/all",
+        "max_products": 8,
+        "show_description": true,
+        "description_length": 55,
+        "show_quick_add": true,
+        "enable_endless_scroll": true,
+        "endless_scroll_speed": 30,
+        "color_scheme": "scheme-1",
+        "background_color": "#fbf1e4",
+        "card_background": "#ffffff",
+        "image_background": "#f7ecde",
+        "heading_color": "#9b2d32",
+        "text_color": "#4d4038",
+        "accent_color": "#c99700",
+        "desktop_card_width": 240,
+        "card_gap": 30,
+        "max_width": 1240,
+        "mobile_padding_top": 48,
+        "mobile_padding_bottom": 48,
+        "desktop_padding_top": 72,
+        "desktop_padding_bottom": 72
+      }
+    },
     "dv_gold_features_marquee": {
       "type": "dv-gold-features-marquee",
       "name": "DV Gold features marquee",
@@ -404,11 +410,11 @@
         "features_marquee_text": "ETHICALLY SOURCED,ARTISANAL BLEND,PREMIUM QUALITY",
         "features_marquee_accessibility_label": "Product features",
         "features_marquee_speed": 18,
+        "vertical_padding": 28,
+        "color_scheme": "scheme-1",
         "features_marquee_background": "#8b0008",
         "features_marquee_color": "#c99700",
-        "features_marquee_dot_color": "#c99700",
-        "vertical_padding": 28,
-        "color_scheme": "scheme-1"
+        "features_marquee_dot_color": "#c99700"
       }
     },
     "dv_gold_history": {
@@ -416,9 +422,8 @@
       "name": "DV Gold history",
       "settings": {
         "heading": "THE DV HISTORY",
-        "image": "",
         "image_alt": "DV Groups history photograph",
-        "text": "<p>DV Groups represents a legacy built on trust, quality, and consistency. With roots dating back to 1957, the brand has grown from traditional trading organization into a brand of choice in premium food products.</p><p>Our philosophy is simple\u2014deliver authentic products that preserve their natural essence while meeting the evolving needs of today\u2019s consumers.</p>",
+        "text": "<p>DV Groups represents a legacy built on trust, <br/>quality, and consistency. With roots dating back to <br/>1957, the brand has grown from traditional trading<br/>organization into a brand of choice in premium food products.<br/><br/>Our philosophy is simple—deliver authentic products <br/>that preserve their natural essence while meeting the evolving needs of today’s consumers<br/></p>",
         "color_scheme": "scheme-1",
         "background_color": "#fbf5ee",
         "heading_color": "#9b2d32",
