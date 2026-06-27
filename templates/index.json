@@ -117,7 +117,14 @@
         "mobile_padding_top": 48,
         "mobile_padding_bottom": 48,
         "desktop_padding_top": 72,
-        "desktop_padding_bottom": 72
+        "desktop_padding_bottom": 72,
+        "features_marquee_text": "ETHICALLY SOURCED,ARTISANAL BLEND,PREMIUM QUALITY",
+        "features_marquee_accessibility_label": "Product features",
+        "features_marquee_speed": 18,
+        "features_marquee_margin_top": 44,
+        "features_marquee_background": "#8b0008",
+        "features_marquee_color": "#c99700",
+        "features_marquee_dot_color": "#c99700"
       }
     },
     "dv_gold_hero_carousel": {

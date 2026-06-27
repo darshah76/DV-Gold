@@ -97,6 +97,25 @@
       {% endif %}
     </div>
   </div>
+
+  {% if section.settings.features_marquee_text != blank %}
+    {% assign marquee_features = section.settings.features_marquee_text | split: ',' %}
+    <div class="dv-all-products__features-marquee" aria-label="{{ section.settings.features_marquee_accessibility_label | escape }}">
+      <div class="dv-all-products__features-track">
+        {% for repeat in (1..2) %}
+          <div class="dv-all-products__features-group" aria-hidden="{% if repeat == 1 %}false{% else %}true{% endif %}">
+            {% for feature in marquee_features %}
+              {% assign stripped_feature = feature | strip %}
+              {% if stripped_feature != blank %}
+                <span class="dv-all-products__feature-text">{{ stripped_feature }}</span>
+                <span class="dv-all-products__feature-dot" aria-hidden="true">•</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
 </section>
 
 <style>
@@ -278,6 +297,58 @@
     pointer-events: none;
   }
 
+  #{{ section_anchor }} .dv-all-products__features-marquee {
+    width: 100%;
+    margin-block-start: {{ section.settings.features_marquee_margin_top }}px;
+    overflow: hidden;
+    background: {{ section.settings.features_marquee_background }};
+    color: {{ section.settings.features_marquee_color }};
+  }
+
+  #{{ section_anchor }} .dv-all-products__features-track {
+    display: flex;
+    width: max-content;
+    animation: dv-all-products-features-marquee-{{ section.id }} {{ section.settings.features_marquee_speed }}s linear infinite;
+    will-change: transform;
+  }
+
+  #{{ section_anchor }} .dv-all-products__features-group {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    min-width: max-content;
+  }
+
+  #{{ section_anchor }} .dv-all-products__feature-text,
+  #{{ section_anchor }} .dv-all-products__feature-dot {
+    flex: 0 0 auto;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  #{{ section_anchor }} .dv-all-products__feature-text {
+    padding-block: 28px;
+    padding-inline: clamp(24px, 5vw, 52px);
+  }
+
+  #{{ section_anchor }} .dv-all-products__feature-dot {
+    color: {{ section.settings.features_marquee_dot_color }};
+    padding-inline: clamp(10px, 2vw, 18px);
+  }
+
+  @keyframes dv-all-products-features-marquee-{{ section.id }} {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+
   @media screen and (max-width: 749px) {
     #{{ section_anchor }} .dv-all-products__carousel {
       --dv-all-gap: clamp(18px, 6vw, 30px);
@@ -349,6 +420,10 @@
       #{{ section_anchor }} .dv-all-products__card.is-clone {
         display: none;
       }
+
+      #{{ section_anchor }} .dv-all-products__features-track {
+        animation: none;
+      }
     }
   }
 </style>
@@ -370,6 +445,13 @@
     { "type": "checkbox", "id": "show_quick_add", "label": "Show quick add button", "default": true },
     { "type": "checkbox", "id": "enable_endless_scroll", "label": "Enable endless desktop scroll", "default": true },
     { "type": "range", "id": "endless_scroll_speed", "label": "Endless scroll duration", "min": 10, "max": 80, "step": 5, "unit": "s", "default": 30 },
+    { "type": "text", "id": "features_marquee_text", "label": "Features marquee text", "default": "ETHICALLY SOURCED,ARTISANAL BLEND,PREMIUM QUALITY" },
+    { "type": "text", "id": "features_marquee_accessibility_label", "label": "Features marquee accessibility label", "default": "Product features" },
+    { "type": "range", "id": "features_marquee_speed", "label": "Features marquee duration", "min": 8, "max": 60, "step": 1, "unit": "s", "default": 18 },
+    { "type": "range", "id": "features_marquee_margin_top", "label": "Features marquee top spacing", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 44 },
+    { "type": "color", "id": "features_marquee_background", "label": "Features marquee background", "default": "#8b0008" },
+    { "type": "color", "id": "features_marquee_color", "label": "Features marquee text", "default": "#c99700" },
+    { "type": "color", "id": "features_marquee_dot_color", "label": "Features marquee dot", "default": "#c99700" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
     { "type": "color", "id": "background_color", "label": "Background", "default": "#fbf1e4" },
     { "type": "color", "id": "card_background", "label": "Card background", "default": "#ffffff" },
