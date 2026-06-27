@@ -22,7 +22,6 @@
     --dv-all-accent: {{ section.settings.accent_color }};
     --dv-all-card-bg: {{ section.settings.card_background }};
     --dv-all-image-bg: {{ section.settings.image_background }};
-    --dv-all-card-width-mobile: {{ section.settings.mobile_card_width }}vw;
     --dv-all-card-width-desktop: {{ section.settings.desktop_card_width }}px;
     --dv-all-gap: {{ section.settings.card_gap }}px;
     --dv-all-max-width: {{ section.settings.max_width }}px;
@@ -173,23 +172,13 @@
   }
 
   #{{ section_anchor }} .dv-all-products__carousel {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--dv-all-gap);
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: 2px;
     padding: 1px 2px 12px;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  #{{ section_anchor }} .dv-all-products__carousel::-webkit-scrollbar {
-    height: 0;
   }
 
   #{{ section_anchor }} .dv-all-products__card {
-    flex: 0 0 min(var(--dv-all-card-width-mobile), 222px);
-    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     min-height: 100%;
@@ -309,13 +298,38 @@
     opacity: 0.45;
   }
 
+  @media screen and (max-width: 749px) {
+    #{{ section_anchor }} .dv-all-products__carousel {
+      --dv-all-gap: clamp(18px, 6vw, 30px);
+    }
+
+    #{{ section_anchor }} .dv-all-products__card {
+      min-width: 0;
+    }
+  }
+
   @media screen and (min-width: 750px) {
     #{{ section_anchor }} {
       padding-block: var(--dv-all-padding-top-desktop) var(--dv-all-padding-bottom-desktop);
     }
 
+    #{{ section_anchor }} .dv-all-products__carousel {
+      display: flex;
+      gap: var(--dv-all-gap);
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 2px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #{{ section_anchor }} .dv-all-products__carousel::-webkit-scrollbar {
+      height: 0;
+    }
+
     #{{ section_anchor }} .dv-all-products__card {
-      flex-basis: var(--dv-all-card-width-desktop);
+      flex: 0 0 var(--dv-all-card-width-desktop);
+      scroll-snap-align: start;
     }
   }
 </style>
@@ -341,7 +355,6 @@
     { "type": "color", "id": "heading_color", "label": "Heading and price", "default": "#9b2d32" },
     { "type": "color", "id": "text_color", "label": "Text", "default": "#4d4038" },
     { "type": "color", "id": "accent_color", "label": "Accent", "default": "#c99700" },
-    { "type": "range", "id": "mobile_card_width", "label": "Mobile card width", "min": 38, "max": 90, "step": 1, "unit": "vw", "default": 42 },
     { "type": "range", "id": "desktop_card_width", "label": "Desktop card width", "min": 180, "max": 360, "step": 10, "unit": "px", "default": 240 },
     { "type": "range", "id": "card_gap", "label": "Card gap", "min": 8, "max": 48, "step": 2, "unit": "px", "default": 30 },
     { "type": "range", "id": "max_width", "label": "Content max width", "min": 900, "max": 1600, "step": 20, "unit": "px", "default": 1240 },

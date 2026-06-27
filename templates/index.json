@@ -109,7 +109,6 @@
         "heading_color": "#9b2d32",
         "text_color": "#4d4038",
         "accent_color": "#c99700",
-        "mobile_card_width": 42,
         "desktop_card_width": 240,
         "card_gap": 30,
         "max_width": 1240,
