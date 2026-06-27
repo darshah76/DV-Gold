@@ -58,59 +58,26 @@
     >
       {% if products_collection != blank and products_collection.products_count > 0 %}
         {% for product in products_collection.products limit: max_products %}
-          {% liquid
-            assign product_image = product.featured_image
-            assign product_description = product.description | strip_html | truncate: section.settings.description_length
-            assign selected_variant = product.selected_or_first_available_variant
+          {% render 'dv-gold-all-product-card',
+            product: product,
+            description_length: section.settings.description_length,
+            show_description: section.settings.show_description,
+            show_quick_add: section.settings.show_quick_add,
+            is_clone: false
           %}
-          <article class="dv-all-products__card" role="listitem">
-            <a class="dv-all-products__image-link" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
-              <span class="dv-all-products__view-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" focusable="false">
-                  <path d="M12 5.5c4.2 0 7.5 3.6 8.7 5.2.6.8.6 1.8 0 2.6-1.2 1.6-4.5 5.2-8.7 5.2s-7.5-3.6-8.7-5.2a2.1 2.1 0 0 1 0-2.6C4.5 9.1 7.8 5.5 12 5.5Zm0 2c-3.2 0-6 2.8-7.1 4.1a.6.6 0 0 0 0 .8c1 1.3 3.9 4.1 7.1 4.1s6-2.8 7.1-4.1a.6.6 0 0 0 0-.8c-1-1.3-3.9-4.1-7.1-4.1Zm0 2.1a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8Z" />
-                </svg>
-              </span>
-
-              {% if product_image != blank %}
-                {{
-                  product_image
-                  | image_url: width: 700
-                  | image_tag:
-                    loading: 'lazy',
-                    widths: '240, 320, 420, 560, 700',
-                    sizes: '(min-width: 990px) 220px, 42vw',
-                    class: 'dv-all-products__image',
-                    alt: product_image.alt
-                }}
-              {% else %}
-                {{ 'product-1' | placeholder_svg_tag: 'dv-all-products__placeholder' }}
-              {% endif %}
-            </a>
-
-            <div class="dv-all-products__body">
-              <h3 class="dv-all-products__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
-              {% if section.settings.show_description and product_description != blank %}
-                <p class="dv-all-products__description">{{ product_description }}</p>
-              {% endif %}
-              <div class="dv-all-products__footer">
-                <p class="dv-all-products__price">{{ product.price | money }}</p>
-                {% if section.settings.show_quick_add %}
-                  {% form 'product', product, class: 'dv-all-products__form' %}
-                    <input type="hidden" name="id" value="{{ selected_variant.id }}">
-                    <button
-                      class="dv-all-products__add"
-                      type="submit"
-                      {% unless selected_variant.available %}disabled{% endunless %}
-                      aria-label="Add {{ product.title | escape }} to cart"
-                    >
-                      <span aria-hidden="true">+</span>
-                    </button>
-                  {% endform %}
-                {% endif %}
-              </div>
-            </div>
-          </article>
         {% endfor %}
+
+        {% if section.settings.enable_endless_scroll %}
+          {% for product in products_collection.products limit: max_products %}
+            {% render 'dv-gold-all-product-card',
+              product: product,
+              description_length: section.settings.description_length,
+              show_description: section.settings.show_description,
+              show_quick_add: section.settings.show_quick_add,
+              is_clone: true
+            %}
+          {% endfor %}
+        {% endif %}
       {% else %}
         {% for i in (1..4) %}
           <article class="dv-all-products__card dv-all-products__card--placeholder" role="listitem">
@@ -307,6 +274,7 @@
   }
 
   #{{ section_anchor }} .dv-all-products__card.is-clone {
+    display: none;
     pointer-events: none;
   }
 
@@ -335,6 +303,18 @@
       -webkit-overflow-scrolling: touch;
     }
 
+    #{{ section_anchor }} .dv-all-products__carousel[data-endless-scroll='true'] {
+      width: max-content;
+      overflow: visible;
+      scroll-snap-type: none;
+      animation: dv-all-products-marquee-{{ section.id }} {{ section.settings.endless_scroll_speed }}s linear infinite;
+    }
+
+    #{{ section_anchor }} .dv-all-products__carousel[data-endless-scroll='true']:hover,
+    #{{ section_anchor }} .dv-all-products__carousel[data-endless-scroll='true']:focus-within {
+      animation-play-state: paused;
+    }
+
     #{{ section_anchor }} .dv-all-products__carousel::-webkit-scrollbar {
       height: 0;
     }
@@ -343,97 +323,36 @@
       flex: 0 0 var(--dv-all-card-width-desktop);
       scroll-snap-align: start;
     }
+
+    #{{ section_anchor }} .dv-all-products__card.is-clone {
+      display: flex;
+      scroll-snap-align: none;
+    }
+
+    @keyframes dv-all-products-marquee-{{ section.id }} {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(calc(-50% - (var(--dv-all-gap) / 2)));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #{{ section_anchor }} .dv-all-products__carousel[data-endless-scroll='true'] {
+        animation: none;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        width: auto;
+      }
+
+      #{{ section_anchor }} .dv-all-products__card.is-clone {
+        display: none;
+      }
+    }
   }
 </style>
 
-<script>
-  (() => {
-    const section = document.getElementById({{ section_anchor | json }});
-    if (!section) return;
-
-    const track = section.querySelector('[data-dv-all-products-track]');
-    if (!track || track.dataset.endlessScroll !== 'true') return;
-
-    const desktopQuery = window.matchMedia('(min-width: 750px)');
-    let frameId = null;
-    let lastTime = null;
-    let isPaused = false;
-
-    const getSpeed = () => Number(track.dataset.scrollSpeed || 30);
-
-    const removeClones = () => {
-      track.querySelectorAll('.is-clone').forEach((clone) => clone.remove());
-    };
-
-    const createClones = () => {
-      if (track.querySelector('.is-clone')) return;
-
-      Array.from(track.children).forEach((card) => {
-        if (!(card instanceof HTMLElement) || card.classList.contains('is-clone')) return;
-
-        const clone = card.cloneNode(true);
-        if (!(clone instanceof HTMLElement)) return;
-
-        clone.classList.add('is-clone');
-        clone.setAttribute('aria-hidden', 'true');
-        clone.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
-        clone.querySelectorAll('a, button, input, select, textarea').forEach((element) => {
-          element.setAttribute('tabindex', '-1');
-        });
-        track.appendChild(clone);
-      });
-    };
-
-    const stop = () => {
-      if (frameId) window.cancelAnimationFrame(frameId);
-      frameId = null;
-      lastTime = null;
-    };
-
-    const tick = (time) => {
-      if (!desktopQuery.matches) {
-        stop();
-        removeClones();
-        track.scrollLeft = 0;
-        return;
-      }
-
-      if (!lastTime) lastTime = time;
-      const delta = time - lastTime;
-      lastTime = time;
-
-      if (!isPaused) {
-        track.scrollLeft += (getSpeed() * delta) / 1000;
-        const resetPoint = track.scrollWidth / 2;
-
-        if (resetPoint > 0 && track.scrollLeft >= resetPoint) {
-          track.scrollLeft -= resetPoint;
-        }
-      }
-
-      frameId = window.requestAnimationFrame(tick);
-    };
-
-    const start = () => {
-      if (!desktopQuery.matches) {
-        removeClones();
-        track.scrollLeft = 0;
-        return;
-      }
-
-      createClones();
-      if (!frameId) frameId = window.requestAnimationFrame(tick);
-    };
-
-    track.addEventListener('mouseenter', () => { isPaused = true; });
-    track.addEventListener('mouseleave', () => { isPaused = false; });
-    track.addEventListener('focusin', () => { isPaused = true; });
-    track.addEventListener('focusout', () => { isPaused = false; });
-    desktopQuery.addEventListener('change', start);
-
-    start();
-  })();
-</script>
 
 {% schema %}
 {
@@ -450,7 +369,7 @@
     { "type": "range", "id": "description_length", "label": "Description character limit", "min": 30, "max": 120, "step": 5, "default": 55 },
     { "type": "checkbox", "id": "show_quick_add", "label": "Show quick add button", "default": true },
     { "type": "checkbox", "id": "enable_endless_scroll", "label": "Enable endless desktop scroll", "default": true },
-    { "type": "range", "id": "endless_scroll_speed", "label": "Endless scroll speed", "min": 10, "max": 80, "step": 5, "unit": "px", "default": 30 },
+    { "type": "range", "id": "endless_scroll_speed", "label": "Endless scroll duration", "min": 10, "max": 80, "step": 5, "unit": "s", "default": 30 },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
     { "type": "color", "id": "background_color", "label": "Background", "default": "#fbf1e4" },
     { "type": "color", "id": "card_background", "label": "Card background", "default": "#ffffff" },
