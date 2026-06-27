@@ -355,7 +355,7 @@
     },
     "dv_gold_community_carousel": {
       "type": "dv-gold-community-carousel",
-      "name": "DV Gold community carousel",
+      "name": "DV Gold social carousel",
       "settings": {
         "heading": "BE PART OF OUR COMMUNITY",
         "subheading": "Social Media Links",
