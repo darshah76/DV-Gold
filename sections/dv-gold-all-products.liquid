@@ -29,6 +29,7 @@
     --dv-all-padding-bottom-mobile: {{ section.settings.mobile_padding_bottom }}px;
     --dv-all-padding-top-desktop: {{ section.settings.desktop_padding_top }}px;
     --dv-all-padding-bottom-desktop: {{ section.settings.desktop_padding_bottom }}px;
+    --dv-all-scroll-speed: {{ section.settings.endless_scroll_speed }};
   "
 >
   <div class="dv-all-products__inner">
@@ -47,7 +48,14 @@
       </div>
     </div>
 
-    <div class="dv-all-products__carousel" role="list" aria-label="{{ section.settings.heading | escape }}">
+    <div
+      class="dv-all-products__carousel"
+      role="list"
+      aria-label="{{ section.settings.heading | escape }}"
+      data-dv-all-products-track
+      data-endless-scroll="{{ section.settings.enable_endless_scroll }}"
+      data-scroll-speed="{{ section.settings.endless_scroll_speed }}"
+    >
       {% if products_collection != blank and products_collection.products_count > 0 %}
         {% for product in products_collection.products limit: max_products %}
           {% liquid
@@ -298,6 +306,10 @@
     opacity: 0.45;
   }
 
+  #{{ section_anchor }} .dv-all-products__card.is-clone {
+    pointer-events: none;
+  }
+
   @media screen and (max-width: 749px) {
     #{{ section_anchor }} .dv-all-products__carousel {
       --dv-all-gap: clamp(18px, 6vw, 30px);
@@ -334,6 +346,95 @@
   }
 </style>
 
+<script>
+  (() => {
+    const section = document.getElementById({{ section_anchor | json }});
+    if (!section) return;
+
+    const track = section.querySelector('[data-dv-all-products-track]');
+    if (!track || track.dataset.endlessScroll !== 'true') return;
+
+    const desktopQuery = window.matchMedia('(min-width: 750px)');
+    let frameId = null;
+    let lastTime = null;
+    let isPaused = false;
+
+    const getSpeed = () => Number(track.dataset.scrollSpeed || 30);
+
+    const removeClones = () => {
+      track.querySelectorAll('.is-clone').forEach((clone) => clone.remove());
+    };
+
+    const createClones = () => {
+      if (track.querySelector('.is-clone')) return;
+
+      Array.from(track.children).forEach((card) => {
+        if (!(card instanceof HTMLElement) || card.classList.contains('is-clone')) return;
+
+        const clone = card.cloneNode(true);
+        if (!(clone instanceof HTMLElement)) return;
+
+        clone.classList.add('is-clone');
+        clone.setAttribute('aria-hidden', 'true');
+        clone.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
+        clone.querySelectorAll('a, button, input, select, textarea').forEach((element) => {
+          element.setAttribute('tabindex', '-1');
+        });
+        track.appendChild(clone);
+      });
+    };
+
+    const stop = () => {
+      if (frameId) window.cancelAnimationFrame(frameId);
+      frameId = null;
+      lastTime = null;
+    };
+
+    const tick = (time) => {
+      if (!desktopQuery.matches) {
+        stop();
+        removeClones();
+        track.scrollLeft = 0;
+        return;
+      }
+
+      if (!lastTime) lastTime = time;
+      const delta = time - lastTime;
+      lastTime = time;
+
+      if (!isPaused) {
+        track.scrollLeft += (getSpeed() * delta) / 1000;
+        const resetPoint = track.scrollWidth / 2;
+
+        if (resetPoint > 0 && track.scrollLeft >= resetPoint) {
+          track.scrollLeft -= resetPoint;
+        }
+      }
+
+      frameId = window.requestAnimationFrame(tick);
+    };
+
+    const start = () => {
+      if (!desktopQuery.matches) {
+        removeClones();
+        track.scrollLeft = 0;
+        return;
+      }
+
+      createClones();
+      if (!frameId) frameId = window.requestAnimationFrame(tick);
+    };
+
+    track.addEventListener('mouseenter', () => { isPaused = true; });
+    track.addEventListener('mouseleave', () => { isPaused = false; });
+    track.addEventListener('focusin', () => { isPaused = true; });
+    track.addEventListener('focusout', () => { isPaused = false; });
+    desktopQuery.addEventListener('change', start);
+
+    start();
+  })();
+</script>
+
 {% schema %}
 {
   "name": "DV Gold all products",
@@ -348,6 +449,8 @@
     { "type": "checkbox", "id": "show_description", "label": "Show product description", "default": true },
     { "type": "range", "id": "description_length", "label": "Description character limit", "min": 30, "max": 120, "step": 5, "default": 55 },
     { "type": "checkbox", "id": "show_quick_add", "label": "Show quick add button", "default": true },
+    { "type": "checkbox", "id": "enable_endless_scroll", "label": "Enable endless desktop scroll", "default": true },
+    { "type": "range", "id": "endless_scroll_speed", "label": "Endless scroll speed", "min": 10, "max": 80, "step": 5, "unit": "px/s", "default": 30 },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
     { "type": "color", "id": "background_color", "label": "Background", "default": "#fbf1e4" },
     { "type": "color", "id": "card_background", "label": "Card background", "default": "#ffffff" },
