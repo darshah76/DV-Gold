@@ -414,6 +414,30 @@
         "desktop_padding_top": 72,
         "desktop_padding_bottom": 104
       }
+    },
+    "dv_gold_bulk_inquiries": {
+      "type": "dv-gold-bulk-inquiries",
+      "name": "DV Gold bulk inquiries",
+      "settings": {
+        "heading": "Bulk Inquiries",
+        "text": "<p>Planning a large order or need custom pricing? Chat with us on WhatsApp and our team will help you quickly.</p>",
+        "button_label": "Chat on WhatsApp",
+        "whatsapp_number": "919876543210",
+        "whatsapp_message": "Hello, I would like to inquire about bulk orders.",
+        "color_scheme": "scheme-1",
+        "background_color": "#fbf1e4",
+        "card_background": "#fffaf2",
+        "card_border_color": "#f0dfbf",
+        "heading_color": "#9b2d32",
+        "text_color": "#191512",
+        "button_background": "#25d366",
+        "button_text_color": "#ffffff",
+        "max_width": 1180,
+        "mobile_padding_top": 48,
+        "mobile_padding_bottom": 48,
+        "desktop_padding_top": 72,
+        "desktop_padding_bottom": 72
+      }
     }
   },
   "order": [
@@ -422,6 +446,7 @@
     "dv_gold_seasonal_specials",
     "dv_gold_promise",
     "product_list_fa6P9H",
+    "dv_gold_bulk_inquiries",
     "dv_gold_features_marquee",
     "dv_gold_history",
     "dv_gold_community_carousel"
