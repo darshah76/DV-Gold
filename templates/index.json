@@ -318,6 +318,68 @@
         "desktop_padding_bottom": 72
       }
     },
+    "dv_gold_community_carousel": {
+      "type": "dv-gold-community-carousel",
+      "blocks": {
+        "social_media_6bUbch": {
+          "type": "social_media",
+          "settings": {
+            "image_alt": "DV Gold social media post",
+            "caption": "",
+            "accessibility_label": "",
+            "link": "",
+            "open_in_new_tab": true
+          }
+        },
+        "social_media_KAFgCh": {
+          "type": "social_media",
+          "settings": {
+            "image_alt": "DV Gold social media post",
+            "caption": "",
+            "accessibility_label": "",
+            "link": "",
+            "open_in_new_tab": true
+          }
+        },
+        "social_media_xLKXCV": {
+          "type": "social_media",
+          "settings": {
+            "image_alt": "DV Gold social media post",
+            "caption": "",
+            "accessibility_label": "",
+            "link": "",
+            "open_in_new_tab": true
+          }
+        }
+      },
+      "block_order": [
+        "social_media_6bUbch",
+        "social_media_KAFgCh",
+        "social_media_xLKXCV"
+      ],
+      "name": "DV Gold social carousel",
+      "settings": {
+        "heading": "BE PART OF OUR COMMUNITY",
+        "subheading": "Social Media Links",
+        "carousel_label": "DV Gold social media links",
+        "color_scheme": "scheme-1",
+        "background_color": "#fbf5ee",
+        "heading_color": "#9b2d32",
+        "strip_background": "#f6ead9",
+        "strip_text_color": "#191512",
+        "mobile_card_width": 86,
+        "desktop_card_width": 380,
+        "card_gap": 28,
+        "enable_endless_scroll": true,
+        "endless_scroll_speed": 30,
+        "card_radius": 10,
+        "max_width": 1240,
+        "mobile_padding_top": 64,
+        "mobile_padding_bottom": 64,
+        "desktop_padding_top": 88,
+        "desktop_padding_bottom": 88
+      }
+    },
     "dv_gold_features_marquee": {
       "type": "dv-gold-features-marquee",
       "name": "DV Gold features marquee",
@@ -351,31 +413,6 @@
         "mobile_padding_bottom": 84,
         "desktop_padding_top": 72,
         "desktop_padding_bottom": 104
-      }
-    },
-    "dv_gold_community_carousel": {
-      "type": "dv-gold-community-carousel",
-      "name": "DV Gold social carousel",
-      "settings": {
-        "heading": "BE PART OF OUR COMMUNITY",
-        "subheading": "Social Media Links",
-        "carousel_label": "DV Gold social media links",
-        "color_scheme": "scheme-1",
-        "background_color": "#fbf5ee",
-        "heading_color": "#9b2d32",
-        "strip_background": "#f6ead9",
-        "strip_text_color": "#191512",
-        "mobile_card_width": 86,
-        "desktop_card_width": 380,
-        "card_gap": 28,
-        "enable_endless_scroll": true,
-        "endless_scroll_speed": 30,
-        "card_radius": 10,
-        "max_width": 1240,
-        "mobile_padding_top": 64,
-        "mobile_padding_bottom": 64,
-        "desktop_padding_top": 88,
-        "desktop_padding_bottom": 88
       }
     }
   },
