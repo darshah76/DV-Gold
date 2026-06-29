@@ -293,40 +293,37 @@
 
     #{{ section_anchor }} .dv-all-products__card {
       min-width: 0;
-      padding: 10px 10px 12px;
+      padding: 12px 12px 14px;
     }
 
     #{{ section_anchor }} .dv-all-products__body {
       padding-block-start: 14px;
     }
 
-    #{{ section_anchor }} .dv-all-products__footer {
-      align-items: flex-start;
-      gap: 8px;
+    #{{ section_anchor }} .dv-all-products__title {
+      margin-block-end: 6px;
+      font-size: 1.6rem;
+      line-height: 1.12;
+    }
+
+    #{{ section_anchor }} .dv-all-products__description {
+      display: -webkit-box;
+      margin-block-end: 12px;
+      overflow: hidden;
+      font-size: 1.35rem;
+      line-height: 1.25;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
     }
 
     #{{ section_anchor }} .dv-all-products__price {
-      min-width: 0;
-      font-size: clamp(1.6rem, 5vw, 2rem);
-      overflow-wrap: anywhere;
-    }
-
-    #{{ section_anchor }} .dv-all-products__form {
-      flex: 0 0 auto;
+      font-size: 1.8rem;
     }
 
     #{{ section_anchor }} .dv-all-products__add {
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 12px;
-      font-size: 1.7rem;
-      flex: 0 0 auto;
-    }
-  }
-
-  @media screen and (max-width: 420px) {
-    #{{ section_anchor }} .dv-all-products__carousel {
-      grid-template-columns: 1fr;
     }
   }
 
