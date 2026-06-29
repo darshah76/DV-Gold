@@ -494,6 +494,61 @@
         "desktop_padding_top": 72,
         "desktop_padding_bottom": 72
       }
+    },
+    "dv_gold_faq": {
+      "type": "dv-gold-faq",
+      "blocks": {
+        "faq_global_shipping": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Global Shipping & Delivery",
+            "answer": "<p>We carefully pack every order and provide delivery updates once your shipment is on its way.</p>"
+          }
+        },
+        "faq_brewing_guides": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Optimal Brewing Guides",
+            "answer": "<p>Use fresh water, the recommended steeping time, and your preferred strength to enjoy DV Gold tea at its best.</p>"
+          }
+        },
+        "faq_sourcing_standards": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Ethical Sourcing Standards",
+            "answer": "<p>Our products are selected with a focus on trusted sourcing, premium quality, and consistent standards.</p>"
+          }
+        },
+        "faq_wholesale_accounts": {
+          "type": "faq_item",
+          "settings": {
+            "question": "B2B & Wholesale Accounts",
+            "answer": "<p>Contact our team for bulk orders, wholesale pricing, and partnership opportunities.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_global_shipping",
+        "faq_brewing_guides",
+        "faq_sourcing_standards",
+        "faq_wholesale_accounts"
+      ],
+      "name": "DV Gold FAQ",
+      "settings": {
+        "heading": "FAQ’S",
+        "color_scheme": "scheme-1",
+        "background_color": "#fbf5ef",
+        "heading_color": "#9b2d32",
+        "card_background": "#fffaf2",
+        "border_color": "#f0dfbf",
+        "text_color": "#191512",
+        "icon_color": "#c99700",
+        "max_width": 760,
+        "mobile_padding_top": 76,
+        "mobile_padding_bottom": 88,
+        "desktop_padding_top": 88,
+        "desktop_padding_bottom": 96
+      }
     }
   },
   "order": [
@@ -506,6 +561,7 @@
     "dv_gold_features_marquee",
     "dv_gold_history",
     "dv_gold_community_carousel",
-    "dv_gold_bulk_inquiries"
+    "dv_gold_bulk_inquiries",
+    "dv_gold_faq"
   ]
 }
