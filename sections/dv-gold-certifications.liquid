@@ -100,11 +100,11 @@
     margin-inline: auto;
     color: var(--dv-certifications-heading);
     font-family: var(--font-heading--family);
-    font-size: var(--dv-certifications-heading-mobile-size);
+    font-size: clamp(3rem, 9vw, var(--dv-certifications-heading-mobile-size));
     font-weight: 800;
     line-height: 1.33;
-    letter-spacing: var(--dv-certifications-heading-letter-spacing);
-    overflow-wrap: normal;
+    letter-spacing: min(var(--dv-certifications-heading-letter-spacing), 0.04em);
+    overflow-wrap: anywhere;
     text-align: center;
     text-transform: var(--dv-certifications-heading-transform);
     word-break: normal;
