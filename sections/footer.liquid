@@ -1,261 +1,535 @@
-{% liquid
-  if section.settings.background_color != blank
-    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
-  endif
-%}
-
-<div
-  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
-></div>
-<div
-  class="section section--{{ section.settings.section_width }}{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+<footer
+  class="dv-footer"
+  style="
+    --dv-footer-bg: {{ section.settings.background_color }};
+    --dv-footer-text: {{ section.settings.text_color }};
+    --dv-footer-muted: {{ section.settings.muted_text_color }};
+    --dv-footer-accent: {{ section.settings.accent_color }};
+    --dv-footer-mobile-nav-bg: {{ section.settings.mobile_nav_background }};
+  "
 >
-  {% liquid
-    assign total_blocks = section.blocks.size
+  <div class="dv-footer__inner">
+    <div class="dv-footer__brand">
+      <a class="dv-footer__logo-link" href="{{ section.settings.logo_link | default: routes.root_url }}" aria-label="{{ shop.name | escape }} home">
+        {% if section.settings.logo != blank %}
+          {{
+            section.settings.logo
+            | image_url: width: 240
+            | image_tag: class: 'dv-footer__logo', widths: '120, 180, 240', loading: 'lazy', alt: shop.name
+          }}
+        {% else %}
+          <span class="dv-footer__logo-placeholder" aria-hidden="true">
+            <span>DV</span>
+          </span>
+        {% endif %}
+      </a>
 
-    # Grid layout calculations
-    assign grid_columns = total_blocks | at_most: 4
+      {% if section.settings.tagline != blank %}
+        <div class="dv-footer__tagline">{{ section.settings.tagline }}</div>
+      {% endif %}
 
-    # Calculate last row counts using modulo arithmetic
-    # last_row_count = (total_blocks - 1) % N + 1
-    assign last_row_count = total_blocks | minus: 1 | modulo: 4 | plus: 1
-    assign tablet_last_row_count = total_blocks | minus: 1 | modulo: 2 | plus: 1
+      <div class="dv-footer__actions" aria-label="Footer actions">
+        <a class="dv-footer__icon-button" href="{{ section.settings.share_url | default: routes.root_url }}" aria-label="{{ section.settings.share_label | escape }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 16.1c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.22.09-.45.09-.7s-.04-.48-.09-.7l7.05-4.11A2.98 2.98 0 0 0 18 8a3 3 0 1 0-3-3c0 .25.04.48.09.7L8.04 9.81A3 3 0 1 0 8.04 14.2l7.12 4.18c-.05.2-.08.41-.08.63a2.92 2.92 0 1 0 2.92-2.9Z"/></svg>
+          </a>
+        <a class="dv-footer__icon-button" href="{{ section.settings.community_url | default: routes.root_url }}" aria-label="{{ section.settings.community_label | escape }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10h-2a8 8 0 1 1-2.34-5.66L14 10h8V2l-2.92 2.92A9.97 9.97 0 0 0 12 2Zm-1 5v6l5 3 .95-1.63-3.95-2.34V7h-2Z"/></svg>
+          </a>
+        <a class="dv-footer__icon-button" href="{{ section.settings.contact_url | default: routes.root_url }}" aria-label="{{ section.settings.contact_label | escape }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8h16v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5Zm-3 8V7a3 3 0 1 1 6 0v3H9Zm3 4a2 2 0 0 1 1 3.73V19h-2v-1.27A2 2 0 0 1 12 14Z"/></svg>
+          </a>
+      </div>
+    </div>
 
-    # Check if there are orphaned elements (single item in last row)
-    assign has_isolated_grid_item_desktop = false
-    assign has_isolated_grid_item_tablet = false
+    <div class="dv-footer__columns">
+      <div class="dv-footer__column">
+        <h2 class="dv-footer__heading">{{ section.settings.quick_links_heading }}</h2>
+        <ul class="dv-footer__list">
+          {% liquid
+            assign has_quick_links = false
+          %}
+          {% for block in section.blocks %}
+            {% if block.type == 'quick_link' %}
+              {% liquid
+                assign has_quick_links = true
+                assign link_label = block.settings.label | default: 'Quick link'
+                assign link_url = block.settings.url | default: routes.root_url
+              %}
+              <li {{ block.shopify_attributes }}><a href="{{ link_url }}">{{ link_label }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% unless has_quick_links %}
+            <li><a href="{{ section.settings.quick_link_1_url | default: routes.root_url }}">{{ section.settings.quick_link_1_label }}</a></li>
+            <li><a href="{{ section.settings.quick_link_2_url | default: routes.root_url }}">{{ section.settings.quick_link_2_label }}</a></li>
+            <li><a href="{{ section.settings.quick_link_3_url | default: routes.root_url }}">{{ section.settings.quick_link_3_label }}</a></li>
+            <li><a href="{{ section.settings.quick_link_4_url | default: routes.root_url }}">{{ section.settings.quick_link_4_label }}</a></li>
+          {% endunless %}
+        </ul>
+      </div>
 
-    if total_blocks > 4 and last_row_count == 1
-      assign has_isolated_grid_item_desktop = true
-    endif
+      <div class="dv-footer__column">
+        <h2 class="dv-footer__heading">{{ section.settings.policies_heading }}</h2>
+        <ul class="dv-footer__list">
+          {% liquid
+            assign has_policy_links = false
+          %}
+          {% for block in section.blocks %}
+            {% if block.type == 'policy_link' %}
+              {% liquid
+                assign has_policy_links = true
+                assign link_label = block.settings.label | default: 'Policy link'
+                assign link_url = block.settings.url | default: routes.root_url
+              %}
+              <li {{ block.shopify_attributes }}><a href="{{ link_url }}">{{ link_label }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% unless has_policy_links %}
+            <li><a href="{{ section.settings.policy_link_1_url | default: routes.root_url }}">{{ section.settings.policy_link_1_label }}</a></li>
+            <li><a href="{{ section.settings.policy_link_2_url | default: routes.root_url }}">{{ section.settings.policy_link_2_label }}</a></li>
+            <li><a href="{{ section.settings.policy_link_3_url | default: routes.root_url }}">{{ section.settings.policy_link_3_label }}</a></li>
+            <li><a href="{{ section.settings.policy_link_4_url | default: routes.root_url }}">{{ section.settings.policy_link_4_label }}</a></li>
+          {% endunless %}
+        </ul>
+      </div>
 
-    if total_blocks == 5
-      assign has_isolated_grid_item_tablet = true
-    endif
-  %}
-  <div
-    class="
-      footer-content
-      spacing-style
-      {% if has_isolated_grid_item_desktop %}footer-content--isolated-grid-item-desktop{% endif %}
-      {% if has_isolated_grid_item_tablet %}footer-content--isolated-grid-item-tablet{% endif %}
-    "
-    style="
-      {%  render 'spacing-style', settings: section.settings %}
-      --footer-gap: {{ section.settings.gap }}px;
-      --grid-columns: {{ grid_columns }};
-      --last-row-count: {{ last_row_count }};
-      --tablet-last-row-count: {{ tablet_last_row_count }};
-    "
-  >
-    {% content_for 'blocks' %}
+      <div class="dv-footer__column dv-footer__newsletter">
+        <h2 class="dv-footer__heading">{{ section.settings.newsletter_heading }}</h2>
+        {% if section.settings.newsletter_text != blank %}
+          <div class="dv-footer__newsletter-text">{{ section.settings.newsletter_text }}</div>
+        {% endif %}
+        {% form 'customer', class: 'dv-footer__form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label class="visually-hidden" for="DvFooterEmail-{{ section.id }}">{{ section.settings.newsletter_placeholder }}</label>
+          <input
+            id="DvFooterEmail-{{ section.id }}"
+            class="dv-footer__input"
+            type="email"
+            name="contact[email]"
+            value="{{ form.email }}"
+            placeholder="{{ section.settings.newsletter_placeholder }}"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            required
+          >
+          <button class="dv-footer__submit" type="submit" aria-label="{{ section.settings.newsletter_button_label | escape }}">→</button>
+          {% if form.posted_successfully? %}
+            <p class="dv-footer__form-message" tabindex="-1">{{ section.settings.newsletter_success_message }}</p>
+          {% elsif form.errors %}
+            <p class="dv-footer__form-message dv-footer__form-message--error" tabindex="-1">{{ form.errors | default_errors }}</p>
+          {% endif %}
+        {% endform %}
+      </div>
+    </div>
+
+    <div class="dv-footer__divider"></div>
+    <div class="dv-footer__copyright">
+      {{ section.settings.copyright_text }}
+      {% if section.settings.credit_text != blank %}<span>{{ section.settings.credit_text }}</span>{% endif %}
+    </div>
   </div>
-</div>
+
+  {% if section.settings.show_mobile_nav %}
+    <nav class="dv-footer__mobile-nav" aria-label="Mobile footer navigation">
+      <a href="{{ section.settings.mobile_home_url | default: routes.root_url }}" aria-label="{{ section.settings.mobile_home_label | escape }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.3 12 4l9 7.3v8.2h-6v-5h-6v5H3v-8.2Z"/></svg></a>
+      <a href="{{ section.settings.mobile_menu_url | default: routes.all_products_collection_url }}" aria-label="{{ section.settings.mobile_menu_label | escape }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h4v4H5V5Zm10 0h4v4h-4V5ZM5 15h4v4H5v-4Zm10 0h4v4h-4v-4Z"/></svg></a>
+      <a href="{{ section.settings.mobile_bag_url | default: routes.cart_url }}" aria-label="{{ section.settings.mobile_bag_label | escape }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V7a5 5 0 0 1 10 0v1h2v12H5V8h2Zm2 0h6V7a3 3 0 0 0-6 0v1Z"/></svg></a>
+      <a href="{{ section.settings.mobile_chat_url | default: routes.root_url }}" aria-label="{{ section.settings.mobile_chat_label | escape }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.47 14.03L3.6 21l4.08-.93A9 9 0 1 0 12 3Zm-3.4 5.8c.16-.38.33-.39.49-.39h.42c.13 0 .33.05.5.25.18.2.67.66.67 1.6s-.69 1.86-.78 1.99c-.1.13-1.34 2.15-3.33 2.93-1.65.65-1.99.52-2.35.49-.36-.04-1.16-.47-1.32-.93-.16-.46-.16-.85-.11-.93.05-.08.18-.13.38-.25.2-.12 1.16-.57 1.34-.64.18-.07.31-.1.44.1.13.2.5.64.62.77.11.13.23.15.43.05.2-.1.84-.31 1.6-.98.59-.53.99-1.18 1.1-1.38.12-.2.01-.31-.09-.41-.09-.09-.2-.23-.29-.34-.1-.12-.13-.2-.2-.33-.06-.13-.03-.25.02-.35.05-.1.44-1.06.6-1.45Z"/></svg></a>
+    </nav>
+  {% endif %}
+</footer>
 
 {% stylesheet %}
-  .footer-content {
-    contain: content;
-    content-visibility: auto;
+  .dv-footer {
+    background: var(--dv-footer-bg);
+    color: var(--dv-footer-text);
+    font-family: var(--font-body--family);
+    padding: 56px 0 0;
+  }
+
+  .dv-footer__inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 clamp(26px, 6vw, 64px) 38px;
+  }
+
+  .dv-footer__brand,
+  .dv-footer__column {
+    min-width: 0;
+  }
+
+  .dv-footer__logo-link {
+    display: inline-flex;
+    text-decoration: none;
+  }
+
+  .dv-footer__logo {
+    width: 96px;
+    height: auto;
+    display: block;
+  }
+
+  .dv-footer__logo-placeholder {
+    width: 96px;
+    height: 54px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #cf1212;
+    font-weight: 800;
+    letter-spacing: -0.08em;
+    background: radial-gradient(circle at 38% 34%, #fff7bf 0 22%, #f4c557 58%, #d79b2a 100%);
+    box-shadow: inset 0 0 0 2px rgb(255 255 255 / 28%);
+  }
+
+  .dv-footer__tagline {
+    max-width: 430px;
+    margin-top: 30px;
+    color: var(--dv-footer-muted);
+    font-size: 1.5rem;
+    line-height: 1.68;
+    font-style: italic;
+  }
+
+  .dv-footer__actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .dv-footer__icon-button {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgb(255 255 255 / 12%);
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dv-footer-accent);
+    background: rgb(255 255 255 / 2%);
+    transition: border-color .2s ease, transform .2s ease, background .2s ease;
+  }
+
+  .dv-footer__icon-button:hover {
+    border-color: var(--dv-footer-accent);
+    background: rgb(230 177 0 / 9%);
+    transform: translateY(-2px);
+  }
+
+  .dv-footer svg {
+    width: 17px;
+    height: 17px;
+    fill: currentColor;
+  }
+
+  .dv-footer__columns {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--footer-gap);
-    align-items: start;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 48px;
+    margin-top: 56px;
   }
 
-  .footer-content .menu__heading__default {
-    font-weight: var(--font-heading--weight);
+  .dv-footer__heading {
+    margin: 0 0 24px;
+    color: var(--dv-footer-accent);
+    font-family: var(--font-heading--family);
+    font-size: 1.8rem;
+    line-height: 1.1;
+    letter-spacing: .16em;
+    text-transform: uppercase;
   }
 
-  @media screen and (min-width: 750px) and (max-width: 989px) {
-    .footer-content {
-      grid-template-columns: repeat(min(var(--grid-columns), 3), 1fr);
-      grid-auto-flow: row;
+  .dv-footer__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 14px;
+  }
+
+  .dv-footer__list a,
+  .dv-footer__newsletter-text {
+    color: var(--dv-footer-muted);
+    font-size: 1.35rem;
+    line-height: 1.5;
+  }
+
+  .dv-footer__list a {
+    text-decoration: none;
+  }
+
+  .dv-footer__list a:hover {
+    color: var(--dv-footer-accent);
+  }
+
+  .dv-footer__newsletter-text {
+    max-width: 360px;
+    margin-bottom: 22px;
+  }
+
+  .dv-footer__form {
+    position: relative;
+    max-width: 430px;
+  }
+
+  .dv-footer__input {
+    width: 100%;
+    min-height: 50px;
+    padding: 0 48px 0 0;
+    border: 0;
+    border-bottom: 1px solid rgb(230 177 0 / 28%);
+    border-radius: 0;
+    background: rgb(255 255 255 / 7%);
+    color: var(--dv-footer-text);
+    font: inherit;
+  }
+
+  .dv-footer__input::placeholder {
+    color: rgb(176 176 176 / 70%);
+  }
+
+  .dv-footer__submit {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 44px;
+    height: 50px;
+    border: 0;
+    background: transparent;
+    color: var(--dv-footer-accent);
+    font-size: 2.4rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .dv-footer__form-message {
+    margin: 12px 0 0;
+    color: var(--dv-footer-accent);
+    font-size: 1.2rem;
+  }
+
+  .dv-footer__form-message--error {
+    color: #ff8a8a;
+  }
+
+  .dv-footer__divider {
+    margin-top: 58px;
+    border-top: 1px solid rgb(255 255 255 / 6%);
+  }
+
+  .dv-footer__copyright {
+    padding-top: 20px;
+    color: rgb(176 176 176 / 42%);
+    font-size: 1rem;
+    line-height: 1.7;
+    letter-spacing: .42em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .dv-footer__copyright span {
+    display: block;
+  }
+
+  .dv-footer__mobile-nav {
+    display: none;
+  }
+
+  @media screen and (max-width: 989px) {
+    .dv-footer__columns {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .footer-content[style*='--grid-columns: 4'] {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .footer-content--isolated-grid-item-tablet > :last-child {
+    .dv-footer__newsletter {
       grid-column: 1 / -1;
     }
   }
 
-  @media screen and (min-width: 990px) {
-    .footer-content {
-      grid-template-columns: repeat(var(--grid-columns), 1fr);
+  @media screen and (max-width: 749px) {
+    .dv-footer {
+      padding-top: 58px;
+      padding-bottom: 60px;
     }
 
-    /* Single item centered */
-    .footer-content[style*='--grid-columns: 1'] {
-      justify-items: center;
+    .dv-footer__inner {
+      padding: 0 26px 38px;
     }
 
-    .footer-content--isolated-grid-item-desktop > :last-child {
-      grid-column: 1 / -1;
+    .dv-footer__logo,
+    .dv-footer__logo-placeholder {
+      width: 74px;
+    }
+
+    .dv-footer__logo-placeholder {
+      height: 42px;
+    }
+
+    .dv-footer__tagline {
+      margin-top: 26px;
+      font-size: 1.25rem;
+      line-height: 1.65;
+    }
+
+    .dv-footer__columns {
+      grid-template-columns: 1fr;
+      gap: 46px;
+      margin-top: 48px;
+    }
+
+    .dv-footer__heading {
+      margin-bottom: 22px;
+      font-size: 1.6rem;
+    }
+
+    .dv-footer__list {
+      gap: 13px;
+    }
+
+    .dv-footer__list a,
+    .dv-footer__newsletter-text {
+      font-size: 1.2rem;
+    }
+
+    .dv-footer__newsletter-text {
+      max-width: 285px;
+    }
+
+    .dv-footer__form {
+      max-width: none;
+    }
+
+    .dv-footer__input {
+      min-height: 48px;
+      padding-left: 0;
+    }
+
+    .dv-footer__divider {
+      margin-top: 54px;
+    }
+
+    .dv-footer__copyright {
+      font-size: .85rem;
+      letter-spacing: .38em;
+    }
+
+    .dv-footer__mobile-nav {
+      position: fixed;
+      z-index: 50;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      min-height: 60px;
+      padding: 0 16px env(safe-area-inset-bottom);
+      background: var(--dv-footer-mobile-nav-bg);
+      border-top: 1px solid rgb(0 0 0 / 6%);
+      box-shadow: 0 -8px 24px rgb(0 0 0 / 8%);
+    }
+
+    .dv-footer__mobile-nav a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1d2134;
+      min-height: 60px;
+    }
+
+    .dv-footer__mobile-nav a:first-child {
+      color: var(--dv-footer-accent);
     }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:names.footer",
-  "class": "section-wrapper",
-  "blocks": [
-    {
-      "type": "_divider"
-    },
-    {
-      "type": "@app"
-    },
-    {
-      "type": "button"
-    },
-    {
-      "type": "follow-on-shop"
-    },
-    {
-      "type": "group"
-    },
-    {
-      "type": "icon"
-    },
-    {
-      "type": "image"
-    },
-    {
-      "type": "menu"
-    },
-    {
-      "type": "payment-icons"
-    },
-    {
-      "type": "text"
-    },
-    {
-      "type": "logo"
-    },
-    {
-      "type": "jumbo-text"
-    },
-    {
-      "type": "social-links"
-    },
-    {
-      "type": "email-signup"
-    }
-  ],
+  "name": "DV Gold footer",
+  "class": "dv-gold-footer-section",
   "enabled_on": {
     "groups": ["footer"]
   },
   "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "url", "id": "logo_link", "label": "Logo link" },
+    { "type": "richtext", "id": "tagline", "label": "Tagline", "default": "<p>Curating the world's finest sensory experiences through artisanal teas, heritage spices, and premium dry fruits since 1957.</p>" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#0d0c0b" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#f7f0e2" },
+    { "type": "color", "id": "muted_text_color", "label": "Muted text", "default": "#b4b0a9" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#d9a900" },
+    { "type": "text", "id": "share_label", "label": "Share button label", "default": "Share" },
+    { "type": "url", "id": "share_url", "label": "Share button link" },
+    { "type": "text", "id": "community_label", "label": "Community button label", "default": "Community" },
+    { "type": "url", "id": "community_url", "label": "Community button link" },
+    { "type": "text", "id": "contact_label", "label": "Contact button label", "default": "Contact" },
+    { "type": "url", "id": "contact_url", "label": "Contact button link" },
+    { "type": "text", "id": "quick_links_heading", "label": "Quick links heading", "default": "Quick Links" },
+    { "type": "text", "id": "quick_link_1_label", "label": "Fallback quick link 1 label", "default": "Tea Collection" },
+    { "type": "url", "id": "quick_link_1_url", "label": "Fallback quick link 1 URL" },
+    { "type": "text", "id": "quick_link_2_label", "label": "Fallback quick link 2 label", "default": "Heritage Spices" },
+    { "type": "url", "id": "quick_link_2_url", "label": "Fallback quick link 2 URL" },
+    { "type": "text", "id": "quick_link_3_label", "label": "Fallback quick link 3 label", "default": "Premium Dry Fruits" },
+    { "type": "url", "id": "quick_link_3_url", "label": "Fallback quick link 3 URL" },
+    { "type": "text", "id": "quick_link_4_label", "label": "Fallback quick link 4 label", "default": "Farari Items" },
+    { "type": "url", "id": "quick_link_4_url", "label": "Fallback quick link 4 URL" },
+    { "type": "text", "id": "policies_heading", "label": "Policies heading", "default": "Policies" },
+    { "type": "text", "id": "policy_link_1_label", "label": "Fallback policy link 1 label", "default": "Privacy Policy" },
+    { "type": "url", "id": "policy_link_1_url", "label": "Fallback policy link 1 URL" },
+    { "type": "text", "id": "policy_link_2_label", "label": "Fallback policy link 2 label", "default": "Shipping Policy" },
+    { "type": "url", "id": "policy_link_2_url", "label": "Fallback policy link 2 URL" },
+    { "type": "text", "id": "policy_link_3_label", "label": "Fallback policy link 3 label", "default": "Returns & Cancellation" },
+    { "type": "url", "id": "policy_link_3_url", "label": "Fallback policy link 3 URL" },
+    { "type": "text", "id": "policy_link_4_label", "label": "Fallback policy link 4 label", "default": "Refund Policy" },
+    { "type": "url", "id": "policy_link_4_url", "label": "Fallback policy link 4 URL" },
+    { "type": "text", "id": "newsletter_heading", "label": "Newsletter heading", "default": "Newsletter" },
+    { "type": "richtext", "id": "newsletter_text", "label": "Newsletter text", "default": "<p>Join our inner circle for exclusive seasonal releases and stories.</p>" },
+    { "type": "text", "id": "newsletter_placeholder", "label": "Email placeholder", "default": "Enter your email address" },
+    { "type": "text", "id": "newsletter_button_label", "label": "Newsletter button label", "default": "Subscribe" },
+    { "type": "text", "id": "newsletter_success_message", "label": "Newsletter success message", "default": "Thank you for subscribing." },
+    { "type": "text", "id": "copyright_text", "label": "Copyright text", "default": "© 2026 DV Gold Foods." },
+    { "type": "text", "id": "credit_text", "label": "Credit text", "default": "Designed by Inventech Solution" },
+    { "type": "checkbox", "id": "show_mobile_nav", "label": "Show mobile bottom navigation", "default": true },
+    { "type": "color", "id": "mobile_nav_background", "label": "Mobile navigation background", "default": "#fff4df" },
+    { "type": "text", "id": "mobile_home_label", "label": "Mobile home label", "default": "Home" },
+    { "type": "url", "id": "mobile_home_url", "label": "Mobile home link" },
+    { "type": "text", "id": "mobile_menu_label", "label": "Mobile menu label", "default": "Collections" },
+    { "type": "url", "id": "mobile_menu_url", "label": "Mobile menu link" },
+    { "type": "text", "id": "mobile_bag_label", "label": "Mobile bag label", "default": "Cart" },
+    { "type": "url", "id": "mobile_bag_url", "label": "Mobile bag link" },
+    { "type": "text", "id": "mobile_chat_label", "label": "Mobile chat label", "default": "WhatsApp" },
+    { "type": "url", "id": "mobile_chat_url", "label": "Mobile chat link" }
+  ],
+  "blocks": [
     {
-      "type": "select",
-      "id": "section_width",
-      "label": "t:settings.width",
-      "options": [
-        {
-          "value": "page-width",
-          "label": "t:options.page"
-        },
-        {
-          "value": "full-width",
-          "label": "t:options.full"
-        }
-      ],
-      "default": "page-width"
+      "type": "quick_link",
+      "name": "Quick link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Tea Collection" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
     },
     {
-      "type": "range",
-      "id": "gap",
-      "label": "t:settings.gap",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "t:settings.background_color",
-      "default": "{{ settings.color_palette.foreground }}"
-    },
-    {
-      "type": "header",
-      "content": "t:content.padding"
-    },
-    {
-      "type": "range",
-      "id": "padding-block-start",
-      "label": "t:settings.top",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 20
-    },
-    {
-      "type": "range",
-      "id": "padding-block-end",
-      "label": "t:settings.bottom",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 20
+      "type": "policy_link",
+      "name": "Policy link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Privacy Policy" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "t:names.footer",
-      "category": "t:categories.footer",
-      "settings": {
-        "gap": 20,
-        "padding-block-start": 36,
-        "padding-block-end": 36
-      },
-      "blocks": {
-        "newsletter-group": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "gap": 6,
-            "width": "fill"
-          },
-          "blocks": {
-            "newsletter-heading": {
-              "type": "text",
-              "settings": {
-                "text": "t:html_defaults.join_our_email_list",
-                "width": "100%",
-                "alignment": "left",
-                "type_preset": "h3"
-              }
-            },
-            "newsletter-text": {
-              "type": "text",
-              "settings": {
-                "text": "t:html_defaults.get_exclusive_deals_and_early_access_to_new_products",
-                "width": "100%",
-                "alignment": "left",
-                "type_preset": "rte"
-              }
-            }
-          },
-          "block_order": ["newsletter-heading", "newsletter-text"]
-        },
-        "newsletter-form": {
-          "type": "email-signup",
-          "settings": {
-            "width": "fill"
-          }
-        }
-      },
-      "block_order": ["newsletter-group", "newsletter-form"]
+      "name": "DV Gold footer",
+      "blocks": [
+        { "type": "quick_link", "settings": { "label": "Tea Collection" } },
+        { "type": "quick_link", "settings": { "label": "Heritage Spices" } },
+        { "type": "quick_link", "settings": { "label": "Premium Dry Fruits" } },
+        { "type": "quick_link", "settings": { "label": "Farari Items" } },
+        { "type": "policy_link", "settings": { "label": "Privacy Policy" } },
+        { "type": "policy_link", "settings": { "label": "Shipping Policy" } },
+        { "type": "policy_link", "settings": { "label": "Returns & Cancellation" } },
+        { "type": "policy_link", "settings": { "label": "Refund Policy" } }
+      ]
     }
   ]
 }
