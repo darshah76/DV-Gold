@@ -3,12 +3,16 @@
   assign product_description = product.description | strip_html | truncate: description_length
   assign selected_variant = product.selected_or_first_available_variant
   assign clone_class = ''
+  assign description_class = ''
   if is_clone
     assign clone_class = ' is-clone'
   endif
+  if show_description and product_description != blank
+    assign description_class = ' dv-all-products__card--has-description'
+  endif
 %}
 
-<article class="dv-all-products__card{{ clone_class }}" role="listitem" {% if is_clone %}aria-hidden="true"{% endif %}>
+<article class="dv-all-products__card{{ clone_class }}{{ description_class }}" role="listitem" {% if is_clone %}aria-hidden="true"{% endif %}>
   <a class="dv-all-products__image-link" href="{{ product.url }}" aria-label="{{ product.title | escape }}" {% if is_clone %}tabindex="-1"{% endif %}>
     <span class="dv-all-products__view-icon" aria-hidden="true">
       <svg viewBox="0 0 24 24" focusable="false">
