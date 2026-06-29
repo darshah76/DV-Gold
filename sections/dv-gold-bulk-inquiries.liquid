@@ -43,7 +43,12 @@
         </div>
 
         {% if section.settings.heading != blank %}
-          <h2 class="dv-bulk-inquiries__heading">{{ section.settings.heading }}</h2>
+          <h2 class="dv-bulk-inquiries__heading">
+            {% assign heading_words = section.settings.heading | split: ' ' %}
+            {% for word in heading_words %}
+              <span>{{ word }}</span>
+            {% endfor %}
+          </h2>
         {% endif %}
 
         {% if section.settings.text != blank %}
@@ -131,16 +136,20 @@
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__heading {
-    margin: 0 0 31px;
+    margin: 0 0 30px;
     color: var(--dv-bulk-heading);
     font-family: var(--font-heading--family);
-    max-width: 8.8em;
-    font-size: clamp(3.2rem, 8.35vw, 3.9rem);
+    max-width: 9em;
+    font-size: clamp(3.4rem, 8.35vw, 3.9rem);
     font-weight: 700;
     line-height: 1.12;
     letter-spacing: clamp(0.08em, 1.05vw, 0.12em);
     overflow-wrap: anywhere;
     text-transform: uppercase;
+  }
+
+  #{{ section_anchor }} .dv-bulk-inquiries__heading span {
+    display: block;
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__text {
@@ -176,6 +185,7 @@
     justify-content: center;
     gap: 13px;
     width: min(100%, 338px);
+    max-width: 338px;
     min-height: clamp(66px, 15.85vw, 74px);
     margin-top: clamp(38px, 9vw, 42px);
     padding: 18px clamp(18px, 6vw, 24px);
