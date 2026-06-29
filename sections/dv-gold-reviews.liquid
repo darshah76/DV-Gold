@@ -1,8 +1,5 @@
 {% liquid
   assign section_anchor = 'dv-gold-reviews-' | append: section.id
-  assign modal_id = section_anchor | append: '-modal'
-  assign modal_title_id = modal_id | append: '-title'
-  assign confirmation_id = modal_id | append: '-confirmation'
 %}
 
 <section
@@ -10,489 +7,239 @@
   class="dv-reviews color-{{ section.settings.color_scheme }}"
   style="
     --dv-reviews-bg: {{ section.settings.background_color }};
-    --dv-reviews-heading: {{ section.settings.heading_color }};
-    --dv-reviews-text: {{ section.settings.text_color }};
     --dv-reviews-card-bg: {{ section.settings.card_background }};
     --dv-reviews-border: {{ section.settings.border_color }};
-    --dv-reviews-accent: {{ section.settings.accent_color }};
-    --dv-reviews-button-bg: {{ section.settings.button_background }};
-    --dv-reviews-button-text: {{ section.settings.button_text_color }};
+    --dv-reviews-heading: {{ section.settings.heading_color }};
+    --dv-reviews-text: {{ section.settings.text_color }};
+    --dv-reviews-muted: {{ section.settings.muted_text_color }};
+    --dv-reviews-star: {{ section.settings.star_color }};
     --dv-reviews-max-width: {{ section.settings.max_width }}px;
     --dv-reviews-padding-top-mobile: {{ section.settings.mobile_padding_top }}px;
     --dv-reviews-padding-bottom-mobile: {{ section.settings.mobile_padding_bottom }}px;
     --dv-reviews-padding-top-desktop: {{ section.settings.desktop_padding_top }}px;
     --dv-reviews-padding-bottom-desktop: {{ section.settings.desktop_padding_bottom }}px;
   "
+  data-dv-reviews
 >
   <div class="dv-reviews__inner">
-    <div class="dv-reviews__header">
-      {% if section.settings.eyebrow != blank %}
-        <p class="dv-reviews__eyebrow">{{ section.settings.eyebrow | escape }}</p>
-      {% endif %}
+    <h2 class="dv-reviews__heading">{{ section.settings.heading | escape }}</h2>
 
-      {% if section.settings.heading != blank %}
-        <h2 class="dv-reviews__heading">{{ section.settings.heading | escape }}</h2>
-      {% endif %}
+    <div class="dv-reviews__summary">
+      <div>
+        <p class="dv-reviews__rating">{{ section.settings.rating | escape }}</p>
+        <div class="dv-reviews__stars" aria-label="{{ section.settings.rating | escape }} out of 5 stars">★★★★★</div>
+        <p class="dv-reviews__count">{{ section.settings.review_count_text | escape }}</p>
+      </div>
 
-      {% if section.settings.subheading != blank %}
-        <p class="dv-reviews__subheading">{{ section.settings.subheading | escape }}</p>
-      {% endif %}
-
-      <button
-        type="button"
-        class="dv-reviews__write-button"
-        data-dv-review-open
-        aria-haspopup="dialog"
-        aria-controls="{{ modal_id }}"
-      >
-        {{ section.settings.button_label | escape }}
+      <button class="dv-reviews__write" type="button" data-review-modal-open>
+        {{ section.settings.write_review_label | escape }}
       </button>
     </div>
 
-    <div class="dv-reviews__cards" role="list" aria-label="{{ section.settings.reviews_label | escape }}">
-      {% if section.blocks.size > 0 %}
-        {% for block in section.blocks %}
-          <article class="dv-reviews__card" role="listitem" {{ block.shopify_attributes }}>
-            <div class="dv-reviews__stars" aria-label="{{ block.settings.rating }} out of 5 stars">
-              {% for i in (1..5) %}
-                <span aria-hidden="true">{% if i <= block.settings.rating %}★{% else %}☆{% endif %}</span>
-              {% endfor %}
-            </div>
-            {% if block.settings.review != blank %}
-              <blockquote class="dv-reviews__quote">{{ block.settings.review }}</blockquote>
+    <div class="dv-reviews__cards" data-review-pages>
+      {% for block in section.blocks %}
+        <article class="dv-reviews__card" data-review-card data-page="{{ forloop.index }}" {{ block.shopify_attributes }}>
+          <div class="dv-reviews__card-stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="dv-reviews__quote">"{{ block.settings.quote | escape }}"</p>
+          <div class="dv-reviews__author-row">
+            <p class="dv-reviews__author">{{ block.settings.author | escape }}</p>
+            {% if block.settings.verified_label != blank %}
+              <p class="dv-reviews__verified" aria-label="{{ block.settings.verified_label | escape }}">
+                <span aria-hidden="true">⊙</span> {{ block.settings.verified_label | escape }}
+              </p>
             {% endif %}
-            {% if block.settings.author != blank %}
-              <p class="dv-reviews__author">— {{ block.settings.author | escape }}</p>
-            {% endif %}
-          </article>
-        {% endfor %}
-      {% else %}
-        <article class="dv-reviews__card" role="listitem">
-          <div class="dv-reviews__stars" aria-label="5 out of 5 stars" aria-hidden="false">★★★★★</div>
-          <blockquote class="dv-reviews__quote">Add customer reviews in the theme editor.</blockquote>
-          <p class="dv-reviews__author">— DV Gold customer</p>
+          </div>
         </article>
-      {% endif %}
+      {% endfor %}
     </div>
+
+    <nav class="dv-reviews__pagination" aria-label="Reviews pagination">
+      <button class="dv-reviews__page dv-reviews__page--arrow" type="button" aria-label="Previous reviews page" data-review-page-prev>‹</button>
+      <button class="dv-reviews__page is-active" type="button" data-review-page-button data-page="1" aria-current="page">1</button>
+      <button class="dv-reviews__page" type="button" data-review-page-button data-page="2">2</button>
+      <button class="dv-reviews__page" type="button" data-review-page-button data-page="3">3</button>
+      <span class="dv-reviews__ellipsis" aria-hidden="true">...</span>
+      <button class="dv-reviews__page" type="button" data-review-page-button data-page="25">25</button>
+      <button class="dv-reviews__page dv-reviews__page--arrow" type="button" aria-label="Next reviews page" data-review-page-next>›</button>
+    </nav>
   </div>
 
-  <div class="dv-review-modal" data-dv-review-modal hidden>
-    <div class="dv-review-modal__backdrop" data-dv-review-close aria-hidden="true"></div>
-    <div
-      id="{{ modal_id }}"
-      class="dv-review-modal__dialog"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="{{ modal_title_id }}"
-      tabindex="-1"
-    >
-      <button type="button" class="dv-review-modal__close" data-dv-review-close aria-label="Close review form">
-        <span aria-hidden="true">×</span>
-      </button>
-
-      <div class="dv-review-modal__content" data-dv-review-form-state>
-        <p class="dv-review-modal__eyebrow">{{ section.settings.modal_eyebrow | escape }}</p>
-        <h3 id="{{ modal_title_id }}" class="dv-review-modal__title">{{ section.settings.modal_title | escape }}</h3>
-
-        <form class="dv-review-modal__form" action="" method="post" data-dv-review-form>
-          <input type="hidden" name="form_type" value="dv_gold_review">
-          <input type="hidden" name="section_id" value="{{ section.id }}">
-
-          <div class="dv-review-modal__field">
-            <label for="{{ modal_id }}-name">Name</label>
-            <input id="{{ modal_id }}-name" name="review[name]" type="text" autocomplete="name" required>
-          </div>
-
-          <div class="dv-review-modal__field">
-            <label for="{{ modal_id }}-rating">Rating</label>
-            <select id="{{ modal_id }}-rating" name="review[rating]" required>
-              <option value="5">5 stars</option>
-              <option value="4">4 stars</option>
-              <option value="3">3 stars</option>
-              <option value="2">2 stars</option>
-              <option value="1">1 star</option>
-            </select>
-          </div>
-
-          <div class="dv-review-modal__field">
-            <label for="{{ modal_id }}-review">Review</label>
-            <textarea id="{{ modal_id }}-review" name="review[body]" rows="5" required></textarea>
-          </div>
-
-          <button type="submit" class="dv-review-modal__submit">Submit review</button>
-        </form>
-      </div>
-
-      <div id="{{ confirmation_id }}" class="dv-review-modal__confirmation" data-dv-review-confirmation hidden tabindex="-1">
-        <h3 class="dv-review-modal__title">Thank you for your review.</h3>
-        <p>Your feedback has been received. This demo form is ready to connect to a reviews app, app proxy, or backend endpoint.</p>
-        <button type="button" class="dv-review-modal__submit" data-dv-review-close>Close</button>
-      </div>
+  <div class="dv-reviews__modal" data-review-modal hidden>
+    <div class="dv-reviews__modal-backdrop" data-review-modal-close></div>
+    <div class="dv-reviews__dialog" role="dialog" aria-modal="true" aria-labelledby="{{ section_anchor }}-modal-title" tabindex="-1">
+      <button class="dv-reviews__modal-close" type="button" aria-label="Close review form" data-review-modal-close>×</button>
+      <h3 id="{{ section_anchor }}-modal-title" class="dv-reviews__modal-title">Write a Review</h3>
+      <form class="dv-reviews__form" data-review-form>
+        <label>
+          Name
+          <input type="text" name="name" autocomplete="name" required>
+        </label>
+        <label>
+          Rating
+          <select name="rating" required>
+            <option value="5">★★★★★</option>
+            <option value="4">★★★★☆</option>
+            <option value="3">★★★☆☆</option>
+            <option value="2">★★☆☆☆</option>
+            <option value="1">★☆☆☆☆</option>
+          </select>
+        </label>
+        <label>
+          Review
+          <textarea name="review" rows="5" required></textarea>
+        </label>
+        <button class="dv-reviews__submit" type="submit">Submit Review</button>
+        <p class="dv-reviews__success" data-review-success hidden>Thank you! Your review has been received.</p>
+      </form>
     </div>
   </div>
 </section>
 
-<style>
-  #{{ section_anchor }} {
-    background: var(--dv-reviews-bg);
-    color: var(--dv-reviews-text);
-    padding-block: var(--dv-reviews-padding-top-mobile) var(--dv-reviews-padding-bottom-mobile);
-  }
-
-  #{{ section_anchor }} .dv-reviews__inner {
-    width: min(calc(100% - 32px), var(--dv-reviews-max-width));
-    margin-inline: auto;
-  }
-
-  #{{ section_anchor }} .dv-reviews__header {
-    text-align: center;
-    margin-inline: auto;
-    max-width: 760px;
-  }
-
-  #{{ section_anchor }} .dv-reviews__eyebrow,
-  #{{ section_anchor }} .dv-review-modal__eyebrow {
-    color: var(--dv-reviews-accent);
-    font-size: 1.4rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    margin: 0 0 12px;
-    text-transform: uppercase;
-  }
-
-  #{{ section_anchor }} .dv-reviews__heading,
-  #{{ section_anchor }} .dv-review-modal__title {
-    color: var(--dv-reviews-heading);
-    font-family: var(--font-heading--family);
-    font-size: clamp(3.4rem, 9vw, 5.6rem);
-    font-weight: 800;
-    line-height: 1;
-    margin: 0;
-    text-transform: uppercase;
-  }
-
-  #{{ section_anchor }} .dv-reviews__subheading {
-    font-size: clamp(1.6rem, 4vw, 1.9rem);
-    line-height: 1.55;
-    margin: 18px auto 0;
-    max-width: 620px;
-  }
-
-  #{{ section_anchor }} .dv-reviews__write-button,
-  #{{ section_anchor }} .dv-review-modal__submit {
-    appearance: none;
-    border: 0;
-    border-radius: 999px;
-    background: var(--dv-reviews-button-bg);
-    color: var(--dv-reviews-button-text);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font: inherit;
-    font-weight: 800;
-    margin-block-start: 28px;
-    min-height: 48px;
-    padding: 13px 28px;
-    text-decoration: none;
-    transition: opacity 160ms ease, transform 160ms ease;
-  }
-
-  #{{ section_anchor }} .dv-reviews__write-button:hover,
-  #{{ section_anchor }} .dv-review-modal__submit:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-  }
-
-  #{{ section_anchor }} .dv-reviews__cards {
-    display: grid;
-    gap: 18px;
-    margin-block-start: 36px;
-  }
-
-  #{{ section_anchor }} .dv-reviews__card {
-    background: var(--dv-reviews-card-bg);
-    border: 1px solid var(--dv-reviews-border);
-    border-radius: 22px;
-    box-shadow: 0 14px 32px rgba(74, 42, 20, 0.07);
-    padding: 24px;
-  }
-
-  #{{ section_anchor }} .dv-reviews__stars {
-    color: var(--dv-reviews-accent);
-    font-size: 2rem;
-    letter-spacing: 0.08em;
-    line-height: 1;
-    margin-block-end: 16px;
-  }
-
-  #{{ section_anchor }} .dv-reviews__quote {
-    font-size: clamp(1.55rem, 4vw, 1.8rem);
-    line-height: 1.55;
-    margin: 0;
-  }
-
-  #{{ section_anchor }} .dv-reviews__author {
-    color: var(--dv-reviews-heading);
-    font-weight: 800;
-    margin: 18px 0 0;
-  }
-
-  #{{ section_anchor }} .dv-review-modal[hidden],
-  #{{ section_anchor }} .dv-review-modal__confirmation[hidden] {
-    display: none;
-  }
-
-  #{{ section_anchor }} .dv-review-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    display: grid;
-    place-items: center;
-    padding: 20px;
-  }
-
-  #{{ section_anchor }} .dv-review-modal__backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(25, 21, 18, 0.58);
-  }
-
-  #{{ section_anchor }} .dv-review-modal__dialog {
-    position: relative;
-    width: min(100%, 560px);
-    max-height: min(86vh, 760px);
-    overflow: auto;
-    background: var(--dv-reviews-card-bg);
-    border: 1px solid var(--dv-reviews-border);
-    border-radius: 24px;
-    box-shadow: 0 24px 80px rgba(25, 21, 18, 0.28);
-    padding: 28px;
-  }
-
-  #{{ section_anchor }} .dv-review-modal__close {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--dv-reviews-border);
-    border-radius: 999px;
-    background: #fff;
-    color: var(--dv-reviews-text);
-    cursor: pointer;
-    font-size: 2.8rem;
-    line-height: 1;
-  }
-
-  #{{ section_anchor }} .dv-review-modal__content,
-  #{{ section_anchor }} .dv-review-modal__confirmation {
-    padding-block-start: 22px;
-  }
-
-  #{{ section_anchor }} .dv-review-modal__title {
-    font-size: clamp(2.8rem, 7vw, 4rem);
-    padding-inline-end: 34px;
-  }
-
-  #{{ section_anchor }} .dv-review-modal__form {
-    display: grid;
-    gap: 18px;
-    margin-block-start: 24px;
-  }
-
-  #{{ section_anchor }} .dv-review-modal__field {
-    display: grid;
-    gap: 8px;
-    text-align: left;
-  }
-
-  #{{ section_anchor }} .dv-review-modal__field label {
-    font-size: 1.4rem;
-    font-weight: 800;
-  }
-
-  #{{ section_anchor }} .dv-review-modal__field input,
-  #{{ section_anchor }} .dv-review-modal__field select,
-  #{{ section_anchor }} .dv-review-modal__field textarea {
-    width: 100%;
-    border: 1px solid var(--dv-reviews-border);
-    border-radius: 14px;
-    background: #fff;
-    color: var(--dv-reviews-text);
-    font: inherit;
-    min-height: 48px;
-    padding: 12px 14px;
-  }
-
-  #{{ section_anchor }} .dv-review-modal__field textarea {
-    resize: vertical;
-  }
-
-  #{{ section_anchor }} .dv-review-modal__confirmation p {
-    font-size: 1.6rem;
-    line-height: 1.55;
-    margin: 16px 0 0;
-  }
-
-  @media screen and (min-width: 750px) {
-    #{{ section_anchor }} {
-      padding-block: var(--dv-reviews-padding-top-desktop) var(--dv-reviews-padding-bottom-desktop);
-    }
-
-    #{{ section_anchor }} .dv-reviews__inner {
-      width: min(calc(100% - 64px), var(--dv-reviews-max-width));
-    }
-
-    #{{ section_anchor }} .dv-reviews__cards {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      margin-block-start: 48px;
-    }
-
-    #{{ section_anchor }} .dv-review-modal__dialog {
-      padding: 36px;
-    }
-  }
-</style>
-
 <script>
   (() => {
     const section = document.getElementById({{ section_anchor | json }});
+    if (!section || section.dataset.initialized === 'true') return;
+    section.dataset.initialized = 'true';
 
-    if (!section || section.dataset.dvReviewModalReady === 'true') return;
+    const cards = [...section.querySelectorAll('[data-review-card]')];
+    const pageButtons = [...section.querySelectorAll('[data-review-page-button]')];
+    const prevButton = section.querySelector('[data-review-page-prev]');
+    const nextButton = section.querySelector('[data-review-page-next]');
+    const modal = section.querySelector('[data-review-modal]');
+    const dialog = section.querySelector('.dv-reviews__dialog');
+    const openButton = section.querySelector('[data-review-modal-open]');
+    const closeButtons = [...section.querySelectorAll('[data-review-modal-close]')];
+    const form = section.querySelector('[data-review-form]');
+    const success = section.querySelector('[data-review-success]');
+    const visiblePages = pageButtons.map((button) => Number(button.dataset.page));
+    let currentPage = 1;
 
-    section.dataset.dvReviewModalReady = 'true';
-
-    const modal = section.querySelector('[data-dv-review-modal]');
-    const dialog = section.querySelector('[role="dialog"]');
-    const openButton = section.querySelector('[data-dv-review-open]');
-    const closeButtons = section.querySelectorAll('[data-dv-review-close]');
-    const form = section.querySelector('[data-dv-review-form]');
-    const formState = section.querySelector('[data-dv-review-form-state]');
-    const confirmation = section.querySelector('[data-dv-review-confirmation]');
-    let previousFocus = null;
-
-    if (!modal || !dialog || !openButton) return;
-
-    const focusableSelector = 'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-    const getFocusableElements = () => Array.from(dialog.querySelectorAll(focusableSelector)).filter((element) => element.offsetParent !== null);
-
-    const closeModal = () => {
-      modal.hidden = true;
-      document.documentElement.classList.remove('dv-review-modal-open');
-
-      if (formState) formState.hidden = false;
-      if (confirmation) confirmation.hidden = true;
-      if (form) form.reset();
-
-      if (previousFocus && typeof previousFocus.focus === 'function') {
-        previousFocus.focus();
-      } else {
-        openButton.focus();
-      }
+    const setPage = (page) => {
+      const maxPage = Math.max(...visiblePages);
+      currentPage = Math.min(Math.max(page, 1), maxPage);
+      cards.forEach((card, index) => {
+        const fallbackPage = (index % 3) + 1;
+        const cardPage = Number(card.dataset.page) || fallbackPage;
+        card.hidden = visiblePages.includes(currentPage) && currentPage <= 3 ? cardPage !== currentPage : false;
+      });
+      pageButtons.forEach((button) => {
+        const isActive = Number(button.dataset.page) === currentPage;
+        button.classList.toggle('is-active', isActive);
+        if (isActive) button.setAttribute('aria-current', 'page');
+        else button.removeAttribute('aria-current');
+      });
+      prevButton.disabled = currentPage === 1;
+      nextButton.disabled = currentPage === maxPage;
     };
 
-    const openModal = () => {
-      previousFocus = document.activeElement;
-      modal.hidden = false;
-      document.documentElement.classList.add('dv-review-modal-open');
+    pageButtons.forEach((button) => button.addEventListener('click', () => setPage(Number(button.dataset.page))));
+    prevButton.addEventListener('click', () => setPage(currentPage - 1));
+    nextButton.addEventListener('click', () => setPage(currentPage + 1));
 
-      window.requestAnimationFrame(() => {
-        const firstField = dialog.querySelector('input, select, textarea');
-        (firstField || dialog).focus();
-      });
+    const openModal = () => {
+      modal.hidden = false;
+      document.documentElement.classList.add('dv-reviews-modal-open');
+      setTimeout(() => dialog.focus(), 0);
+    };
+    const closeModal = () => {
+      modal.hidden = true;
+      document.documentElement.classList.remove('dv-reviews-modal-open');
+      openButton.focus();
     };
 
     openButton.addEventListener('click', openModal);
     closeButtons.forEach((button) => button.addEventListener('click', closeModal));
-
     document.addEventListener('keydown', (event) => {
-      if (!modal.hidden && event.key === 'Escape') {
-        event.preventDefault();
-        closeModal();
-      }
+      if (event.key === 'Escape' && !modal.hidden) closeModal();
     });
-
-    dialog.addEventListener('keydown', (event) => {
-      if (event.key !== 'Tab') return;
-
-      const focusableElements = getFocusableElements();
-      const firstFocusable = focusableElements[0];
-      const lastFocusable = focusableElements[focusableElements.length - 1];
-
-      if (!firstFocusable || !lastFocusable) return;
-
-      if (event.shiftKey && document.activeElement === firstFocusable) {
-        event.preventDefault();
-        lastFocusable.focus();
-      } else if (!event.shiftKey && document.activeElement === lastFocusable) {
-        event.preventDefault();
-        firstFocusable.focus();
-      }
-    });
-
-    form?.addEventListener('submit', (event) => {
+    form.addEventListener('submit', (event) => {
       event.preventDefault();
-
-      if (formState) formState.hidden = true;
-      if (confirmation) {
-        confirmation.hidden = false;
-        confirmation.focus();
-      }
+      success.hidden = false;
+      form.reset();
     });
+
+    setPage(1);
   })();
 </script>
 
+{% stylesheet %}
+  .dv-reviews { background: var(--dv-reviews-bg); color: var(--dv-reviews-text); padding-block: var(--dv-reviews-padding-top-mobile) var(--dv-reviews-padding-bottom-mobile); }
+  .dv-reviews__inner { margin-inline: auto; max-width: var(--dv-reviews-max-width); padding-inline: 20px; }
+  .dv-reviews__heading { color: var(--dv-reviews-heading); font-family: var(--font-heading--family); font-size: clamp(2.6rem, 7vw, 4.2rem); font-weight: 800; letter-spacing: .12em; line-height: 1.08; margin: 0 0 26px; text-align: center; text-transform: uppercase; }
+  .dv-reviews__summary { align-items: center; border-bottom: 1px solid #f2b89a; display: flex; justify-content: space-between; margin-inline: -20px; padding: 0 22px 10px; }
+  .dv-reviews__rating { color: #000; font-size: 2.2rem; font-weight: 800; line-height: 1; margin: 0 0 4px; }
+  .dv-reviews__stars, .dv-reviews__card-stars { color: var(--dv-reviews-star); letter-spacing: .08em; line-height: 1; }
+  .dv-reviews__stars { font-size: 1.5rem; margin-bottom: 4px; }
+  .dv-reviews__count { color: var(--dv-reviews-muted); font-size: 1.1rem; margin: 0; }
+  .dv-reviews__write { background: #fff8ec; border: 1px solid #f1dfc3; border-radius: 7px; color: #000; cursor: pointer; font-size: 1.2rem; padding: 8px 10px; }
+  .dv-reviews__cards { display: grid; gap: 18px; padding-block: 4px 12px; }
+  .dv-reviews__card { background: var(--dv-reviews-card-bg); border: 1px solid var(--dv-reviews-border); border-radius: 18px; padding: 24px 23px 22px; }
+  .dv-reviews__card-stars { font-size: 1.4rem; margin-bottom: 14px; }
+  .dv-reviews__quote { color: #5d5249; font-size: 1.24rem; font-style: italic; line-height: 1.55; margin: 0 0 18px; }
+  .dv-reviews__author-row { align-items: center; display: flex; gap: 12px; justify-content: space-between; }
+  .dv-reviews__author { color: #2a1712; font-family: var(--font-heading--family); font-size: 1.2rem; font-weight: 800; letter-spacing: .04em; margin: 0; text-transform: uppercase; }
+  .dv-reviews__verified { color: var(--dv-reviews-star); font-size: .78rem; font-weight: 800; letter-spacing: .04em; margin: 0; text-transform: uppercase; white-space: nowrap; }
+  .dv-reviews__pagination { align-items: center; display: flex; gap: 10px; justify-content: center; }
+  .dv-reviews__page { background: transparent; border: 0; color: #2c211b; cursor: pointer; font-size: 1.15rem; padding: 2px; }
+  .dv-reviews__page.is-active { font-weight: 800; }
+  .dv-reviews__page:disabled { cursor: not-allowed; opacity: .35; }
+  .dv-reviews__page--arrow { font-size: 2rem; line-height: .8; }
+  .dv-reviews__ellipsis { font-size: 1.1rem; }
+  .dv-reviews__modal[hidden] { display: none; }
+  .dv-reviews__modal { inset: 0; position: fixed; z-index: 1000; }
+  .dv-reviews__modal-backdrop { background: rgba(0, 0, 0, .45); inset: 0; position: absolute; }
+  .dv-reviews__dialog { background: #fffaf2; border: 1px solid var(--dv-reviews-border); border-radius: 18px; box-shadow: 0 20px 60px rgba(0, 0, 0, .2); left: 50%; max-width: min(90vw, 440px); padding: 28px; position: absolute; top: 50%; transform: translate(-50%, -50%); width: 100%; }
+  .dv-reviews__modal-close { background: transparent; border: 0; cursor: pointer; font-size: 2.8rem; line-height: 1; position: absolute; right: 14px; top: 10px; }
+  .dv-reviews__modal-title { color: var(--dv-reviews-heading); font-family: var(--font-heading--family); margin: 0 0 18px; }
+  .dv-reviews__form { display: grid; gap: 14px; }
+  .dv-reviews__form label { display: grid; font-size: 1.3rem; font-weight: 700; gap: 6px; }
+  .dv-reviews__form input, .dv-reviews__form select, .dv-reviews__form textarea { border: 1px solid #e8d3ad; border-radius: 8px; font: inherit; padding: 10px; width: 100%; }
+  .dv-reviews__submit { background: var(--dv-reviews-heading); border: 0; border-radius: 999px; color: #fff; cursor: pointer; font-weight: 800; padding: 12px 18px; }
+  .dv-reviews__success { color: #2f6f31; font-weight: 700; margin: 0; }
+  .dv-reviews-modal-open { overflow: hidden; }
+  @media screen and (min-width: 750px) { .dv-reviews { padding-block: var(--dv-reviews-padding-top-desktop) var(--dv-reviews-padding-bottom-desktop); } .dv-reviews__inner { max-width: min(var(--dv-reviews-max-width), 760px); } .dv-reviews__cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } .dv-reviews__summary { margin-inline: 0; } }
+{% endstylesheet %}
+
 {% schema %}
 {
-  "name": "DV Gold Reviews",
-  "tag": "section",
-  "class": "section-dv-gold-reviews",
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  },
+  "name": "DV Gold reviews",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Customer Reviews" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Loved by Tea Drinkers" },
-    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Read what customers are saying about DV Gold, then share your own experience." },
-    { "type": "text", "id": "button_label", "label": "Write review button label", "default": "Write a Review" },
-    { "type": "text", "id": "reviews_label", "label": "Reviews list accessibility label", "default": "Customer reviews" },
-    { "type": "text", "id": "modal_eyebrow", "label": "Modal eyebrow", "default": "Share your experience" },
-    { "type": "text", "id": "modal_title", "label": "Modal title", "default": "Write a Review" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "WORDS FROM OUR CONNOISSEURS" },
+    { "type": "text", "id": "rating", "label": "Rating", "default": "4.86" },
+    { "type": "text", "id": "review_count_text", "label": "Review count text", "default": "Based on 76 Reviews" },
+    { "type": "text", "id": "write_review_label", "label": "Write review label", "default": "Write a Review" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
-    { "type": "color", "id": "background_color", "label": "Background color", "default": "#fbf5ef" },
-    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#9b2d32" },
-    { "type": "color", "id": "text_color", "label": "Text color", "default": "#191512" },
-    { "type": "color", "id": "card_background", "label": "Card background", "default": "#fffaf2" },
-    { "type": "color", "id": "border_color", "label": "Border color", "default": "#f0dfbf" },
-    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#c99700" },
-    { "type": "color", "id": "button_background", "label": "Button background", "default": "#9b2d32" },
-    { "type": "color", "id": "button_text_color", "label": "Button text", "default": "#ffffff" },
-    { "type": "range", "id": "max_width", "min": 360, "max": 1400, "step": 20, "unit": "px", "label": "Maximum width", "default": 1120 },
-    { "type": "range", "id": "mobile_padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Mobile padding top", "default": 76 },
-    { "type": "range", "id": "mobile_padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Mobile padding bottom", "default": 88 },
-    { "type": "range", "id": "desktop_padding_top", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "Desktop padding top", "default": 88 },
-    { "type": "range", "id": "desktop_padding_bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "Desktop padding bottom", "default": 96 }
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#fbf5ee" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#fff4e4" },
+    { "type": "color", "id": "border_color", "label": "Border", "default": "#f0dfbf" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#9b2d32" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#191512" },
+    { "type": "color", "id": "muted_text_color", "label": "Muted text", "default": "#6f665e" },
+    { "type": "color", "id": "star_color", "label": "Stars", "default": "#c99700" },
+    { "type": "range", "id": "max_width", "min": 280, "max": 1200, "step": 20, "unit": "px", "label": "Max width", "default": 320 },
+    { "type": "range", "id": "mobile_padding_top", "min": 0, "max": 140, "step": 4, "unit": "px", "label": "Mobile padding top", "default": 42 },
+    { "type": "range", "id": "mobile_padding_bottom", "min": 0, "max": 140, "step": 4, "unit": "px", "label": "Mobile padding bottom", "default": 36 },
+    { "type": "range", "id": "desktop_padding_top", "min": 0, "max": 180, "step": 4, "unit": "px", "label": "Desktop padding top", "default": 72 },
+    { "type": "range", "id": "desktop_padding_bottom", "min": 0, "max": 180, "step": 4, "unit": "px", "label": "Desktop padding bottom", "default": 72 }
   ],
   "blocks": [
     {
       "type": "review",
       "name": "Review",
       "settings": [
-        { "type": "text", "id": "author", "label": "Author", "default": "Happy customer" },
-        { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "label": "Rating", "default": 5 },
-        { "type": "textarea", "id": "review", "label": "Review", "default": "Beautiful tea, excellent flavor, and a premium experience from the first cup." }
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "The aroma of the DV Gold Tea is unparalleled. It has become a non-negotiable staple in my morning ritual. Truly artisanal quality." },
+        { "type": "text", "id": "author", "label": "Author", "default": "ANANYA SHAH" },
+        { "type": "text", "id": "verified_label", "label": "Verified label", "default": "VERIFIED BUYER" }
       ]
     }
   ],
   "presets": [
     {
-      "name": "DV Gold Reviews",
+      "name": "DV Gold reviews",
       "blocks": [
-        { "type": "review", "settings": { "author": "Amina R.", "rating": 5, "review": "Smooth, aromatic, and packaged beautifully. It has become part of my daily ritual." } },
-        { "type": "review", "settings": { "author": "Daniel K.", "rating": 5, "review": "The quality is consistent and the flavor feels special enough for gifting." } },
-        { "type": "review", "settings": { "author": "Priya S.", "rating": 5, "review": "DV Gold tastes refined and fresh. I love serving it when guests visit." } }
+        { "type": "review", "settings": { "quote": "The aroma of the DV Gold Tea is unparalleled. It has become a non-negotiable staple in my morning ritual. Truly artisanal quality.", "author": "ANANYA SHAH", "verified_label": "VERIFIED BUYER" } },
+        { "type": "review", "settings": { "quote": "The heritage spices reminded me of my grandmother's kitchen. You can tell they are small-batch and fresh. Excellent service too.", "author": "VIKRAM PATEL", "verified_label": "VERIFIED BUYER" } },
+        { "type": "review", "settings": { "quote": "I've tried many luxury tea brands, but The Sensory Archive's commitment to purity is evident from the first sip. Highly recommended.", "author": "PRIYA IYER", "verified_label": "VERIFIED BUYER" } }
       ]
     }
   ]
