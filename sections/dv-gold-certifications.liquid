@@ -160,6 +160,14 @@
       line-height: 1.18;
     }
 
+    #{{ section_anchor }} .dv-certifications__text {
+      max-width: 680px;
+      font-size: clamp(1.8rem, 2vw, 2.2rem);
+      line-height: 1.65;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
     #{{ section_anchor }} .dv-certifications__badges {
       flex-direction: row;
       justify-content: center;
@@ -176,12 +184,6 @@
     #{{ section_anchor }} .dv-certifications__badge-image {
       width: clamp(62px, 7vw, 82px);
       height: clamp(62px, 7vw, 82px);
-    }
-
-    #{{ section_anchor }} .dv-certifications__text {
-      max-width: 680px;
-      font-size: clamp(1.8rem, 2vw, 2.2rem);
-      line-height: 1.65;
     }
   }
 </style>
