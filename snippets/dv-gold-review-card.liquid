@@ -1,0 +1,17 @@
+<article class="dv-reviews__card" role="listitem" {{ block.shopify_attributes }}>
+  <div class="dv-reviews__card-stars" aria-label="5 out of 5 stars">★★★★★</div>
+
+  {% if block.settings.body != blank %}
+    <p class="dv-reviews__body">{{ block.settings.body | escape }}</p>
+  {% endif %}
+
+  <div class="dv-reviews__footer">
+    {% if block.settings.author != blank %}
+      <p class="dv-reviews__author">{{ block.settings.author | escape }}</p>
+    {% endif %}
+
+    <p class="dv-reviews__badge">
+      {{ block.settings.badge | default: section.settings.verified_badge_text | escape }}
+    </p>
+  </div>
+</article>
