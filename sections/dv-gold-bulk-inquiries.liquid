@@ -100,7 +100,8 @@
     justify-content: flex-start;
     gap: 0;
     min-height: 484px;
-    padding: 58px 40px 60px;
+    padding: 58px clamp(22px, 7vw, 40px) 60px;
+    overflow: hidden;
     border: 1px solid var(--dv-bulk-card-border);
     border-radius: 28px;
     background: var(--dv-bulk-card-bg);
@@ -133,16 +134,19 @@
     margin: 0 0 31px;
     color: var(--dv-bulk-heading);
     font-family: var(--font-heading--family);
-    font-size: 3.9rem;
+    max-width: 100%;
+    font-size: clamp(3rem, 10.2vw, 3.9rem);
     font-weight: 700;
     line-height: 1.08;
-    letter-spacing: 0.13em;
+    letter-spacing: clamp(0.06em, 1.2vw, 0.13em);
+    overflow-wrap: anywhere;
     text-transform: uppercase;
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__text {
     color: var(--dv-bulk-text);
-    font-size: 1.95rem;
+    max-width: 100%;
+    font-size: clamp(1.8rem, 5.4vw, 1.95rem);
     font-weight: 500;
     line-height: 1.45;
   }
@@ -157,9 +161,12 @@
 
   #{{ section_anchor }} .dv-bulk-inquiries__text p::before {
     content: "☏";
+    display: inline-block;
+    margin-right: 10px;
     color: var(--dv-bulk-icon);
     font-size: 1.85rem;
     line-height: 1;
+    vertical-align: 0.05em;
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__button {
@@ -170,15 +177,16 @@
     width: min(100%, 338px);
     min-height: 74px;
     margin-top: 42px;
-    padding: 18px 24px;
+    padding: 18px clamp(18px, 6vw, 24px);
     border-radius: 8px;
     background: var(--dv-bulk-button-bg);
     color: var(--dv-bulk-button-text);
     font-family: var(--font-body--family);
-    font-size: 2.3rem;
+    font-size: clamp(1.9rem, 6.1vw, 2.3rem);
     font-weight: 800;
     line-height: 1;
     text-decoration: none;
+    white-space: nowrap;
     transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
     box-shadow: 0 17px 26px rgba(74, 42, 20, 0.11);
   }
@@ -196,8 +204,8 @@
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__button-icon {
-    width: 31px;
-    height: 31px;
+    width: clamp(24px, 7vw, 31px);
+    height: clamp(24px, 7vw, 31px);
     flex: 0 0 auto;
   }
 
@@ -217,6 +225,7 @@
 
     #{{ section_anchor }} .dv-bulk-inquiries__heading {
       font-size: clamp(3.9rem, 4vw, 5.6rem);
+      letter-spacing: 0.13em;
     }
 
     #{{ section_anchor }} .dv-bulk-inquiries__button {
