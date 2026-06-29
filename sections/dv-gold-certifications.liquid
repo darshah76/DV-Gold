@@ -19,6 +19,11 @@
     --dv-certifications-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
     --dv-certifications-desktop-padding-top: {{ section.settings.desktop_padding_top }}px;
     --dv-certifications-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+    --dv-certifications-card-mobile-padding-y: {{ section.settings.card_mobile_padding_y }}px;
+    --dv-certifications-card-mobile-padding-x: {{ section.settings.card_mobile_padding_x }}px;
+    --dv-certifications-card-desktop-padding-y: {{ section.settings.card_desktop_padding_y }}px;
+    --dv-certifications-card-desktop-padding-x: {{ section.settings.card_desktop_padding_x }}px;
+    --dv-certifications-card-border-radius: {{ section.settings.card_border_radius }}px;
   "
 >
   <div class="dv-certifications__panel">
@@ -71,9 +76,9 @@
   #{{ section_anchor }} .dv-certifications__panel {
     width: min(100%, var(--dv-certifications-max-width));
     margin-inline: auto;
-    padding: 51px 18px 56px;
+    padding: var(--dv-certifications-card-mobile-padding-y) var(--dv-certifications-card-mobile-padding-x);
     border: 1px solid var(--dv-certifications-card-border);
-    border-radius: 44px;
+    border-radius: var(--dv-certifications-card-border-radius);
     background: var(--dv-certifications-card-bg);
   }
 
@@ -155,8 +160,8 @@
     }
 
     #{{ section_anchor }} .dv-certifications__panel {
-      padding: clamp(64px, 7vw, 88px) clamp(56px, 8vw, 112px);
-      border-radius: 56px;
+      padding: var(--dv-certifications-card-desktop-padding-y) var(--dv-certifications-card-desktop-padding-x);
+      border-radius: var(--dv-certifications-card-border-radius);
     }
 
     #{{ section_anchor }} .dv-certifications__heading {
@@ -213,6 +218,11 @@
     { "type": "color", "id": "icon_shadow_color", "label": "Badge shadow", "default": "#eadfce" },
     { "type": "color", "id": "placeholder_color", "label": "Placeholder color", "default": "#9b2d32" },
     { "type": "range", "id": "max_width", "label": "Content max width", "min": 360, "max": 1180, "step": 20, "unit": "px", "default": 860 },
+    { "type": "range", "id": "card_mobile_padding_y", "label": "Card mobile vertical padding", "min": 0, "max": 120, "step": 1, "unit": "px", "default": 51 },
+    { "type": "range", "id": "card_mobile_padding_x", "label": "Card mobile horizontal padding", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 18 },
+    { "type": "range", "id": "card_desktop_padding_y", "label": "Card desktop vertical padding", "min": 0, "max": 140, "step": 1, "unit": "px", "default": 88 },
+    { "type": "range", "id": "card_desktop_padding_x", "label": "Card desktop horizontal padding", "min": 0, "max": 160, "step": 1, "unit": "px", "default": 112 },
+    { "type": "range", "id": "card_border_radius", "label": "Card border radius", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 44 },
     { "type": "range", "id": "mobile_padding_top", "label": "Mobile top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 44 },
     { "type": "range", "id": "mobile_padding_bottom", "label": "Mobile bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 40 },
     { "type": "range", "id": "desktop_padding_top", "label": "Desktop top padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 72 },
