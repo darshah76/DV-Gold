@@ -191,10 +191,12 @@
   .dv-community__heading {
     color: var(--dv-community-heading);
     font-family: var(--font-heading--family);
-    font-size: clamp(3.4rem, 9vw, 6.4rem);
+    font-size: clamp(3rem, 8vw, 4.4rem);
     font-weight: 800;
-    letter-spacing: 0.14em;
+    letter-spacing: clamp(0.04em, 1.5vw, 0.08em);
     line-height: 1.12;
+    overflow-wrap: anywhere;
+    word-break: normal;
     margin: 0 auto 24px;
     max-width: 920px;
     padding-inline: 24px;
@@ -314,6 +316,11 @@
   @media screen and (min-width: 750px) {
     .dv-community {
       padding-block: var(--dv-community-padding-top-desktop) var(--dv-community-padding-bottom-desktop);
+    }
+
+    .dv-community__heading {
+      font-size: clamp(3.4rem, 9vw, 6.4rem);
+      letter-spacing: 0.14em;
     }
 
     .dv-community__inner {
