@@ -89,7 +89,7 @@
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__inner {
-    width: min(100% - 48px, var(--dv-bulk-max-width));
+    width: min(calc(100% - clamp(48px, 10vw, 96px)), var(--dv-bulk-max-width));
     margin-inline: auto;
   }
 
@@ -99,8 +99,8 @@
     align-items: center;
     justify-content: flex-start;
     gap: 0;
-    min-height: 484px;
-    padding: 58px clamp(22px, 7vw, 40px) 60px;
+    min-height: clamp(456px, 103.6vw, 484px);
+    padding: clamp(56px, 12.4vw, 58px) clamp(22px, 7vw, 40px) clamp(58px, 12.8vw, 60px);
     overflow: hidden;
     border: 1px solid var(--dv-bulk-card-border);
     border-radius: 28px;
@@ -117,9 +117,9 @@
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__graphic {
-    width: 88px;
-    height: 70px;
-    margin-bottom: 27px;
+    width: clamp(76px, 18.9vw, 88px);
+    height: clamp(61px, 15vw, 70px);
+    margin-bottom: clamp(25px, 5.8vw, 27px);
     color: var(--dv-bulk-icon);
   }
 
@@ -134,11 +134,11 @@
     margin: 0 0 31px;
     color: var(--dv-bulk-heading);
     font-family: var(--font-heading--family);
-    max-width: 100%;
-    font-size: clamp(3rem, 10.2vw, 3.9rem);
+    max-width: 8.8em;
+    font-size: clamp(3.2rem, 8.35vw, 3.9rem);
     font-weight: 700;
-    line-height: 1.08;
-    letter-spacing: clamp(0.06em, 1.2vw, 0.13em);
+    line-height: 1.12;
+    letter-spacing: clamp(0.08em, 1.05vw, 0.12em);
     overflow-wrap: anywhere;
     text-transform: uppercase;
   }
@@ -146,7 +146,7 @@
   #{{ section_anchor }} .dv-bulk-inquiries__text {
     color: var(--dv-bulk-text);
     max-width: 100%;
-    font-size: clamp(1.8rem, 5.4vw, 1.95rem);
+    font-size: clamp(1.65rem, 4.25vw, 1.95rem);
     font-weight: 500;
     line-height: 1.45;
   }
@@ -155,18 +155,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 9px;
     margin: 0;
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__text p::before {
-    content: "☏";
+    content: "";
     display: inline-block;
-    margin-right: 10px;
-    color: var(--dv-bulk-icon);
-    font-size: 1.85rem;
-    line-height: 1;
-    vertical-align: 0.05em;
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+    background-color: var(--dv-bulk-icon);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='black' d='M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.3-.3.75-.4 1.14-.27 1.25.41 2.6.63 3.95.63.61 0 1.1.49 1.1 1.1v3.48c0 .61-.49 1.1-1.1 1.1C10.56 21.72 2.5 13.66 2.5 3.72c0-.61.49-1.1 1.1-1.1h3.5c.61 0 1.1.49 1.1 1.1 0 1.37.22 2.7.63 3.96.12.38.03.82-.28 1.13l-1.93 1.98Zm.52 8.79c.44 0 .8-.36.8-.8s-.36-.8-.8-.8-.8.36-.8.8.36.8.8.8Zm-2.64-2.7c.35 0 .64-.29.64-.64s-.29-.64-.64-.64-.64.29-.64.64.29.64.64.64Zm13.08-9.9c.44 0 .8-.36.8-.8s-.36-.8-.8-.8-.8.36-.8.8.36.8.8.8Zm-2.64-2.7c.35 0 .64-.29.64-.64S15.29 3 14.94 3s-.64.29-.64.64.29.64.64.64Z'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='black' d='M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.3-.3.75-.4 1.14-.27 1.25.41 2.6.63 3.95.63.61 0 1.1.49 1.1 1.1v3.48c0 .61-.49 1.1-1.1 1.1C10.56 21.72 2.5 13.66 2.5 3.72c0-.61.49-1.1 1.1-1.1h3.5c.61 0 1.1.49 1.1 1.1 0 1.37.22 2.7.63 3.96.12.38.03.82-.28 1.13l-1.93 1.98Zm.52 8.79c.44 0 .8-.36.8-.8s-.36-.8-.8-.8-.8.36-.8.8.36.8.8.8Zm-2.64-2.7c.35 0 .64-.29.64-.64s-.29-.64-.64-.64-.64.29-.64.64.29.64.64.64Zm13.08-9.9c.44 0 .8-.36.8-.8s-.36-.8-.8-.8-.8.36-.8.8.36.8.8.8Zm-2.64-2.7c.35 0 .64-.29.64-.64S15.29 3 14.94 3s-.64.29-.64.64.29.64.64.64Z'/%3E%3C/svg%3E") center / contain no-repeat;
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__button {
@@ -175,8 +176,8 @@
     justify-content: center;
     gap: 13px;
     width: min(100%, 338px);
-    min-height: 74px;
-    margin-top: 42px;
+    min-height: clamp(66px, 15.85vw, 74px);
+    margin-top: clamp(38px, 9vw, 42px);
     padding: 18px clamp(18px, 6vw, 24px);
     border-radius: 8px;
     background: var(--dv-bulk-button-bg);
@@ -215,15 +216,16 @@
     }
 
     #{{ section_anchor }} .dv-bulk-inquiries__inner {
-      width: min(100% - 64px, var(--dv-bulk-max-width));
+      width: min(calc(100% - 64px), var(--dv-bulk-max-width));
     }
 
     #{{ section_anchor }} .dv-bulk-inquiries__card {
       min-height: auto;
-      padding: clamp(52px, 5vw, 70px);
+      padding: clamp(56px, 6vw, 86px);
     }
 
     #{{ section_anchor }} .dv-bulk-inquiries__heading {
+      max-width: 12em;
       font-size: clamp(3.9rem, 4vw, 5.6rem);
       letter-spacing: 0.13em;
     }
@@ -257,7 +259,7 @@
     { "type": "color", "id": "text_color", "label": "Text color", "default": "#191512" },
     { "type": "color", "id": "button_background", "label": "Button background", "default": "#25d366" },
     { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#ffffff" },
-    { "type": "range", "id": "max_width", "min": 360, "max": 1400, "step": 20, "unit": "px", "label": "Maximum width", "default": 420 },
+    { "type": "range", "id": "max_width", "min": 360, "max": 1400, "step": 20, "unit": "px", "label": "Maximum width", "default": 760 },
     { "type": "range", "id": "mobile_padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Mobile padding top", "default": 108 },
     { "type": "range", "id": "mobile_padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Mobile padding bottom", "default": 76 },
     { "type": "range", "id": "desktop_padding_top", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "Desktop padding top", "default": 72 },
