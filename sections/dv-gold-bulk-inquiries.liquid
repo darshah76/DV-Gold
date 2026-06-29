@@ -20,6 +20,7 @@
     --dv-bulk-card-bg: {{ section.settings.card_background }};
     --dv-bulk-card-border: {{ section.settings.card_border_color }};
     --dv-bulk-heading: {{ section.settings.heading_color }};
+    --dv-bulk-icon: {{ section.settings.icon_color }};
     --dv-bulk-text: {{ section.settings.text_color }};
     --dv-bulk-button-bg: {{ section.settings.button_background }};
     --dv-bulk-button-text: {{ section.settings.button_text_color }};
@@ -33,6 +34,14 @@
   <div class="dv-bulk-inquiries__inner">
     <div class="dv-bulk-inquiries__card">
       <div class="dv-bulk-inquiries__content">
+        <div class="dv-bulk-inquiries__graphic" aria-hidden="true">
+          <svg viewBox="0 0 96 76" focusable="false">
+            <path d="M8 8h52v36H25L8 60V8Z" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>
+            <path d="M61 23h14v36L58 44h3V23Z" fill="currentColor"/>
+            <path d="M60 23h14v36L58 44h2V23Z" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
         {% if section.settings.heading != blank %}
           <h2 class="dv-bulk-inquiries__heading">{{ section.settings.heading }}</h2>
         {% endif %}
@@ -80,71 +89,104 @@
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__inner {
-    width: min(100% - 32px, var(--dv-bulk-max-width));
+    width: min(100% - 48px, var(--dv-bulk-max-width));
     margin-inline: auto;
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__card {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 28px;
-    padding: clamp(28px, 6vw, 56px);
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    min-height: 484px;
+    padding: 58px 40px 60px;
     border: 1px solid var(--dv-bulk-card-border);
-    border-radius: 24px;
+    border-radius: 28px;
     background: var(--dv-bulk-card-bg);
-    box-shadow: 0 18px 45px rgba(74, 42, 20, 0.08);
+    box-shadow: none;
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     max-width: 720px;
+    text-align: center;
+  }
+
+  #{{ section_anchor }} .dv-bulk-inquiries__graphic {
+    width: 88px;
+    height: 70px;
+    margin-bottom: 27px;
+    color: var(--dv-bulk-icon);
+  }
+
+  #{{ section_anchor }} .dv-bulk-inquiries__graphic svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__heading {
-    margin: 0 0 14px;
+    margin: 0 0 31px;
     color: var(--dv-bulk-heading);
     font-family: var(--font-heading--family);
-    font-size: clamp(2.8rem, 7vw, 4.8rem);
+    font-size: 3.9rem;
     font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.02em;
+    line-height: 1.08;
+    letter-spacing: 0.13em;
     text-transform: uppercase;
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__text {
     color: var(--dv-bulk-text);
-    font-size: clamp(1.55rem, 3.8vw, 1.9rem);
-    line-height: 1.55;
+    font-size: 1.95rem;
+    font-weight: 500;
+    line-height: 1.45;
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__text p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     margin: 0;
+  }
+
+  #{{ section_anchor }} .dv-bulk-inquiries__text p::before {
+    content: "☏";
+    color: var(--dv-bulk-icon);
+    font-size: 1.85rem;
+    line-height: 1;
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    min-height: 52px;
-    padding: 14px 24px;
-    border-radius: 999px;
+    gap: 13px;
+    width: min(100%, 338px);
+    min-height: 74px;
+    margin-top: 42px;
+    padding: 18px 24px;
+    border-radius: 8px;
     background: var(--dv-bulk-button-bg);
     color: var(--dv-bulk-button-text);
     font-family: var(--font-body--family);
-    font-size: 1.6rem;
+    font-size: 2.3rem;
     font-weight: 800;
     line-height: 1;
     text-decoration: none;
     transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
-    box-shadow: 0 10px 24px rgba(37, 211, 102, 0.25);
+    box-shadow: 0 17px 26px rgba(74, 42, 20, 0.11);
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__button:hover,
   #{{ section_anchor }} .dv-bulk-inquiries__button:focus-visible {
     transform: translateY(-2px);
-    box-shadow: 0 14px 30px rgba(37, 211, 102, 0.32);
+    box-shadow: 0 20px 32px rgba(74, 42, 20, 0.15);
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__button--disabled {
@@ -154,8 +196,8 @@
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__button-icon {
-    width: 22px;
-    height: 22px;
+    width: 31px;
+    height: 31px;
     flex: 0 0 auto;
   }
 
@@ -164,9 +206,17 @@
       padding-block: var(--dv-bulk-desktop-padding-top) var(--dv-bulk-desktop-padding-bottom);
     }
 
+    #{{ section_anchor }} .dv-bulk-inquiries__inner {
+      width: min(100% - 64px, var(--dv-bulk-max-width));
+    }
+
     #{{ section_anchor }} .dv-bulk-inquiries__card {
-      flex-direction: row;
-      align-items: center;
+      min-height: auto;
+      padding: clamp(52px, 5vw, 70px);
+    }
+
+    #{{ section_anchor }} .dv-bulk-inquiries__heading {
+      font-size: clamp(3.9rem, 4vw, 5.6rem);
     }
 
     #{{ section_anchor }} .dv-bulk-inquiries__button {
@@ -185,21 +235,22 @@
   },
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "Bulk Inquiries" },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Planning a large order or need custom pricing? Chat with us on WhatsApp and our team will help you quickly.</p>" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>For B2B &amp; wholesale partnerships</p>" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Chat on WhatsApp" },
     { "type": "text", "id": "whatsapp_number", "label": "WhatsApp number", "default": "919876543210" },
     { "type": "text", "id": "whatsapp_message", "label": "WhatsApp message", "default": "Hello, I would like to inquire about bulk orders." },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
-    { "type": "color", "id": "background_color", "label": "Background color", "default": "#fbf1e4" },
-    { "type": "color", "id": "card_background", "label": "Card background", "default": "#fffaf2" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#fbf5ef" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#fbf0df" },
     { "type": "color", "id": "card_border_color", "label": "Card border color", "default": "#f0dfbf" },
-    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#9b2d32" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#191512" },
+    { "type": "color", "id": "icon_color", "label": "Icon color", "default": "#c99700" },
     { "type": "color", "id": "text_color", "label": "Text color", "default": "#191512" },
     { "type": "color", "id": "button_background", "label": "Button background", "default": "#25d366" },
     { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#ffffff" },
-    { "type": "range", "id": "max_width", "min": 720, "max": 1400, "step": 20, "unit": "px", "label": "Maximum width", "default": 1180 },
-    { "type": "range", "id": "mobile_padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Mobile padding top", "default": 48 },
-    { "type": "range", "id": "mobile_padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Mobile padding bottom", "default": 48 },
+    { "type": "range", "id": "max_width", "min": 360, "max": 1400, "step": 20, "unit": "px", "label": "Maximum width", "default": 420 },
+    { "type": "range", "id": "mobile_padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Mobile padding top", "default": 108 },
+    { "type": "range", "id": "mobile_padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Mobile padding bottom", "default": 76 },
     { "type": "range", "id": "desktop_padding_top", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "Desktop padding top", "default": 72 },
     { "type": "range", "id": "desktop_padding_bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "Desktop padding bottom", "default": 72 }
   ],
