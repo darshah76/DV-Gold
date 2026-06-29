@@ -1,8 +1,3 @@
-{% liquid
-  assign quick_links = section.blocks | where: 'type', 'quick_link'
-  assign policy_links = section.blocks | where: 'type', 'policy_link'
-%}
-
 <footer
   class="dv-footer"
   style="
@@ -50,18 +45,50 @@
       <div class="dv-footer__column">
         <h2 class="dv-footer__heading">{{ section.settings.quick_links_heading }}</h2>
         <ul class="dv-footer__list">
-          {% for block in quick_links %}
-            <li {{ block.shopify_attributes }}><a href="{{ block.settings.url | default: routes.root_url }}">{{ block.settings.label }}</a></li>
+          {% liquid
+            assign has_quick_links = false
+          %}
+          {% for block in section.blocks %}
+            {% if block.type == 'quick_link' %}
+              {% liquid
+                assign has_quick_links = true
+                assign link_label = block.settings.label | default: 'Quick link'
+                assign link_url = block.settings.url | default: routes.root_url
+              %}
+              <li {{ block.shopify_attributes }}><a href="{{ link_url }}">{{ link_label }}</a></li>
+            {% endif %}
           {% endfor %}
+          {% unless has_quick_links %}
+            <li><a href="{{ section.settings.quick_link_1_url | default: routes.root_url }}">{{ section.settings.quick_link_1_label }}</a></li>
+            <li><a href="{{ section.settings.quick_link_2_url | default: routes.root_url }}">{{ section.settings.quick_link_2_label }}</a></li>
+            <li><a href="{{ section.settings.quick_link_3_url | default: routes.root_url }}">{{ section.settings.quick_link_3_label }}</a></li>
+            <li><a href="{{ section.settings.quick_link_4_url | default: routes.root_url }}">{{ section.settings.quick_link_4_label }}</a></li>
+          {% endunless %}
         </ul>
       </div>
 
       <div class="dv-footer__column">
         <h2 class="dv-footer__heading">{{ section.settings.policies_heading }}</h2>
         <ul class="dv-footer__list">
-          {% for block in policy_links %}
-            <li {{ block.shopify_attributes }}><a href="{{ block.settings.url | default: routes.root_url }}">{{ block.settings.label }}</a></li>
+          {% liquid
+            assign has_policy_links = false
+          %}
+          {% for block in section.blocks %}
+            {% if block.type == 'policy_link' %}
+              {% liquid
+                assign has_policy_links = true
+                assign link_label = block.settings.label | default: 'Policy link'
+                assign link_url = block.settings.url | default: routes.root_url
+              %}
+              <li {{ block.shopify_attributes }}><a href="{{ link_url }}">{{ link_label }}</a></li>
+            {% endif %}
           {% endfor %}
+          {% unless has_policy_links %}
+            <li><a href="{{ section.settings.policy_link_1_url | default: routes.root_url }}">{{ section.settings.policy_link_1_label }}</a></li>
+            <li><a href="{{ section.settings.policy_link_2_url | default: routes.root_url }}">{{ section.settings.policy_link_2_label }}</a></li>
+            <li><a href="{{ section.settings.policy_link_3_url | default: routes.root_url }}">{{ section.settings.policy_link_3_label }}</a></li>
+            <li><a href="{{ section.settings.policy_link_4_url | default: routes.root_url }}">{{ section.settings.policy_link_4_label }}</a></li>
+          {% endunless %}
         </ul>
       </div>
 
@@ -437,7 +464,23 @@
     { "type": "text", "id": "contact_label", "label": "Contact button label", "default": "Contact" },
     { "type": "url", "id": "contact_url", "label": "Contact button link" },
     { "type": "text", "id": "quick_links_heading", "label": "Quick links heading", "default": "Quick Links" },
+    { "type": "text", "id": "quick_link_1_label", "label": "Fallback quick link 1 label", "default": "Tea Collection" },
+    { "type": "url", "id": "quick_link_1_url", "label": "Fallback quick link 1 URL" },
+    { "type": "text", "id": "quick_link_2_label", "label": "Fallback quick link 2 label", "default": "Heritage Spices" },
+    { "type": "url", "id": "quick_link_2_url", "label": "Fallback quick link 2 URL" },
+    { "type": "text", "id": "quick_link_3_label", "label": "Fallback quick link 3 label", "default": "Premium Dry Fruits" },
+    { "type": "url", "id": "quick_link_3_url", "label": "Fallback quick link 3 URL" },
+    { "type": "text", "id": "quick_link_4_label", "label": "Fallback quick link 4 label", "default": "Farari Items" },
+    { "type": "url", "id": "quick_link_4_url", "label": "Fallback quick link 4 URL" },
     { "type": "text", "id": "policies_heading", "label": "Policies heading", "default": "Policies" },
+    { "type": "text", "id": "policy_link_1_label", "label": "Fallback policy link 1 label", "default": "Privacy Policy" },
+    { "type": "url", "id": "policy_link_1_url", "label": "Fallback policy link 1 URL" },
+    { "type": "text", "id": "policy_link_2_label", "label": "Fallback policy link 2 label", "default": "Shipping Policy" },
+    { "type": "url", "id": "policy_link_2_url", "label": "Fallback policy link 2 URL" },
+    { "type": "text", "id": "policy_link_3_label", "label": "Fallback policy link 3 label", "default": "Returns & Cancellation" },
+    { "type": "url", "id": "policy_link_3_url", "label": "Fallback policy link 3 URL" },
+    { "type": "text", "id": "policy_link_4_label", "label": "Fallback policy link 4 label", "default": "Refund Policy" },
+    { "type": "url", "id": "policy_link_4_url", "label": "Fallback policy link 4 URL" },
     { "type": "text", "id": "newsletter_heading", "label": "Newsletter heading", "default": "Newsletter" },
     { "type": "richtext", "id": "newsletter_text", "label": "Newsletter text", "default": "<p>Join our inner circle for exclusive seasonal releases and stories.</p>" },
     { "type": "text", "id": "newsletter_placeholder", "label": "Email placeholder", "default": "Enter your email address" },
