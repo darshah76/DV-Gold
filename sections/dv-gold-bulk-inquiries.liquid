@@ -184,16 +184,16 @@
     align-items: center;
     justify-content: center;
     gap: 13px;
-    width: min(100%, 338px);
-    max-width: 338px;
+    width: min(100%, 360px);
+    max-width: 360px;
     min-height: clamp(66px, 15.85vw, 74px);
     margin-top: clamp(38px, 9vw, 42px);
-    padding: 18px clamp(18px, 6vw, 24px);
+    padding: 18px clamp(22px, 6vw, 30px);
     border-radius: 8px;
     background: var(--dv-bulk-button-bg);
     color: var(--dv-bulk-button-text);
     font-family: var(--font-body--family);
-    font-size: clamp(1.9rem, 6.1vw, 2.3rem);
+    font-size: clamp(1.8rem, 5.4vw, 2.2rem);
     font-weight: 800;
     line-height: 1;
     text-decoration: none;
@@ -215,9 +215,11 @@
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__button-icon {
-    width: clamp(24px, 7vw, 31px);
-    height: clamp(24px, 7vw, 31px);
+    display: block;
+    width: clamp(20px, 5vw, 26px);
+    height: clamp(20px, 5vw, 26px);
     flex: 0 0 auto;
+    overflow: visible;
   }
 
   @media screen and (min-width: 750px) {
