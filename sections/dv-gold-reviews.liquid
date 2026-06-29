@@ -2,6 +2,7 @@
   assign section_anchor = 'dv-gold-reviews-' | append: section.id
   assign reviews_per_page = section.settings.reviews_per_page
   assign total_reviews = section.blocks.size
+  assign section_heading = section.settings.heading | default: 'WORDS FROM OUR CONNOISSEURS'
   assign total_pages = total_reviews | plus: reviews_per_page | minus: 1 | divided_by: reviews_per_page
   if total_pages < 1
     assign total_pages = 1
@@ -31,8 +32,8 @@
   data-review-total-pages="{{ total_pages }}"
 >
   <div class="dv-reviews__inner">
-    {% if section.settings.heading != blank %}
-      <h2 class="dv-reviews__heading">{{ section.settings.heading | escape }}</h2>
+    {% if section_heading != blank %}
+      <h2 class="dv-reviews__heading">{{ section_heading | escape }}</h2>
     {% endif %}
 
     {% if section.settings.subheading != blank %}
@@ -265,7 +266,7 @@
     "groups": ["header", "footer"]
   },
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Reviews" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "WORDS FROM OUR CONNOISSEURS" },
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Trusted by tea lovers around the world." },
     { "type": "range", "id": "reviews_per_page", "min": 1, "max": 12, "step": 1, "label": "Reviews per page", "default": 3 },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
