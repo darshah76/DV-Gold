@@ -157,14 +157,19 @@ dialog {
   color: var(--color-foreground);
 }
 
-p,
+p {
+  overflow-wrap: break-word;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  overflow-wrap: break-word;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
 }
 
 .wrap-text {
