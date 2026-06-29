@@ -286,61 +286,6 @@
         "desktop_padding_bottom": 84
       }
     },
-    "dv_gold_certifications": {
-      "type": "dv-gold-certifications",
-      "blocks": {
-        "certification_iso": {
-          "type": "certification",
-          "settings": {
-            "placeholder_text": "ISO",
-            "alt_text": "ISO 9001 certification logo"
-          }
-        },
-        "certification_fssai": {
-          "type": "certification",
-          "settings": {
-            "placeholder_text": "FSSAI",
-            "alt_text": "FSSAI registration logo"
-          }
-        },
-        "certification_gmp": {
-          "type": "certification",
-          "settings": {
-            "placeholder_text": "GMP",
-            "alt_text": "GMP certification logo"
-          }
-        }
-      },
-      "block_order": [
-        "certification_iso",
-        "certification_fssai",
-        "certification_gmp"
-      ],
-      "name": "DV Gold certifications",
-      "settings": {
-        "heading": "CERTIFICATIONS\n& REGISTRATIONS",
-        "text": "<p>Every product undergoes rigorous quality checks to ensure it meets our high standards. From sourcing to packaging, we maintain consistency, safety, and excellence at every step.</p>",
-        "color_scheme": "scheme-1",
-        "page_background": "#fbf5ef",
-        "card_background": "#fbf1e4",
-        "card_border_color": "#f0dfbf",
-        "heading_color": "#9b2d32",
-        "heading_desktop_size": 68,
-        "heading_mobile_size": 44,
-        "heading_letter_spacing": 4,
-        "heading_max_width": 720,
-        "heading_transform": "uppercase",
-        "text_color": "#000000",
-        "icon_background": "#ffffff",
-        "icon_shadow_color": "#eadfce",
-        "placeholder_color": "#9b2d32",
-        "max_width": 860,
-        "mobile_padding_top": 44,
-        "mobile_padding_bottom": 40,
-        "desktop_padding_top": 72,
-        "desktop_padding_bottom": 72
-      }
-    },
     "product_list_fa6P9H": {
       "type": "dv-gold-all-products",
       "name": "DV Gold all products",
@@ -495,6 +440,61 @@
         "desktop_padding_bottom": 72
       }
     },
+    "dv_gold_certifications": {
+      "type": "dv-gold-certifications",
+      "blocks": {
+        "certification_iso": {
+          "type": "certification",
+          "settings": {
+            "placeholder_text": "ISO",
+            "alt_text": "ISO 9001 certification logo"
+          }
+        },
+        "certification_fssai": {
+          "type": "certification",
+          "settings": {
+            "placeholder_text": "FSSAI",
+            "alt_text": "FSSAI registration logo"
+          }
+        },
+        "certification_gmp": {
+          "type": "certification",
+          "settings": {
+            "placeholder_text": "GMP",
+            "alt_text": "GMP certification logo"
+          }
+        }
+      },
+      "block_order": [
+        "certification_iso",
+        "certification_fssai",
+        "certification_gmp"
+      ],
+      "name": "DV Gold certifications",
+      "settings": {
+        "heading": "CERTIFICATIONS\n& REGISTRATIONS",
+        "text": "<p>Every product undergoes rigorous quality checks to ensure it meets our high standards. From sourcing to packaging, we maintain consistency, safety, and excellence at every step.</p>",
+        "color_scheme": "scheme-1",
+        "page_background": "#fbf5ef",
+        "card_background": "#fbf1e4",
+        "card_border_color": "#f0dfbf",
+        "heading_color": "#9b2d32",
+        "heading_desktop_size": 68,
+        "heading_mobile_size": 44,
+        "heading_letter_spacing": 4,
+        "heading_max_width": 720,
+        "heading_transform": "uppercase",
+        "text_color": "#000000",
+        "icon_background": "#ffffff",
+        "icon_shadow_color": "#eadfce",
+        "placeholder_color": "#9b2d32",
+        "max_width": 860,
+        "mobile_padding_top": 44,
+        "mobile_padding_bottom": 40,
+        "desktop_padding_top": 72,
+        "desktop_padding_bottom": 72
+      }
+    },
     "dv_gold_faq": {
       "type": "dv-gold-faq",
       "blocks": {
@@ -556,12 +556,12 @@
     "dv_gold_shop_by_category",
     "dv_gold_seasonal_specials",
     "dv_gold_promise",
-    "dv_gold_certifications",
     "product_list_fa6P9H",
     "dv_gold_features_marquee",
     "dv_gold_history",
     "dv_gold_community_carousel",
     "dv_gold_bulk_inquiries",
+    "dv_gold_certifications",
     "dv_gold_faq"
   ]
 }
