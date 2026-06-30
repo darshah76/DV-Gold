@@ -161,6 +161,7 @@
           "type": "combo",
           "settings": {
             "product": "",
+            "image": "shopify://shop_images/Container.png",
             "badge_text": "HOT SELLING COMBO",
             "title": "FESTIVE HERITAGE HAMPER",
             "description": "<p>A curated blend of premium Tea, Spices and Handpicked Dry Fruits for special occasions.</p>",
