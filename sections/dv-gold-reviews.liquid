@@ -177,7 +177,7 @@
     margin: 0 auto 24px;
     color: var(--dv-reviews-heading);
     font-family: var(--font-heading--family);
-    font-size: clamp(2.6rem, 8.6vw, 3rem);
+    font-size: var(--dv-section-heading-size);
     font-weight: 800;
     line-height: 1.05;
     text-align: center;
@@ -425,7 +425,7 @@
   @media screen and (min-width: 750px) {
     #{{ section_anchor }} { padding-block: var(--dv-reviews-desktop-padding-top) var(--dv-reviews-desktop-padding-bottom); }
     #{{ section_anchor }} .dv-reviews__inner { width: min(calc(100% - 48px), var(--dv-reviews-max-width)); }
-    #{{ section_anchor }} .dv-reviews__heading { max-width: none; margin-block-end: 18px; font-size: clamp(4.4rem, 7vw, 5.8rem); }
+    #{{ section_anchor }} .dv-reviews__heading { max-width: none; margin-block-end: 18px; font-size: var(--dv-section-heading-size); }
     #{{ section_anchor }} .dv-reviews__subheading { display: block; margin-block-end: 26px; font-size: 1.7rem; }
     #{{ section_anchor }} .dv-reviews__summary { flex-direction: row; gap: 24px; justify-content: space-between; margin-block-end: 28px; padding-inline: 4px; padding-block-end: 0; text-align: left; }
     #{{ section_anchor }} .dv-reviews__summary::after { content: none; }
@@ -447,7 +447,7 @@
 
   @media screen and (min-width: 990px) {
     #{{ section_anchor }} .dv-reviews__inner { width: min(calc(100% - 72px), var(--dv-reviews-max-width)); }
-    #{{ section_anchor }} .dv-reviews__heading { margin-block-end: 22px; font-size: clamp(5rem, 5.5vw, 6.4rem); }
+    #{{ section_anchor }} .dv-reviews__heading { margin-block-end: 22px; font-size: var(--dv-section-heading-size); }
     #{{ section_anchor }} .dv-reviews__summary { margin-block-end: 34px; }
     #{{ section_anchor }} .dv-reviews__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
     #{{ section_anchor }} .dv-reviews__card { padding: 28px; }
@@ -457,7 +457,7 @@
   }
 
   @media screen and (min-width: 1200px) {
-    #{{ section_anchor }} .dv-reviews__heading { font-size: 6.2rem; }
+    #{{ section_anchor }} .dv-reviews__heading { font-size: var(--dv-section-heading-size); }
     #{{ section_anchor }} .dv-reviews__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
 </style>
