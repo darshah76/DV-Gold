@@ -13,80 +13,12 @@
   "sections": {
     "footer": {
       "type": "footer",
-      "blocks": {
-        "quick_tea": {
-          "type": "quick_link",
-          "settings": {
-            "label": "Tea Collection",
-            "url": ""
-          }
-        },
-        "quick_spices": {
-          "type": "quick_link",
-          "settings": {
-            "label": "Heritage Spices",
-            "url": ""
-          }
-        },
-        "quick_dry_fruits": {
-          "type": "quick_link",
-          "settings": {
-            "label": "Premium Dry Fruits",
-            "url": ""
-          }
-        },
-        "quick_farari": {
-          "type": "quick_link",
-          "settings": {
-            "label": "Farari Items",
-            "url": ""
-          }
-        },
-        "policy_privacy": {
-          "type": "policy_link",
-          "settings": {
-            "label": "Privacy Policy",
-            "url": ""
-          }
-        },
-        "policy_shipping": {
-          "type": "policy_link",
-          "settings": {
-            "label": "Shipping Policy",
-            "url": ""
-          }
-        },
-        "policy_returns": {
-          "type": "policy_link",
-          "settings": {
-            "label": "Returns & Cancellation",
-            "url": ""
-          }
-        },
-        "policy_refund": {
-          "type": "policy_link",
-          "settings": {
-            "label": "Refund Policy",
-            "url": ""
-          }
-        }
-      },
-      "block_order": [
-        "quick_tea",
-        "quick_spices",
-        "quick_dry_fruits",
-        "quick_farari",
-        "policy_privacy",
-        "policy_shipping",
-        "policy_returns",
-        "policy_refund"
-      ],
-      "name": "DV Gold footer",
+      "name": "t:names.footer",
       "settings": {
-        "logo": "",
+        "logo": "shopify://shop_images/Container_1.png",
         "logo_link": "",
         "tagline": "<p>Curating the world's finest sensory experiences through artisanal teas, heritage spices, and premium dry fruits since 1957.</p>",
-        "background_color": "#0d0c0b",
+        "background_color": "{{ settings.color_palette.color1 }}",
         "text_color": "#f7f0e2",
         "muted_text_color": "#b4b0a9",
         "accent_color": "#d9a900",
@@ -97,7 +29,23 @@
         "contact_label": "Contact",
         "contact_url": "",
         "quick_links_heading": "Quick Links",
+        "quick_link_1_label": "Tea Collection",
+        "quick_link_1_url": "",
+        "quick_link_2_label": "Heritage Spices",
+        "quick_link_2_url": "",
+        "quick_link_3_label": "Premium Dry Fruits",
+        "quick_link_3_url": "",
+        "quick_link_4_label": "Farari Items",
+        "quick_link_4_url": "",
         "policies_heading": "Policies",
+        "policy_link_1_label": "Privacy Policy",
+        "policy_link_1_url": "",
+        "policy_link_2_label": "Shipping Policy",
+        "policy_link_2_url": "",
+        "policy_link_3_label": "Returns & Cancellation",
+        "policy_link_3_url": "",
+        "policy_link_4_label": "Refund Policy",
+        "policy_link_4_url": "",
         "newsletter_heading": "Newsletter",
         "newsletter_text": "<p>Join our inner circle for exclusive seasonal releases and stories.</p>",
         "newsletter_placeholder": "Enter your email address",
@@ -116,9 +64,68 @@
         "mobile_chat_label": "WhatsApp",
         "mobile_chat_url": ""
       }
+    },
+    "utilities": {
+      "type": "footer-utilities",
+      "blocks": {
+        "copyright": {
+          "type": "footer-copyright",
+          "settings": {
+            "show_powered_by": true,
+            "text_color": "",
+            "font_size": "0.75rem",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "policy_list": {
+          "type": "footer-policy-list",
+          "settings": {
+            "text_color": "",
+            "font_size": "0.75rem",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "social_icons": {
+          "type": "social-links",
+          "settings": {
+            "icon_color": "",
+            "facebook_url": "https://www.facebook.com",
+            "instagram_url": "https://www.instagram.com",
+            "youtube_url": "https://www.youtube.com",
+            "tiktok_url": "https://www.tiktok.com",
+            "twitter_url": "https://www.twitter.com",
+            "threads_url": "",
+            "linkedin_url": "",
+            "bluesky_url": "",
+            "snapchat_url": "",
+            "pinterest_url": "",
+            "tumblr_url": "",
+            "vimeo_url": "",
+            "custom_url": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "copyright",
+        "policy_list",
+        "social_icons"
+      ],
+      "settings": {
+        "section_width": "page-width",
+        "gap": 24,
+        "background_color": "{{ settings.color_palette.color1 }}",
+        "divider_thickness": 1,
+        "divider_color": "",
+        "padding-block-start": 12,
+        "padding-block-end": 16
+      }
     }
   },
   "order": [
-    "footer"
+    "footer",
+    "utilities"
   ]
 }
