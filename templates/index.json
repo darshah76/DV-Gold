@@ -15,6 +15,7 @@
         "slide_1": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_azvasuazvasuazva_Medium_9c8d81c0-cc29-4555-9b33-409c0101a6c3.jpg",
             "image_alt": "DV Gold tea cleanest tea hero banner"
           }
         },
@@ -89,20 +90,10 @@
             "card_background": "#fbefd9"
           }
         },
-        "category_powder": {
-          "type": "category",
-          "settings": {
-            "title": "POWDER",
-            "button_label": "SHOP NOW",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "card_rotation": 3,
-            "card_background": "#fbefd9"
-          }
-        },
         "category_dry_fruits": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/image_16.png",
             "title": "DRY FRUITS",
             "button_label": "SHOP NOW",
             "link": "shopify://collections/all",
@@ -127,7 +118,6 @@
       "block_order": [
         "category_tea",
         "category_spice",
-        "category_powder",
         "category_dry_fruits",
         "category_farali_items"
       ],
@@ -176,6 +166,7 @@
           "type": "side_product",
           "settings": {
             "product": "",
+            "image": "shopify://shop_images/WhatsAppImage2026-04-10at18.47.33_1.jpg",
             "title": "DV GOLD TEA",
             "description": "<p>Premium quality tea blend</p>",
             "price_text": "₹320.00",
@@ -188,7 +179,7 @@
           "type": "side_product",
           "settings": {
             "product": "",
-            "image": "shopify://shop_images/WhatsAppImage2026-04-10at18.47.33_1_eaa40aae-1609-4f84-812f-db5529688b46.jpg",
+            "image": "shopify://shop_images/WhatsAppImage2026-04-10at18.47.33_1.jpg",
             "title": "DV GOLD TEA",
             "description": "<p>Premium quality tea blend</p>",
             "price_text": "₹320.00",
