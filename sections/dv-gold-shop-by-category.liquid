@@ -123,12 +123,13 @@
     margin: 0 0 clamp(46px, 12vw, 92px);
     color: var(--dv-category-heading);
     font-family: var(--font-heading--family);
-    font-size: clamp(2.8rem, 8vw, 4.4rem);
+    font-size: min(var(--dv-section-heading-size), clamp(2.4rem, 7.2vw, 4.4rem));
     font-weight: 700;
     line-height: 1;
     letter-spacing: -0.03em;
     text-align: center;
     text-transform: uppercase;
+    white-space: nowrap;
   }
 
   #{{ section_anchor }} .dv-category__list {

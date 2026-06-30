@@ -88,7 +88,7 @@
     margin-inline: auto;
     color: var(--dv-certifications-heading);
     font-family: var(--font-heading--family);
-    font-size: clamp(2.8rem, 8.5vw, var(--dv-certifications-heading-mobile-size));
+    font-size: min(var(--dv-section-heading-size), var(--dv-certifications-heading-mobile-size));
     font-weight: 800;
     line-height: 1.33;
     letter-spacing: var(--dv-certifications-heading-letter-spacing);
@@ -167,7 +167,7 @@
     }
 
     #{{ section_anchor }} .dv-certifications__heading {
-      font-size: clamp(var(--dv-certifications-heading-mobile-size), 5.4vw, var(--dv-certifications-heading-desktop-size));
+      font-size: min(var(--dv-section-heading-size), var(--dv-certifications-heading-desktop-size));
       line-height: 1.18;
     }
 
@@ -215,8 +215,8 @@
     { "type": "color", "id": "card_background", "label": "Card background", "default": "#fbf1e4" },
     { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#f0dfbf" },
     { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#9b2d32" },
-    { "type": "range", "id": "heading_desktop_size", "label": "Heading desktop size", "min": 32, "max": 96, "step": 1, "unit": "px", "default": 68 },
-    { "type": "range", "id": "heading_mobile_size", "label": "Heading mobile size", "min": 24, "max": 64, "step": 1, "unit": "px", "default": 36 },
+    { "type": "range", "id": "heading_desktop_size", "label": "Heading desktop size", "min": 32, "max": 96, "step": 1, "unit": "px", "default": 58 },
+    { "type": "range", "id": "heading_mobile_size", "label": "Heading mobile size", "min": 24, "max": 64, "step": 1, "unit": "px", "default": 48 },
     { "type": "range", "id": "heading_letter_spacing", "label": "Heading letter spacing", "min": 0, "max": 12, "step": 1, "unit": "%", "default": 4 },
     { "type": "range", "id": "heading_max_width", "label": "Heading max width", "min": 280, "max": 1000, "step": 10, "unit": "px", "default": 720 },
     {
