@@ -915,6 +915,102 @@
     }
   }
 
+
+
+  /* DV Gold mobile header layout: match the compact, centered-logo mobile reference while
+     preserving the existing desktop/tablet column system. */
+  @media screen and (max-width: 749px) {
+    body {
+      --header-height: 98px;
+      --header-group-height: var(--header-height);
+    }
+
+    .header {
+      --header-mobile-bookend: 54px;
+      --header-padding: 0;
+      --dv-mobile-header-accent: #c59000;
+      --color-foreground: var(--dv-mobile-header-accent);
+      --color-foreground-rgb: 197, 144, 0;
+    }
+
+    .header__underlay-closed,
+    .header__underlay-open {
+      --color-background-top-row: #fcf5ef;
+      --color-background-bottom-row: #fcf5ef;
+    }
+
+    .header__row--top {
+      min-height: var(--header-height);
+    }
+
+    .header__columns,
+    #header-component[data-menu-style='drawer'] .header__columns {
+      --header-template-columns: var(--header-mobile-bookend) 1fr var(--header-mobile-bookend) var(--header-mobile-bookend);
+
+      grid-template-areas: 'leftA center rightA rightB';
+      min-height: var(--header-height);
+      padding-inline: 18px 20px;
+    }
+
+    .header__icon--menu {
+      grid-area: leftA;
+      justify-self: start;
+      color: var(--dv-mobile-header-accent);
+    }
+
+    .menu-drawer-container .header__icon--summary {
+      min-width: var(--header-mobile-bookend);
+      min-height: var(--header-mobile-bookend);
+      padding: 0;
+    }
+
+    .header__icon--summary .header-drawer-icon {
+      width: 29px;
+      height: 29px;
+    }
+
+    .header-logo {
+      grid-area: center;
+      align-self: center;
+      justify-self: center;
+      min-width: 96px;
+    }
+
+    .header-logo__image {
+      max-height: 82px;
+      width: auto;
+    }
+
+    .search-action,
+    #header-component[data-menu-style='drawer'] .search-action {
+      grid-area: rightA;
+      justify-self: end;
+    }
+
+    header-actions,
+    #header-component[data-menu-style='drawer'] header-actions {
+      grid-area: rightB;
+      justify-self: end;
+    }
+
+    .header-actions__action {
+      min-width: var(--header-mobile-bookend);
+      min-height: var(--header-mobile-bookend);
+      color: var(--dv-mobile-header-accent);
+      align-items: center;
+    }
+
+    .header-actions__action:not(.account-button) svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    .search-action .header-actions__action:not(.account-button) svg {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
   /* Single column layout if there are no columns within */
   .header__columns:not(:has(.header__column)) {
     grid-template-columns: 1fr;
