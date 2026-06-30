@@ -68,6 +68,7 @@
         "category_tea": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/WhatsAppImage2026-04-10at18.47.34_ca0393d7-163f-4de2-92d1-61abaa128e1e.jpg",
             "title": "TEA",
             "button_label": "SHOP NOW",
             "link": "shopify://collections/all",
@@ -79,6 +80,7 @@
         "category_spice": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/Background_Border_Shadow.png",
             "title": "SPICE",
             "button_label": "SHOP NOW",
             "link": "shopify://collections/all",
@@ -112,6 +114,7 @@
         "category_farali_items": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/Background_Border_Shadow_2.png",
             "title": "FARALI ITEMS",
             "button_label": "SHOP NOW",
             "link": "shopify://collections/all",
