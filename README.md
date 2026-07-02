@@ -30,6 +30,20 @@ There is no nested `theme/`, `shopify-theme/`, or `src/` directory containing a 
 
 If Shopify preview does not update after pushing changes, verify that the Shopify GitHub integration is connected to this repository and branch, then reconnect or resync the GitHub theme from Shopify admin if needed.
 
+
+## Collection page admin verification
+
+When a collection page appears empty or is showing the wrong products, verify the Shopify Admin collection that matches the storefront URL before changing theme code:
+
+1. Open the storefront collection page and note the handle in the browser URL. For example, `/collections/tea` uses the `tea` collection handle.
+2. In Shopify Admin, go to **Products → Collections**.
+3. Search for and open the collection with the same handle as the storefront URL.
+4. Confirm products are assigned to the collection.
+5. If the collection is automated, confirm the collection rules match the products that should appear on the page.
+6. Open each intended product and confirm it is active and published to the **Online Store** sales channel.
+
+These checks confirm whether missing products are caused by Shopify catalog, collection, or publication settings rather than the theme templates.
+
 ## Getting started
 
 We recommend using the Skeleton Theme as a starting point for a theme development project. [Learn more on Shopify.dev](https://shopify.dev/themes/getting-started/create).
