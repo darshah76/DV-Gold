@@ -58,26 +58,12 @@
                   endif
                   assign button_label = block.settings.button_label
                   assign button_action = block.settings.button_action
-                  assign card_title = block.settings.title
-                  if card_title == blank and selected_product != blank
-                    assign card_title = selected_product.title
-                  endif
+                  assign card_title = selected_product.title
                 %}
 
                 <article class="dv-seasonal-specials__card" role="listitem" {{ block.shopify_attributes }}>
                   <div class="dv-seasonal-specials__media">
-                    {% if block.settings.image != blank %}
-                      {{
-                        block.settings.image
-                        | image_url: width: 1400
-                        | image_tag:
-                          loading: 'lazy',
-                          widths: '360, 540, 720, 900, 1100, 1400',
-                          sizes: '(min-width: 990px) 640px, calc(100vw - 60px)',
-                          class: 'dv-seasonal-specials__image',
-                          alt: block.settings.image.alt
-                      }}
-                    {% elsif selected_product.featured_image != blank %}
+                    {% if selected_product.featured_image != blank %}
                       {{
                         selected_product.featured_image
                         | image_url: width: 1400
@@ -104,21 +90,17 @@
                       <h3 class="dv-seasonal-specials__title">{{ card_title }}</h3>
                     {% endif %}
 
-                    {% if block.settings.description != blank %}
-                      <div class="dv-seasonal-specials__description rte">{{ block.settings.description }}</div>
+                    {% if selected_product.description != blank %}
+                      <div class="dv-seasonal-specials__description rte">{{ selected_product.description }}</div>
                     {% endif %}
 
                     <div class="dv-seasonal-specials__purchase-row">
                       <div class="dv-seasonal-specials__prices" aria-label="Price">
-                        {% if block.settings.compare_at_price_text != blank %}
-                          <span class="dv-seasonal-specials__compare-price">{{ block.settings.compare_at_price_text }}</span>
-                        {% elsif selected_product.compare_at_price_max > selected_product.price %}
+                        {% if selected_product.compare_at_price_max > selected_product.price %}
                           <span class="dv-seasonal-specials__compare-price">{{ selected_product.compare_at_price_max | money }}</span>
                         {% endif %}
 
-                        {% if block.settings.price_text != blank %}
-                          <span class="dv-seasonal-specials__price">{{ block.settings.price_text }}</span>
-                        {% elsif selected_product != blank %}
+                        {% if selected_product != blank %}
                           <span class="dv-seasonal-specials__price">{{ selected_product.price | money }}</span>
                         {% endif %}
                       </div>
@@ -172,27 +154,13 @@
                   if product_link == blank and card_product != blank
                     assign product_link = card_product.url
                   endif
-                  assign product_title = block.settings.title
-                  if product_title == blank and card_product != blank
-                    assign product_title = card_product.title
-                  endif
+                  assign product_title = card_product.title
                 %}
 
                 {% assign product_slide_index = product_slide_index | plus: 1 %}
                 <article class="dv-seasonal-specials__product-card" role="listitem" data-dv-seasonal-products-slide data-slide-index="{{ product_slide_index | minus: 1 }}" {{ block.shopify_attributes }}>
                   <a class="dv-seasonal-specials__product-media" href="{{ product_link | default: routes.all_products_collection_url }}">
-                    {% if block.settings.image != blank %}
-                      {{
-                        block.settings.image
-                        | image_url: width: 600
-                        | image_tag:
-                          loading: 'lazy',
-                          widths: '180, 260, 360, 480, 600',
-                          sizes: '(min-width: 990px) 240px, 44vw',
-                          class: 'dv-seasonal-specials__product-image',
-                          alt: block.settings.image.alt
-                      }}
-                    {% elsif card_product.featured_image != blank %}
+                    {% if card_product.featured_image != blank %}
                       {{
                         card_product.featured_image
                         | image_url: width: 600
@@ -214,13 +182,11 @@
                     {% if product_title != blank %}
                       <h3 class="dv-seasonal-specials__product-title">{{ product_title }}</h3>
                     {% endif %}
-                    {% if block.settings.description != blank %}
-                      <div class="dv-seasonal-specials__product-description rte">{{ block.settings.description }}</div>
+                    {% if card_product.description != blank %}
+                      <div class="dv-seasonal-specials__product-description rte">{{ card_product.description }}</div>
                     {% endif %}
                     <div class="dv-seasonal-specials__product-footer">
-                      {% if block.settings.price_text != blank %}
-                        <span class="dv-seasonal-specials__product-price">{{ block.settings.price_text }}</span>
-                      {% elsif card_product != blank %}
+                      {% if card_product != blank %}
                         <span class="dv-seasonal-specials__product-price">{{ card_product.price | money }}</span>
                       {% endif %}
 
@@ -772,13 +738,8 @@
       "type": "combo",
       "name": "Combo card",
       "settings": [
-        { "type": "product", "id": "product", "label": "Product for price/link/add to cart" },
-        { "type": "image_picker", "id": "image", "label": "Image override" },
+        { "type": "product", "id": "product", "label": "Product" },
         { "type": "text", "id": "badge_text", "label": "Badge text", "default": "HOT SELLING COMBO" },
-        { "type": "text", "id": "title", "label": "Product name override", "default": "FESTIVE HERITAGE HAMPER" },
-        { "type": "richtext", "id": "description", "label": "Description", "default": "<p>A curated blend of premium Tea, Spices and Handpicked Dry Fruits for special occasions.</p>" },
-        { "type": "text", "id": "compare_at_price_text", "label": "Compare-at amount override", "default": "₹2,499.00" },
-        { "type": "text", "id": "price_text", "label": "Sale amount override", "default": "₹1,999.00" },
         {
           "type": "select",
           "id": "button_action",
@@ -797,11 +758,7 @@
       "type": "side_product",
       "name": "Product card",
       "settings": [
-        { "type": "product", "id": "product", "label": "Product for price/link/add to cart" },
-        { "type": "image_picker", "id": "image", "label": "Image override" },
-        { "type": "text", "id": "title", "label": "Product name override", "default": "DV GOLD TEA" },
-        { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Premium quality tea blend</p>" },
-        { "type": "text", "id": "price_text", "label": "Amount override", "default": "₹320.00" },
+        { "type": "product", "id": "product", "label": "Product" },
         {
           "type": "select",
           "id": "button_action",

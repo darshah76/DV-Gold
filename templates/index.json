@@ -150,13 +150,8 @@
         "combo_festive_heritage": {
           "type": "combo",
           "settings": {
-            "product": "",
-            "image": "shopify://shop_images/Container.png",
+            "product": "festive-heritage-hamper",
             "badge_text": "HOT SELLING COMBO",
-            "title": "FESTIVE HERITAGE HAMPER",
-            "description": "<p>A curated blend of premium Tea, Spices and Handpicked Dry Fruits for special occasions.</p>",
-            "compare_at_price_text": "₹2,499.00",
-            "price_text": "₹1,999.00",
             "button_action": "link",
             "button_label": "ADD TO CART",
             "link": "shopify://collections/all"
@@ -165,11 +160,7 @@
         "product_card_1": {
           "type": "side_product",
           "settings": {
-            "product": "",
-            "image": "shopify://shop_images/WhatsAppImage2026-04-10at18.47.33_1.jpg",
-            "title": "DV GOLD TEA",
-            "description": "<p>Premium quality tea blend</p>",
-            "price_text": "₹320.00",
+            "product": "dv-gold-tea",
             "button_action": "link",
             "button_label": "+",
             "link": "shopify://collections/all"
@@ -178,11 +169,7 @@
         "product_card_2": {
           "type": "side_product",
           "settings": {
-            "product": "",
-            "image": "shopify://shop_images/WhatsAppImage2026-04-10at18.47.33_1.jpg",
-            "title": "DV GOLD TEA",
-            "description": "<p>Premium quality tea blend</p>",
-            "price_text": "₹320.00",
+            "product": "dv-gold-tea",
             "button_action": "link",
             "button_label": "+",
             "link": "shopify://collections/all"
