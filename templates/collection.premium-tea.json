@@ -8,6 +8,7 @@
         "hero_text": "<p>Discover aromatic blends crafted for everyday freshness, purity, and consistent taste.</p>",
         "hero_button_label": "Shop Bestsellers",
         "products_heading": "Curated Selection",
+        "product_collection": "tea",
         "products_per_page": 12,
         "show_description": true,
         "description_length": 70,

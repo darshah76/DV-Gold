@@ -1,13 +1,14 @@
 <script src="{{ 'facets.js' | asset_url }}" type="module" fetchpriority="low"></script>
 
 {% liquid
+  assign display_collection = section.settings.product_collection | default: collection
   assign hero_eyebrow = section.settings.hero_eyebrow | default: 'DV GOLD COLLECTION'
-  assign hero_heading = section.settings.hero_heading | default: collection.title
-  assign hero_text = section.settings.hero_text | default: collection.description | strip_html
+  assign hero_heading = section.settings.hero_heading | default: display_collection.title
+  assign hero_text = section.settings.hero_text | default: display_collection.description | strip_html
   assign hero_button_label = section.settings.hero_button_label | default: 'Shop Bestsellers'
   assign hero_button_link = section.settings.hero_button_link | default: '#dv-gold-collection-products'
   assign products_per_page = section.settings.products_per_page
-  assign sort_by = collection.sort_by | default: collection.default_sort_by
+  assign sort_by = display_collection.sort_by | default: display_collection.default_sort_by
 %}
 
 <section
@@ -43,18 +44,18 @@
     <facets-form-component
       class="dv-collection__facets"
       section-id="{{ section.id }}"
-      data-collection-id="{{ collection.id }}"
-      data-collection-handle="{{ collection.handle }}"
+      data-collection-id="{{ display_collection.id }}"
+      data-collection-handle="{{ display_collection.handle }}"
     >
-      <form ref="facetsForm" class="dv-collection__facets-form" method="get">
-        {% if collection.filters.size > 0 %}
+      <form ref="facetsForm" class="dv-collection__facets-form" method="get" action="{{ display_collection.url }}">
+        {% if display_collection.filters.size > 0 %}
           <details class="dv-collection__filter-menu">
             <summary class="dv-collection__tool" aria-label="Open filters">
               <span class="dv-collection__filter-icon" aria-hidden="true"></span>
               <span>Filter</span>
             </summary>
             <div class="dv-collection__filter-panel">
-              {% for filter in collection.filters %}
+              {% for filter in display_collection.filters %}
                 <fieldset class="dv-collection__filter-group">
                   <legend>{{ filter.label }}</legend>
                   {% for value in filter.values %}
@@ -78,7 +79,7 @@
         <div class="dv-collection__sort">
           <label class="visually-hidden" for="SortBy-{{ section.id }}">Sort by</label>
           <select id="SortBy-{{ section.id }}" name="sort_by" onchange="this.form.requestSubmit()">
-            {% for option in collection.sort_options %}
+            {% for option in display_collection.sort_options %}
               <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>Sort by {{ option.name }}</option>
             {% endfor %}
           </select>
@@ -93,9 +94,9 @@
       <h2 class="dv-collection__section-title">{{ section.settings.products_heading }}</h2>
     {% endif %}
 
-    {% paginate collection.products by products_per_page %}
+    {% paginate display_collection.products by products_per_page %}
       <div class="dv-collection__grid" role="list">
-        {% for product in collection.products %}
+        {% for product in display_collection.products %}
           {% liquid
             assign product_image = product.featured_image
             assign selected_variant = product.selected_or_first_available_variant
@@ -142,10 +143,10 @@
           <div class="dv-collection__diagnostic" role="status" aria-live="polite">
             <p><strong>Collection diagnostic:</strong></p>
             <ul>
-              <li>Title: {{ collection.title | default: 'No title' }}</li>
-              <li>Handle: {{ collection.handle | default: 'No handle' }}</li>
-              <li>Products count: {{ collection.products_count | default: 0 }}</li>
-              <li>All products count: {{ collection.all_products_count | default: 0 }}</li>
+              <li>Title: {{ display_collection.title | default: 'No title' }}</li>
+              <li>Handle: {{ display_collection.handle | default: 'No handle' }}</li>
+              <li>Products count: {{ display_collection.products_count | default: 0 }}</li>
+              <li>All products count: {{ display_collection.all_products_count | default: 0 }}</li>
             </ul>
           </div>
         {% endfor %}
@@ -214,6 +215,7 @@
     { "type": "text", "id": "hero_button_label", "label": "Hero button label", "default": "Shop Bestsellers" },
     { "type": "url", "id": "hero_button_link", "label": "Hero button link" },
     { "type": "text", "id": "products_heading", "label": "Products heading", "default": "Curated Selection" },
+    { "type": "collection", "id": "product_collection", "label": "Products collection", "info": "Choose which collection's products appear in this section. Defaults to the current collection." },
     { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 4, "max": 48, "step": 4, "default": 12 },
     { "type": "checkbox", "id": "show_description", "label": "Show product description", "default": true },
     { "type": "range", "id": "description_length", "label": "Description length", "min": 40, "max": 160, "step": 10, "default": 70 },
