@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "main": {
+      "type": "dv-gold-collection",
+      "settings": {
+        "hero_eyebrow": "DV GOLD COLLECTION",
+        "hero_heading": "Premium Tea Collection",
+        "hero_text": "<p>Discover aromatic blends crafted for everyday freshness, purity, and consistent taste.</p>",
+        "hero_button_label": "Shop Bestsellers",
+        "products_heading": "Curated Selection",
+        "products_per_page": 12,
+        "show_description": true,
+        "description_length": 70,
+        "show_quick_add": true,
+        "page_background": "#f8efe2",
+        "hero_card_background": "#fffdf9",
+        "heading_color": "#a91e35",
+        "text_color": "#4f453a",
+        "accent_color": "#cf9200",
+        "product_card_background": "#ffffff",
+        "product_image_background": "#f7ecdd"
+      }
+    }
+  },
+  "order": ["main"]
+}
