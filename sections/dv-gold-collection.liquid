@@ -139,6 +139,15 @@
           </article>
         {% else %}
           <p class="dv-collection__empty">No products found in this collection.</p>
+          <div class="dv-collection__diagnostic" role="status" aria-live="polite">
+            <p><strong>Collection diagnostic:</strong></p>
+            <ul>
+              <li>Title: {{ collection.title | default: 'No title' }}</li>
+              <li>Handle: {{ collection.handle | default: 'No handle' }}</li>
+              <li>Products count: {{ collection.products_count | default: 0 }}</li>
+              <li>All products count: {{ collection.all_products_count | default: 0 }}</li>
+            </ul>
+          </div>
         {% endfor %}
       </div>
       {% if paginate.pages > 1 %}
