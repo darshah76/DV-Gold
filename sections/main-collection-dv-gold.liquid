@@ -1,4 +1,4 @@
-{{ 'dv-gold-mobile-collection.css' | asset_url | stylesheet_tag }}
+{{ 'dv-gold-collection.css' | asset_url | stylesheet_tag }}
 
 {% liquid
   assign hero_heading = collection.metafields.custom.hero_heading.value | default: collection.metafields.custom.hero_heading
@@ -18,13 +18,13 @@
   assign hero_description = hero_description | default: 'Discover aromatic blends crafted for everyday freshness, purity, and consistent taste.'
 %}
 
-<div class="dv-mobile-collection">
-  <header class="dv-mobile-collection__header" aria-label="Mobile collection header">
-    <button class="dv-mobile-collection__icon-button" type="button" aria-label="Open menu">
+<div class="dv-gold-collection">
+  <header class="dv-gold-collection__header" aria-label="DV Gold collection header">
+    <button class="dv-gold-collection__icon-button" type="button" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
 
-    <a class="dv-mobile-collection__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }} home">
+    <a class="dv-gold-collection__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }} home">
       {% if settings.logo != blank %}
         {{
           settings.logo
@@ -36,29 +36,29 @@
       {% endif %}
     </a>
 
-    <nav class="dv-mobile-collection__actions" aria-label="Collection actions">
-      <a class="dv-mobile-collection__icon-link" href="{{ routes.search_url }}" aria-label="Search">
+    <nav class="dv-gold-collection__actions" aria-label="Collection actions">
+      <a class="dv-gold-collection__icon-link" href="{{ routes.search_url }}" aria-label="Search">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20.5 19.1-4.7-4.7a7.3 7.3 0 1 0-1.4 1.4l4.7 4.7 1.4-1.4ZM5.7 10.2a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0Z"/></svg>
       </a>
-      <a class="dv-mobile-collection__icon-link" href="{{ routes.cart_url }}" aria-label="Cart">
+      <a class="dv-gold-collection__icon-link" href="{{ routes.cart_url }}" aria-label="Cart">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7V6a5 5 0 0 1 10 0v1h2.2l1 14H3.8l1-14H7Zm2 0h6V6a3 3 0 0 0-6 0v1Zm-2.3 2-.7 10h12l-.7-10H17v2h-2V9H9v2H7V9h-.3Z"/></svg>
       </a>
     </nav>
   </header>
 
-  <main class="dv-mobile-collection__main" id="MainContent">
-    <section class="dv-mobile-collection__hero" aria-labelledby="MobileCollectionHeroTitle">
-      <p class="dv-mobile-collection__eyebrow">DV GOLD COLLECTION</p>
-      <h1 id="MobileCollectionHeroTitle">{{ hero_heading }}</h1>
-      <p class="dv-mobile-collection__description">{{ hero_description }}</p>
-      <a class="dv-mobile-collection__button" href="#MobileCollectionProducts">Shop Bestsellers</a>
+  <main class="dv-gold-collection__main" id="MainContent">
+    <section class="dv-gold-collection__hero" aria-labelledby="DVGoldCollectionHeroTitle">
+      <p class="dv-gold-collection__eyebrow">DV GOLD COLLECTION</p>
+      <h1 id="DVGoldCollectionHeroTitle">{{ hero_heading }}</h1>
+      <p class="dv-gold-collection__description">{{ hero_description }}</p>
+      <a class="dv-gold-collection__button" href="#DVGoldCollectionProducts">Shop Bestsellers</a>
     </section>
 
-    <div class="dv-mobile-collection__toolbar" aria-label="Collection filters and sorting">
-      <button class="dv-mobile-collection__toolbar-button" type="button">Filter</button>
-      <form class="dv-mobile-collection__sort" method="get">
-        <label for="MobileCollectionSort">Sort</label>
-        <select id="MobileCollectionSort" name="sort_by" onchange="this.form.submit()">
+    <div class="dv-gold-collection__toolbar" aria-label="Collection filters and sorting">
+      <button class="dv-gold-collection__toolbar-button" type="button">Filter</button>
+      <form class="dv-gold-collection__sort" method="get">
+        <label for="DVGoldCollectionSort">Sort</label>
+        <select id="DVGoldCollectionSort" name="sort_by" onchange="this.form.submit()">
           {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
           {% for option in collection.sort_options %}
             <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
@@ -67,20 +67,20 @@
       </form>
     </div>
 
-    <section id="MobileCollectionProducts" class="dv-mobile-collection__products" aria-labelledby="MobileCollectionProductsTitle">
-      <h2 id="MobileCollectionProductsTitle">Curated Selection</h2>
+    <section id="DVGoldCollectionProducts" class="dv-gold-collection__products" aria-labelledby="DVGoldCollectionProductsTitle">
+      <h2 id="DVGoldCollectionProductsTitle">Curated Selection</h2>
       {% paginate collection.products by section.settings.products_per_page %}
-        <ul class="dv-mobile-collection__grid" role="list">
+        <ul class="dv-gold-collection__grid" role="list">
           {% for product in collection.products %}
             <li>
-              {% render 'dv-gold-mobile-product-card', product: product %}
+              {% render 'dv-gold-product-card', product: product %}
             </li>
           {% else %}
-            <li class="dv-mobile-collection__empty">No products found in this collection.</li>
+            <li class="dv-gold-collection__empty">No products found in this collection.</li>
           {% endfor %}
         </ul>
         {% if paginate.pages > 1 %}
-          <div class="dv-mobile-collection__pagination">{{ paginate | default_pagination }}</div>
+          <div class="dv-gold-collection__pagination">{{ paginate | default_pagination }}</div>
         {% endif %}
       {% endpaginate %}
     </section>
@@ -89,7 +89,7 @@
 
 {% schema %}
 {
-  "name": "Mobile collection",
+  "name": "DV Gold collection",
   "settings": [
     {
       "type": "paragraph",
