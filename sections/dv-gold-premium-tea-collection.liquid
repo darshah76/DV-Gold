@@ -1,0 +1,203 @@
+<script src="{{ 'facets.js' | asset_url }}" type="module" fetchpriority="low"></script>
+
+{% liquid
+  assign section_anchor = 'dv-premium-collection-' | append: section.id
+  assign hero_image = section.settings.hero_image
+  assign products_per_page = section.settings.products_per_page
+  assign sort_by = collection.sort_by | default: collection.default_sort_by
+%}
+
+<section
+  id="{{ section_anchor }}"
+  class="dv-premium-collection color-{{ section.settings.color_scheme }}"
+  style="
+    --dv-premium-bg: {{ section.settings.background_color }};
+    --dv-premium-hero-bg: {{ section.settings.hero_background_color }};
+    --dv-premium-heading: {{ section.settings.heading_color }};
+    --dv-premium-text: {{ section.settings.text_color }};
+    --dv-premium-accent: {{ section.settings.accent_color }};
+    --dv-premium-card-bg: {{ section.settings.card_background }};
+    --dv-premium-image-bg: {{ section.settings.image_background }};
+    --dv-premium-max-width: {{ section.settings.max_width }}px;
+    --dv-premium-padding-top: {{ section.settings.padding_top }}px;
+    --dv-premium-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="dv-premium-collection__inner">
+    <div class="dv-premium-collection__hero{% if hero_image != blank %} dv-premium-collection__hero--with-image{% endif %}">
+      <div class="dv-premium-collection__hero-copy">
+        {% if section.settings.eyebrow != blank %}
+          <p class="dv-premium-collection__eyebrow">{{ section.settings.eyebrow }}</p>
+        {% endif %}
+        {% if section.settings.heading != blank %}
+          <h1 class="dv-premium-collection__heading">{{ section.settings.heading }}</h1>
+        {% endif %}
+        {% if section.settings.description != blank %}
+          <div class="dv-premium-collection__description rte">{{ section.settings.description }}</div>
+        {% endif %}
+        {% if section.settings.cta_label != blank %}
+          <a class="dv-premium-collection__cta button" href="{{ section.settings.cta_link | default: collection.url }}">
+            {{ section.settings.cta_label }}
+          </a>
+        {% endif %}
+      </div>
+
+      {% if hero_image != blank %}
+        <div class="dv-premium-collection__hero-media">
+          {{
+            hero_image
+            | image_url: width: 1000
+            | image_tag:
+              loading: 'eager',
+              widths: '360, 520, 720, 1000',
+              sizes: '(min-width: 990px) 420px, 90vw',
+              class: 'dv-premium-collection__hero-image',
+              alt: hero_image.alt
+          }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="dv-premium-collection__toolbar" aria-label="Collection controls">
+      <facets-form-component
+        class="dv-premium-collection__facets"
+        section-id="{{ section.id }}"
+        data-collection-id="{{ collection.id }}"
+        data-collection-handle="{{ collection.handle }}"
+      >
+        <form ref="facetsForm" class="dv-premium-collection__facets-form">
+          {% if collection.filters.size > 0 %}
+            <details class="dv-premium-collection__filter-menu">
+              <summary class="dv-premium-collection__control">{{ section.settings.filter_label }}</summary>
+              <div class="dv-premium-collection__filter-panel">
+                {% for filter in collection.filters %}
+                  <fieldset class="dv-premium-collection__filter-group">
+                    <legend>{{ filter.label }}</legend>
+                    {% for value in filter.values %}
+                      <label class="dv-premium-collection__filter-option">
+                        <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                        <span>{{ value.label }} ({{ value.count }})</span>
+                      </label>
+                    {% endfor %}
+                  </fieldset>
+                {% endfor %}
+                <button class="dv-premium-collection__apply button" type="submit">Apply</button>
+              </div>
+            </details>
+          {% else %}
+            <span class="dv-premium-collection__control dv-premium-collection__control--disabled">{{ section.settings.filter_label }}</span>
+          {% endif %}
+
+          <label class="visually-hidden" for="SortBy-{{ section.id }}">Sort by</label>
+          <select id="SortBy-{{ section.id }}" class="dv-premium-collection__select" name="sort_by" onchange="this.form.requestSubmit()">
+            {% for option in collection.sort_options %}
+              <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
+            {% endfor %}
+          </select>
+        </form>
+      </facets-form-component>
+    </div>
+
+    {% if section.settings.products_heading != blank %}
+      <h2 class="dv-premium-collection__products-heading">{{ section.settings.products_heading }}</h2>
+    {% endif %}
+
+    {% paginate collection.products by products_per_page %}
+      <div class="dv-premium-collection__grid" role="list" id="ProductGridContainer">
+        {% for product in collection.products %}
+          {% render 'dv-gold-premium-tea-card',
+            product: product,
+            description_length: section.settings.description_length,
+            show_description: section.settings.show_description,
+            show_quick_add: section.settings.show_quick_add,
+            show_badge: section.settings.show_badges
+          %}
+        {% else %}
+          <p class="dv-premium-collection__empty">No products found in this collection.</p>
+        {% endfor %}
+      </div>
+
+      {% if paginate.pages > 1 %}
+        <div class="dv-premium-collection__pagination">
+          {{ paginate | default_pagination }}
+        </div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</section>
+
+<style>
+  #{{ section_anchor }} { background: var(--dv-premium-bg); color: var(--dv-premium-text); padding-block: var(--dv-premium-padding-top) var(--dv-premium-padding-bottom); }
+  #{{ section_anchor }} .dv-premium-collection__inner { width: min(100% - 32px, var(--dv-premium-max-width)); margin-inline: auto; }
+  #{{ section_anchor }} .dv-premium-collection__hero { display: grid; gap: 28px; overflow: hidden; border-radius: 28px; background: var(--dv-premium-hero-bg); padding: clamp(28px, 7vw, 72px); box-shadow: 0 18px 50px rgba(71, 53, 10, 0.08); }
+  #{{ section_anchor }} .dv-premium-collection__hero--with-image { align-items: center; }
+  #{{ section_anchor }} .dv-premium-collection__eyebrow { margin: 0 0 12px; color: var(--dv-premium-accent); font-size: 1.2rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+  #{{ section_anchor }} .dv-premium-collection__heading { margin: 0; color: var(--dv-premium-heading); font-family: var(--font-heading--family); font-size: clamp(3.8rem, 10vw, 8.4rem); font-weight: 800; line-height: .92; letter-spacing: -.04em; }
+  #{{ section_anchor }} .dv-premium-collection__description { max-width: 62rem; margin-block-start: 18px; font-size: clamp(1.5rem, 2vw, 1.9rem); line-height: 1.5; }
+  #{{ section_anchor }} .dv-premium-collection__cta { margin-block-start: 26px; min-height: 48px; padding-inline: 28px; border-radius: 999px; background: var(--dv-premium-accent); color: #fff; text-decoration: none; }
+  #{{ section_anchor }} .dv-premium-collection__hero-media { justify-self: center; width: min(100%, 420px); }
+  #{{ section_anchor }} .dv-premium-collection__hero-image { display: block; width: 100%; height: auto; object-fit: contain; }
+  #{{ section_anchor }} .dv-premium-collection__toolbar { display: flex; justify-content: flex-end; margin-block: 28px 24px; }
+  #{{ section_anchor }} .dv-premium-collection__facets-form { display: flex; align-items: center; gap: 12px; }
+  #{{ section_anchor }} .dv-premium-collection__control, #{{ section_anchor }} .dv-premium-collection__select { min-height: 42px; border: 1px solid rgba(71, 53, 10, .18); border-radius: 999px; background: #fff; color: var(--dv-premium-heading); padding: 0 18px; font: inherit; font-weight: 700; }
+  #{{ section_anchor }} .dv-premium-collection__filter-menu { position: relative; }
+  #{{ section_anchor }} .dv-premium-collection__filter-menu summary { display: inline-flex; align-items: center; cursor: pointer; list-style: none; }
+  #{{ section_anchor }} .dv-premium-collection__filter-panel { position: absolute; z-index: 4; inset-block-start: calc(100% + 10px); inset-inline-end: 0; width: min(82vw, 320px); max-height: 70vh; overflow: auto; border: 1px solid rgba(71, 53, 10, .16); border-radius: 18px; background: #fff; padding: 18px; box-shadow: 0 16px 40px rgba(31, 24, 10, .14); }
+  #{{ section_anchor }} .dv-premium-collection__filter-group { margin: 0 0 16px; padding: 0; border: 0; }
+  #{{ section_anchor }} .dv-premium-collection__filter-group legend { margin-block-end: 8px; color: var(--dv-premium-heading); font-weight: 800; }
+  #{{ section_anchor }} .dv-premium-collection__filter-option { display: flex; gap: 8px; align-items: center; padding-block: 5px; }
+  #{{ section_anchor }} .dv-premium-collection__apply { width: 100%; min-height: 42px; border-radius: 999px; background: var(--dv-premium-accent); color: #fff; }
+  #{{ section_anchor }} .dv-premium-collection__products-heading { margin: 0 0 22px; color: var(--dv-premium-heading); font-family: var(--font-heading--family); font-size: clamp(2.8rem, 5vw, 5.8rem); font-weight: 800; line-height: 1; letter-spacing: -.03em; }
+  #{{ section_anchor }} .dv-premium-collection__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 4vw, 28px); }
+  #{{ section_anchor }} .dv-premium-collection__card { display: flex; flex-direction: column; min-width: 0; border: 1px solid rgba(71, 53, 10, .08); border-radius: 18px; background: var(--dv-premium-card-bg); padding: 12px; box-shadow: 0 8px 24px rgba(71, 53, 10, .06); }
+  #{{ section_anchor }} .dv-premium-collection__image-link { position: relative; display: flex; align-items: center; justify-content: center; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 14px; background: var(--dv-premium-image-bg); color: inherit; text-decoration: none; }
+  #{{ section_anchor }} .dv-premium-collection__image, #{{ section_anchor }} .dv-premium-collection__placeholder { width: 100%; height: 100%; object-fit: contain; }
+  #{{ section_anchor }} .dv-premium-collection__badge { position: absolute; z-index: 1; inset-block-start: 10px; inset-inline-start: 10px; border-radius: 999px; background: var(--dv-premium-accent); color: #fff; padding: 5px 9px; font-size: 1.1rem; font-weight: 800; line-height: 1; }
+  #{{ section_anchor }} .dv-premium-collection__card-body { display: flex; flex: 1; flex-direction: column; padding-block-start: 14px; }
+  #{{ section_anchor }} .dv-premium-collection__product-title { margin: 0 0 6px; color: var(--dv-premium-heading); font-family: var(--font-heading--family); font-size: clamp(1.55rem, 3.8vw, 2.2rem); font-weight: 800; line-height: 1.1; }
+  #{{ section_anchor }} .dv-premium-collection__product-title a { color: inherit; text-decoration: none; }
+  #{{ section_anchor }} .dv-premium-collection__product-description { display: -webkit-box; margin: 0 0 14px; overflow: hidden; font-size: 1.35rem; line-height: 1.3; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+  #{{ section_anchor }} .dv-premium-collection__card-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-block-start: auto; }
+  #{{ section_anchor }} .dv-premium-collection__price { margin: 0; color: var(--dv-premium-heading); font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 900; line-height: 1; }
+  #{{ section_anchor }} .dv-premium-collection__form { margin: 0; }
+  #{{ section_anchor }} .dv-premium-collection__add { display: inline-flex; width: 38px; height: 38px; align-items: center; justify-content: center; border: 0; border-radius: 13px; background: var(--dv-premium-accent); color: #fff; cursor: pointer; font-size: 2rem; line-height: 1; }
+  #{{ section_anchor }} .dv-premium-collection__add:disabled { cursor: not-allowed; opacity: .45; }
+  #{{ section_anchor }} .dv-premium-collection__pagination { margin-block-start: 36px; text-align: center; }
+  @media screen and (max-width: 749px) { #{{ section_anchor }} .dv-premium-collection__inner { width: min(100% - 24px, var(--dv-premium-max-width)); } #{{ section_anchor }} .dv-premium-collection__hero { border-radius: 24px; } #{{ section_anchor }} .dv-premium-collection__toolbar { justify-content: stretch; } #{{ section_anchor }} .dv-premium-collection__facets, #{{ section_anchor }} .dv-premium-collection__facets-form { width: 100%; } #{{ section_anchor }} .dv-premium-collection__facets-form { justify-content: space-between; } #{{ section_anchor }} .dv-premium-collection__select { min-width: 0; width: 50%; } }
+  @media screen and (min-width: 750px) { #{{ section_anchor }} .dv-premium-collection__hero--with-image { grid-template-columns: minmax(0, 1fr) minmax(260px, .6fr); } #{{ section_anchor }} .dv-premium-collection__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } #{{ section_anchor }} .dv-premium-collection__card { padding: 16px; border-radius: 22px; } #{{ section_anchor }} .dv-premium-collection__add { width: 44px; height: 44px; } }
+  @media screen and (min-width: 1100px) { #{{ section_anchor }} .dv-premium-collection__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+</style>
+
+{% schema %}
+{
+  "name": "DV premium tea collection",
+  "enabled_on": { "templates": ["collection"] },
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "DV GOLD COLLECTION" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Premium Tea Collection" },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Discover a curated selection of premium teas crafted for rich aroma, balanced flavor, and everyday luxury.</p>" },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Shop the collection" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image" },
+    { "type": "text", "id": "filter_label", "label": "Filter label", "default": "Filter" },
+    { "type": "text", "id": "products_heading", "label": "Products heading", "default": "Curated Selection" },
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 8, "max": 32, "step": 4, "default": 16 },
+    { "type": "checkbox", "id": "show_badges", "label": "Show badges", "default": true },
+    { "type": "checkbox", "id": "show_description", "label": "Show product descriptions", "default": true },
+    { "type": "range", "id": "description_length", "label": "Description length", "min": 40, "max": 180, "step": 10, "default": 90 },
+    { "type": "checkbox", "id": "show_quick_add", "label": "Show add button", "default": true },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#fbf4e8" },
+    { "type": "color", "id": "hero_background_color", "label": "Hero background", "default": "#fff7e8" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#2d1b0f" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#5f4a36" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#b88a2a" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#ffffff" },
+    { "type": "color", "id": "image_background", "label": "Image background", "default": "#f7ead5" },
+    { "type": "range", "id": "max_width", "label": "Max width", "min": 960, "max": 1600, "step": 20, "unit": "px", "default": 1240 },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 }
+  ],
+  "presets": [{ "name": "DV premium tea collection" }]
+}
+{% endschema %}

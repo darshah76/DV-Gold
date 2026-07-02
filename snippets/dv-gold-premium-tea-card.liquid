@@ -1,0 +1,63 @@
+{% liquid
+  assign product_image = product.featured_image
+  assign selected_variant = product.selected_or_first_available_variant
+  assign product_description = product.description | strip_html | truncate: description_length
+  assign badge_text = ''
+
+  if product.metafields.custom.badge != blank
+    assign badge_text = product.metafields.custom.badge.value | default: product.metafields.custom.badge
+  elsif product.tags.size > 0
+    assign badge_text = product.tags.first
+  endif
+%}
+
+<article class="dv-premium-collection__card" role="listitem">
+  <a class="dv-premium-collection__image-link" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    {% if badge_text != blank and show_badge %}
+      <span class="dv-premium-collection__badge">{{ badge_text }}</span>
+    {% endif %}
+
+    {% if product_image != blank %}
+      {{
+        product_image
+        | image_url: width: 760
+        | image_tag:
+          loading: 'lazy',
+          widths: '240, 320, 420, 560, 760',
+          sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
+          class: 'dv-premium-collection__image',
+          alt: product_image.alt
+      }}
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag: 'dv-premium-collection__placeholder' }}
+    {% endif %}
+  </a>
+
+  <div class="dv-premium-collection__card-body">
+    <h3 class="dv-premium-collection__product-title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+
+    {% if show_description and product_description != blank %}
+      <p class="dv-premium-collection__product-description">{{ product_description }}</p>
+    {% endif %}
+
+    <div class="dv-premium-collection__card-footer">
+      <p class="dv-premium-collection__price">{{ product.price | money }}</p>
+
+      {% if show_quick_add %}
+        {% form 'product', product, class: 'dv-premium-collection__form' %}
+          <input type="hidden" name="id" value="{{ selected_variant.id }}">
+          <button
+            class="dv-premium-collection__add"
+            type="submit"
+            {% unless selected_variant.available %}disabled{% endunless %}
+            aria-label="Add {{ product.title | escape }} to cart"
+          >
+            <span aria-hidden="true">+</span>
+          </button>
+        {% endform %}
+      {% endif %}
+    </div>
+  </div>
+</article>
