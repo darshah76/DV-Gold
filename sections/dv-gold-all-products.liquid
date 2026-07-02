@@ -84,21 +84,7 @@
           {% endfor %}
         {% endif %}
       {% else %}
-        {% for i in (1..4) %}
-          <article class="dv-all-products__card dv-all-products__card--placeholder" role="listitem">
-            <div class="dv-all-products__image-link">
-              {{ 'product-1' | placeholder_svg_tag: 'dv-all-products__placeholder' }}
-            </div>
-            <div class="dv-all-products__body">
-              <h3 class="dv-all-products__title">Product title</h3>
-              <p class="dv-all-products__description">Choose a Shopify collection to show products here.</p>
-              <div class="dv-all-products__footer">
-                <p class="dv-all-products__price">{{ 0 | money }}</p>
-                <button class="dv-all-products__add" type="button" disabled><span aria-hidden="true">+</span></button>
-              </div>
-            </div>
-          </article>
-        {% endfor %}
+        {% comment %}No products are rendered until a collection with products is selected.{% endcomment %}
       {% endif %}
     </div>
   </div>
