@@ -118,13 +118,15 @@
   }
 
   #{{ section_anchor }} .dv-category__journey-connector {
+    --dv-category-connector-top-offset: calc(var(--dv-category-mobile-padding-top) + clamp(70px, 18vw, 130px));
+
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: var(--dv-category-connector-top-offset);
+    bottom: var(--dv-category-mobile-padding-bottom);
     left: 50%;
     z-index: 0;
     width: var(--dv-category-connector-width);
-    height: 100%;
+    height: auto;
     transform: translateX(-50%);
     pointer-events: none;
     overflow: visible;
@@ -266,6 +268,12 @@
   @media screen and (min-width: 750px) {
     #{{ section_anchor }} {
       padding-block: var(--dv-category-desktop-padding-top) var(--dv-category-desktop-padding-bottom);
+    }
+
+    #{{ section_anchor }} .dv-category__journey-connector {
+      --dv-category-connector-top-offset: calc(var(--dv-category-desktop-padding-top) + clamp(80px, 10vw, 140px));
+
+      bottom: var(--dv-category-desktop-padding-bottom);
     }
 
     #{{ section_anchor }} .dv-category__inner {
