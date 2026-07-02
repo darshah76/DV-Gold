@@ -94,6 +94,86 @@
 .dv-mobile-collection__pagination { margin-top: 22px; }
 
 @media (min-width: 750px) {
-  .dv-mobile-collection__main { width: min(100%, 720px); }
-  .dv-mobile-collection__hero h1 { max-width: 16ch; }
+  .dv-mobile-collection__header {
+    grid-template-columns: 96px 1fr 96px;
+    min-height: 78px;
+    padding: 18px 32px 14px;
+  }
+
+  .dv-mobile-collection__logo img { max-width: 118px; max-height: 42px; }
+
+  .dv-mobile-collection__main {
+    width: min(100%, 900px);
+    padding: 24px 30px 56px;
+  }
+
+  .dv-mobile-collection__hero {
+    min-height: 340px;
+    margin: 14px 0 30px;
+    padding: 48px 42px;
+    border-radius: 38px;
+  }
+
+  .dv-mobile-collection__hero h1 {
+    max-width: 16ch;
+    font-size: clamp(3.25rem, 7vw, 5.25rem);
+  }
+
+  .dv-mobile-collection__description {
+    max-width: 44ch;
+    font-size: 1.06rem;
+  }
+
+  .dv-mobile-collection__toolbar { margin-bottom: 30px; }
+
+  .dv-mobile-collection__products h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+
+  .dv-mobile-collection__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px 18px;
+  }
+
+  .dv-mobile-product-card { border-radius: 28px; }
+  .dv-mobile-product-card__image-link { margin: 10px 10px 0; border-radius: 22px; }
+  .dv-mobile-product-card__content { padding: 15px 16px 18px; }
+  .dv-mobile-product-card__title { font-size: .96rem; }
+  .dv-mobile-product-card__price { font-size: .95rem; }
+}
+
+@media screen and (min-width: 990px) {
+  .dv-mobile-collection__header {
+    grid-template-columns: 128px 1fr 128px;
+    padding-inline: max(48px, var(--page-margin, 48px));
+  }
+
+  .dv-mobile-collection__main {
+    width: min(100%, var(--page-width, 1240px));
+    padding: 34px var(--page-margin, 48px) 72px;
+  }
+
+  .dv-mobile-collection__hero {
+    min-height: 420px;
+    margin-bottom: 42px;
+    padding: 64px 72px;
+    background:
+      radial-gradient(circle at 86% 12%, rgba(216, 178, 111, 0.24), transparent 32%),
+      linear-gradient(135deg, rgba(255, 253, 248, 0.96), rgba(255, 249, 238, 0.88));
+  }
+
+  .dv-mobile-collection__hero h1 { font-size: clamp(4.5rem, 6vw, 7rem); }
+  .dv-mobile-collection__description { margin: 20px 0 28px; font-size: 1.12rem; }
+
+  .dv-mobile-collection__toolbar { margin: 4px 0 34px; }
+
+  .dv-mobile-collection__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px 22px;
+  }
+
+  .dv-mobile-product-card { box-shadow: 0 16px 30px rgba(82,56,24,.1); }
+  .dv-mobile-product-card__image-link { aspect-ratio: .9 / 1; }
+  .dv-mobile-product-card__content { padding: 17px 18px 20px; }
 }
