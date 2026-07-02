@@ -32,6 +32,10 @@
     <div class="dv-category__list" role="list">
       {% for block in section.blocks %}
         {% liquid
+          assign category_collection = block.settings.collection
+          assign category_collection_title = category_collection.title
+          assign category_collection_image = category_collection.featured_image | default: category_collection.image
+          assign category_collection_image_alt = category_collection_image.alt | default: category_collection_title
           assign rotation = block.settings.card_rotation | default: 0
           assign block_card_bg = block.settings.card_background
           if block_card_bg == blank or block_card_bg == 'rgba(0,0,0,0)'
@@ -46,24 +50,23 @@
           >
             <a
               class="dv-category__card"
-              href="{{ block.settings.link | default: '#' }}"
-              {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
-              aria-label="{{ block.settings.title | default: block.settings.button_label | escape }}"
+              href="{{ category_collection.url | default: '#' }}"
+              aria-label="{{ category_collection_title | escape }}"
             >
-              {% if block.settings.image != blank %}
+              {% if category_collection_image != blank %}
                 {{
-                  block.settings.image
+                  category_collection_image
                   | image_url: width: 1200
                   | image_tag:
                     loading: 'lazy',
                     widths: '320, 480, 640, 800, 1000, 1200',
                     sizes: '(min-width: 990px) 520px, 86vw',
                     class: 'dv-category__image',
-                    alt: block.settings.image.alt
+                    alt: category_collection_image_alt
                 }}
               {% else %}
                 <div class="dv-category__placeholder" aria-hidden="true">
-                  {{ 'image' | placeholder_svg_tag: 'dv-category__placeholder-svg' }}
+                  {{ 'collection-1' | placeholder_svg_tag: 'dv-category__placeholder-svg' }}
                 </div>
               {% endif %}
 
@@ -73,8 +76,8 @@
             </a>
           </div>
 
-          {% if block.settings.title != blank %}
-            <h3 class="dv-category__title">{{ block.settings.title }}</h3>
+          {% if category_collection_title != blank %}
+            <h3 class="dv-category__title">{{ category_collection_title }}</h3>
           {% endif %}
 
           {% unless forloop.last %}
@@ -303,11 +306,8 @@
       "type": "category",
       "name": "Category",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "text", "id": "title", "label": "Category name", "default": "TEA" },
+        { "type": "collection", "id": "collection", "label": "Collection" },
         { "type": "text", "id": "button_label", "label": "Button text", "default": "SHOP NOW" },
-        { "type": "url", "id": "link", "label": "Button and card link" },
-        { "type": "checkbox", "id": "open_in_new_tab", "label": "Open link in new tab", "default": false },
         { "type": "range", "id": "card_rotation", "label": "Card rotation", "min": -8, "max": 8, "step": 1, "unit": "deg", "default": -2 },
         { "type": "color", "id": "card_background", "label": "Card background override", "default": "#fbefd9" }
       ]
@@ -317,10 +317,10 @@
     {
       "name": "DV Gold shop by category",
       "blocks": [
-        { "type": "category", "settings": { "title": "TEA", "card_rotation": 2 } },
-        { "type": "category", "settings": { "title": "SPICE", "card_rotation": -4 } },
-        { "type": "category", "settings": { "title": "DRY FRUITS", "card_rotation": 3 } },
-        { "type": "category", "settings": { "title": "FARALI ITEMS", "card_rotation": -3 } }
+        { "type": "category", "settings": { "collection": "tea", "card_rotation": 2 } },
+        { "type": "category", "settings": { "collection": "spice", "card_rotation": -4 } },
+        { "type": "category", "settings": { "collection": "dry-fruits", "card_rotation": 3 } },
+        { "type": "category", "settings": { "collection": "farali-items", "card_rotation": -3 } }
       ]
     }
   ]

@@ -69,11 +69,8 @@
         "category_tea": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/Background_Border_Shadow_css-transform_1.png",
-            "title": "TEA",
+            "collection": "tea",
             "button_label": "SHOP NOW",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
             "card_rotation": 2,
             "card_background": "#fbefd9"
           }
@@ -81,11 +78,8 @@
         "category_spice": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/Background_Border_Shadow.png",
-            "title": "SPICE",
+            "collection": "spice",
             "button_label": "SHOP NOW",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
             "card_rotation": -4,
             "card_background": "#fbefd9"
           }
@@ -93,11 +87,8 @@
         "category_dry_fruits": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/image_16.png",
-            "title": "DRY FRUITS",
+            "collection": "dry-fruits",
             "button_label": "SHOP NOW",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
             "card_rotation": -3,
             "card_background": "#fbefd9"
           }
@@ -105,11 +96,8 @@
         "category_farali_items": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/Background_Border_Shadow_2.png",
-            "title": "FARALI ITEMS",
+            "collection": "farali-items",
             "button_label": "SHOP NOW",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
             "card_rotation": 2,
             "card_background": "#fbefd9"
           }
