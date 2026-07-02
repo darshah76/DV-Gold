@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection-mobile",
+      "settings": {
+        "products_per_page": 24,
+        "hero_heading_metafield": "custom.hero_heading",
+        "hero_description_metafield": "custom.hero_description"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
