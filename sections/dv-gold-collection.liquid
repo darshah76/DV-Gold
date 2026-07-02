@@ -1,3 +1,5 @@
+<script src="{{ 'facets.js' | asset_url }}" type="module" fetchpriority="low"></script>
+
 {% liquid
   assign hero_eyebrow = section.settings.hero_eyebrow | default: 'DV GOLD COLLECTION'
   assign hero_heading = section.settings.hero_heading | default: collection.title
@@ -5,6 +7,7 @@
   assign hero_button_label = section.settings.hero_button_label | default: 'Shop Bestsellers'
   assign hero_button_link = section.settings.hero_button_link | default: '#dv-gold-collection-products'
   assign products_per_page = section.settings.products_per_page
+  assign sort_by = collection.sort_by | default: collection.default_sort_by
 %}
 
 <section
@@ -37,19 +40,52 @@
   </div>
 
   <div class="dv-collection__toolbar" aria-label="Collection controls">
-    <button class="dv-collection__tool" type="button" aria-label="Open filters">
-      <span class="dv-collection__filter-icon" aria-hidden="true"></span>
-      <span>Filter</span>
-    </button>
-    <form class="dv-collection__sort" method="get">
-      <label class="visually-hidden" for="SortBy-{{ section.id }}">Sort by</label>
-      <select id="SortBy-{{ section.id }}" name="sort_by" onchange="this.form.submit()">
-        {% for option in collection.sort_options %}
-          <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>Sort by {{ option.name }}</option>
-        {% endfor %}
-      </select>
-      <span aria-hidden="true">⌄</span>
-    </form>
+    <facets-form-component
+      class="dv-collection__facets"
+      section-id="{{ section.id }}"
+      data-collection-id="{{ collection.id }}"
+      data-collection-handle="{{ collection.handle }}"
+    >
+      <form ref="facetsForm" class="dv-collection__facets-form" method="get">
+        {% if collection.filters.size > 0 %}
+          <details class="dv-collection__filter-menu">
+            <summary class="dv-collection__tool" aria-label="Open filters">
+              <span class="dv-collection__filter-icon" aria-hidden="true"></span>
+              <span>Filter</span>
+            </summary>
+            <div class="dv-collection__filter-panel">
+              {% for filter in collection.filters %}
+                <fieldset class="dv-collection__filter-group">
+                  <legend>{{ filter.label }}</legend>
+                  {% for value in filter.values %}
+                    <label class="dv-collection__filter-option">
+                      <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                      <span>{{ value.label }} ({{ value.count }})</span>
+                    </label>
+                  {% endfor %}
+                </fieldset>
+              {% endfor %}
+              <button class="dv-collection__apply" type="submit">Apply</button>
+            </div>
+          </details>
+        {% else %}
+          <span class="dv-collection__tool dv-collection__tool--disabled">
+            <span class="dv-collection__filter-icon" aria-hidden="true"></span>
+            <span>Filter</span>
+          </span>
+        {% endif %}
+
+        <div class="dv-collection__sort">
+          <label class="visually-hidden" for="SortBy-{{ section.id }}">Sort by</label>
+          <select id="SortBy-{{ section.id }}" name="sort_by" onchange="this.form.requestSubmit()">
+            {% for option in collection.sort_options %}
+              <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>Sort by {{ option.name }}</option>
+            {% endfor %}
+          </select>
+          <span aria-hidden="true">⌄</span>
+        </div>
+      </form>
+    </facets-form-component>
   </div>
 
   <div id="dv-gold-collection-products" class="dv-collection__content">
@@ -121,8 +157,17 @@
   .dv-collection__intro { max-width: 560px; margin: 0 auto; color: var(--dv-text); font-size: 1.4rem; line-height: 1.45; }
   .dv-collection__button { display: inline-flex; min-width: 142px; min-height: 36px; align-items: center; justify-content: center; margin: 28px auto -18px; padding: 10px 24px; border-radius: 999px; background: var(--dv-accent); color: #fff; font-size: 1.2rem; font-weight: 800; text-decoration: none; box-shadow: 0 8px 14px rgba(203, 148, 0, .2); }
   .dv-collection__toolbar { display: flex; min-height: 68px; align-items: center; justify-content: space-between; border-block: 1px solid rgba(199, 159, 87, .22); }
+  .dv-collection__facets, .dv-collection__facets-form { display: flex; width: 100%; min-height: 68px; }
+  .dv-collection__filter-menu { position: relative; flex: 1; margin: 0; }
   .dv-collection__tool, .dv-collection__sort { flex: 1; display: flex; align-items: center; justify-content: center; gap: 12px; height: 68px; border: 0; background: transparent; color: #6b6255; font: inherit; font-size: 1.8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
-  .dv-collection__tool { border-right: 1px solid rgba(199, 159, 87, .22); }
+  .dv-collection__tool { width: 100%; border-right: 1px solid rgba(199, 159, 87, .22); cursor: pointer; list-style: none; }
+  .dv-collection__tool::-webkit-details-marker { display: none; }
+  .dv-collection__tool--disabled { cursor: default; opacity: .55; }
+  .dv-collection__filter-panel { position: absolute; z-index: 4; inset-block-start: calc(100% + 10px); inset-inline-start: 12px; width: min(88vw, 340px); max-height: 70vh; overflow: auto; border: 1px solid rgba(199, 159, 87, .24); border-radius: 18px; background: #fffdf9; padding: 18px; box-shadow: 0 16px 40px rgba(91, 63, 27, .16); }
+  .dv-collection__filter-group { margin: 0 0 16px; padding: 0; border: 0; }
+  .dv-collection__filter-group legend { margin-block-end: 8px; color: var(--dv-heading); font-weight: 800; }
+  .dv-collection__filter-option { display: flex; gap: 8px; align-items: center; padding-block: 5px; color: var(--dv-text); font-size: 1.3rem; font-weight: 700; letter-spacing: 0; text-transform: none; }
+  .dv-collection__apply { width: 100%; min-height: 42px; border: 0; border-radius: 999px; background: var(--dv-accent); color: #fff; cursor: pointer; font: inherit; font-weight: 800; }
   .dv-collection__filter-icon { width: 17px; height: 17px; background: linear-gradient(var(--dv-accent),var(--dv-accent)) 0 4px/17px 1.5px no-repeat, linear-gradient(var(--dv-accent),var(--dv-accent)) 0 12px/17px 1.5px no-repeat; position: relative; }
   .dv-collection__filter-icon:before, .dv-collection__filter-icon:after { content: ''; position: absolute; width: 4px; height: 4px; border: 1px solid var(--dv-accent); border-radius: 50%; background: var(--dv-page-bg); top: 2px; left: 4px; }
   .dv-collection__filter-icon:after { top: 10px; left: 10px; }
