@@ -57,6 +57,7 @@
         {% liquid
           assign category_collection = block.settings.collection
           assign category_collection_title = category_collection.title
+          assign category_collection_title = block.settings.title_override | default: category_collection.title
           assign category_collection_image = category_collection.featured_image | default: category_collection.image
           assign category_collection_image_alt = category_collection_image.alt | default: category_collection_title
           assign rotation = block.settings.card_rotation | default: 0
@@ -222,7 +223,7 @@
 
   #{{ section_anchor }} .dv-category__button {
     position: absolute;
-    z-index: 2;
+    z-index: 4;
     left: 50%;
     bottom: clamp(10px, 2.5vw, 18px);
     transform: translateX(-50%);
@@ -243,7 +244,7 @@
 
   #{{ section_anchor }} .dv-category__title {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     margin: clamp(18px, 4vw, 28px) 0 0;
     padding-inline: 14px;
     background: var(--dv-category-bg);
@@ -259,6 +260,8 @@
 
   #{{ section_anchor }} .dv-category__title::after {
     content: '';
+    position: relative;
+    z-index: 3;
     display: block;
     width: 86px;
     height: 2px;
@@ -330,6 +333,7 @@
       "name": "Category",
       "settings": [
         { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "title_override", "label": "Category title override" },
         { "type": "text", "id": "button_label", "label": "Button text", "default": "SHOP NOW" },
         { "type": "range", "id": "card_rotation", "label": "Card rotation", "min": -8, "max": 8, "step": 1, "unit": "deg", "default": -2 },
         { "type": "color", "id": "card_background", "label": "Card background override", "default": "#fbefd9" }
