@@ -29,23 +29,7 @@
     assign connector_curve = section.settings.connector_curve
     assign connector_right = connector_center | plus: connector_curve
     assign connector_left = connector_center | minus: connector_curve
-    assign connector_half_curve = connector_curve | divided_by: 2
-    assign connector_soft_right = connector_center | plus: connector_half_curve
-    assign connector_soft_left = connector_center | minus: connector_half_curve
   %}
-  <svg
-    class="dv-category__journey-connector"
-    aria-hidden="true"
-    focusable="false"
-    viewBox="0 0 60 1000"
-    preserveAspectRatio="none"
-  >
-    <path
-      class="dv-category__journey-connector-path"
-      d="M30 0 C {{ connector_right }} 170 {{ connector_left }} 320 30 460 C {{ connector_soft_right }} 580 {{ connector_soft_left }} 710 30 1000"
-      pathLength="1000"
-    />
-  </svg>
 
   <div class="dv-category__inner">
     {% if section.settings.heading != blank %}
@@ -105,6 +89,23 @@
           {% endif %}
 
         </div>
+
+        {% unless forloop.last %}
+          <svg
+            class="dv-category__item-connector"
+            aria-hidden="true"
+            focusable="false"
+            role="presentation"
+            viewBox="0 0 60 100"
+            preserveAspectRatio="none"
+          >
+            <path
+              class="dv-category__item-connector-path"
+              d="M30 0 C {{ connector_right }} 30 {{ connector_left }} 70 30 100"
+              pathLength="100"
+            />
+          </svg>
+        {% endunless %}
       {% endfor %}
     </div>
   </div>
@@ -118,22 +119,19 @@
     overflow: hidden;
   }
 
-  #{{ section_anchor }} .dv-category__journey-connector {
-    --dv-category-connector-top-offset: calc(var(--dv-category-mobile-padding-top) + clamp(70px, 18vw, 130px));
-
-    position: absolute;
-    top: var(--dv-category-connector-top-offset);
-    bottom: var(--dv-category-mobile-padding-bottom);
-    left: 50%;
-    z-index: 0;
+  #{{ section_anchor }} .dv-category__item-connector {
+    position: relative;
+    z-index: 1;
+    display: block;
+    flex: 0 0 var(--dv-category-connector-height);
     width: var(--dv-category-connector-width);
-    height: auto;
-    transform: translateX(-50%);
-    pointer-events: none;
+    height: var(--dv-category-connector-height);
+    margin-block: clamp(22px, 6vw, 38px);
     overflow: visible;
+    pointer-events: none;
   }
 
-  #{{ section_anchor }} .dv-category__journey-connector-path {
+  #{{ section_anchor }} .dv-category__item-connector-path {
     fill: none;
     stroke: var(--dv-category-accent);
     stroke-width: var(--dv-category-connector-thickness);
@@ -166,7 +164,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: clamp(72px, 18vw, 112px);
+    gap: 0;
   }
 
   #{{ section_anchor }} .dv-category__item {
@@ -274,18 +272,12 @@
       padding-block: var(--dv-category-desktop-padding-top) var(--dv-category-desktop-padding-bottom);
     }
 
-    #{{ section_anchor }} .dv-category__journey-connector {
-      --dv-category-connector-top-offset: calc(var(--dv-category-desktop-padding-top) + clamp(80px, 10vw, 140px));
-
-      bottom: var(--dv-category-desktop-padding-bottom);
-    }
-
     #{{ section_anchor }} .dv-category__inner {
       width: min(100% - 64px, var(--dv-category-max-width));
     }
 
-    #{{ section_anchor }} .dv-category__list {
-      gap: clamp(88px, 10vw, 140px);
+    #{{ section_anchor }} .dv-category__item-connector {
+      margin-block: clamp(28px, 4vw, 52px);
     }
   }
 
