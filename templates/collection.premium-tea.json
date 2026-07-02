@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "premium_tea_collection": {
+      "type": "dv-gold-premium-tea-collection",
+      "settings": {
+        "eyebrow": "DV GOLD COLLECTION",
+        "heading": "Premium Tea Collection",
+        "description": "<p>Discover a curated selection of premium teas crafted for rich aroma, balanced flavor, and everyday luxury.</p>",
+        "cta_label": "Shop the collection",
+        "products_heading": "Curated Selection"
+      }
+    }
+  },
+  "order": ["premium_tea_collection"]
+}
