@@ -70,6 +70,7 @@
           "type": "category",
           "settings": {
             "collection": "tea",
+            "title_override": "",
             "button_label": "SHOP NOW",
             "card_rotation": 2,
             "card_background": "#fbefd9"
@@ -78,7 +79,8 @@
         "category_spice": {
           "type": "category",
           "settings": {
-            "collection": "spice",
+            "collection": "spices",
+            "title_override": "",
             "button_label": "SHOP NOW",
             "card_rotation": -4,
             "card_background": "#fbefd9"
@@ -88,6 +90,7 @@
           "type": "category",
           "settings": {
             "collection": "dry-fruits",
+            "title_override": "",
             "button_label": "SHOP NOW",
             "card_rotation": -3,
             "card_background": "#fbefd9"
@@ -97,6 +100,7 @@
           "type": "category",
           "settings": {
             "collection": "farali-items",
+            "title_override": "",
             "button_label": "SHOP NOW",
             "card_rotation": 2,
             "card_background": "#fbefd9"
