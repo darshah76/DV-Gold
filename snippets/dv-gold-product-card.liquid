@@ -3,8 +3,8 @@
   assign selected_variant = product.selected_or_first_available_variant
 %}
 
-<article class="dv-mobile-product-card">
-  <a class="dv-mobile-product-card__image-link" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+<article class="dv-gold-product-card">
+  <a class="dv-gold-product-card__image-link" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
     {% if product_image != blank %}
       {{
         product_image
@@ -12,20 +12,20 @@
         | image_tag:
           loading: 'lazy',
           widths: '180, 260, 360, 520',
-          sizes: 'calc((100vw - 48px) / 2)',
-          class: 'dv-mobile-product-card__image',
+          sizes: '(min-width: 1200px) 300px, (min-width: 990px) 33vw, (min-width: 750px) 340px, calc((100vw - 48px) / 2)',
+          class: 'dv-gold-product-card__image',
           alt: product_image.alt
       }}
     {% else %}
-      {{ 'product-1' | placeholder_svg_tag: 'dv-mobile-product-card__placeholder' }}
+      {{ 'product-1' | placeholder_svg_tag: 'dv-gold-product-card__placeholder' }}
     {% endif %}
   </a>
 
-  <div class="dv-mobile-product-card__content">
-    <h3 class="dv-mobile-product-card__title">
+  <div class="dv-gold-product-card__content">
+    <h3 class="dv-gold-product-card__title">
       <a href="{{ product.url }}">{{ product.title }}</a>
     </h3>
-    <p class="dv-mobile-product-card__price">
+    <p class="dv-gold-product-card__price">
       {% if product.price_varies %}
         From {{ product.price_min | money }}
       {% else %}
