@@ -166,7 +166,7 @@
       {
         "type": "font_picker",
         "id": "type_heading_font",
-        "default": "cormorant_garamond_n4",
+        "default": "montserrat_n4",
         "label": "t:options.heading"
       },
       {
