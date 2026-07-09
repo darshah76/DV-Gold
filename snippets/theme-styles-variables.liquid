@@ -152,22 +152,26 @@
     }
 
     /* Letter spacing */
-    --letter-spacing-sm: 0.06em;
-    --letter-spacing-md: 0.13em;
+    --letter-spacing-sm: 0.04em;
+    --letter-spacing-md: 0.08em;
 
     /* Font families */
-    --font-body--family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
-    --font-body--style: {{ settings.type_body_font.style }};
-    --font-body--weight: {{ settings.type_body_font.weight }};
-    --font-subheading--family: {{ settings.type_subheading_font.family }}, {{ settings.type_subheading_font.fallback_families }};
-    --font-subheading--style: {{ settings.type_subheading_font.style }};
-    --font-subheading--weight: {{ settings.type_subheading_font.weight }};
-    --font-heading--family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
-    --font-heading--style: {{ settings.type_heading_font.style }};
+    --font-body--family: 'Inter', {{ settings.type_body_font.fallback_families | default: 'system-ui, sans-serif' }};
+    --font-body--style: normal;
+    --font-body--weight: 400;
+    --font-subheading--family: 'Inter', {{ settings.type_subheading_font.fallback_families | default: 'system-ui, sans-serif' }};
+    --font-subheading--style: normal;
+    --font-subheading--weight: 600;
+    --font-heading--family: 'Playfair Display', {{ settings.type_heading_font.fallback_families | default: 'Georgia, serif' }};
+    --font-heading--style: normal;
     --font-heading--weight: 700;
-    --font-accent--family: {{ settings.type_accent_font.family }}, {{ settings.type_accent_font.fallback_families }};
-    --font-accent--style: {{ settings.type_accent_font.style }};
-    --font-accent--weight: {{ settings.type_accent_font.weight }};
+    --font-accent--family: 'Inter', {{ settings.type_accent_font.fallback_families | default: 'system-ui, sans-serif' }};
+    --font-accent--style: normal;
+    --font-accent--weight: 600;
+    --font-price--family: var(--font-body--family);
+    --font-price--weight: 700;
+    --font-price--size: clamp(1.875rem, 1.55rem + 1.4vw, 2.25rem);
+    --color-brand-burgundy: #7A1E2C;
 
     /* Margin sizes */
     --font-heading--spacing: 0.25em;
@@ -220,8 +224,8 @@
     /* Line height / Leading */
     --line-height: 1;
 
-    --line-height--display-tight: 1;
-    --line-height--display-normal: 1.1;
+    --line-height--display-tight: 1.15;
+    --line-height--display-normal: 1.2;
     --line-height--display-loose: 1.2;
 
     --line-height--heading-tight: 1.15;
@@ -230,7 +234,7 @@
 
     --line-height--body-tight: 1.2;
     --line-height--body-normal: 1.4;
-    --line-height--body-loose: 1.6;
+    --line-height--body-loose: 1.7;
 
     /* Typography presets */
     {% liquid
@@ -344,6 +348,42 @@
         echo '--font-[preset_name]--line-height: var(--line-height--[preset_line_height]);' | replace: '[preset_name]', preset_name | replace: '[preset_line_height]', settings[preset_line_height]
       endfor
     %}
+
+    /* Premium editorial typography preset overrides */
+    --font-size--paragraph: 1rem;
+    --font-size--body-large: 1.125rem;
+    --font-size--h1: clamp(2.125rem, 1.35rem + 3.3vw, 3.5rem);
+    --font-size--h2: clamp(1.875rem, 1.43rem + 1.9vw, 2.625rem);
+    --font-size--h3: clamp(1.5rem, 1.28rem + 0.95vw, 1.875rem);
+    --font-size--h4: clamp(1.25rem, 1.1rem + 0.65vw, 1.5rem);
+    --font-size--product-title: clamp(1.25rem, 1.1rem + 0.65vw, 1.5rem);
+    --font-size--nav: 1rem;
+    --font-size--small: 0.875rem;
+    --font-size--button: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+    --font-paragraph--family: var(--font-body--family);
+    --font-paragraph--style: var(--font-body--style);
+    --font-paragraph--weight: 400;
+    --font-paragraph--line-height: 1.7;
+    --font-paragraph--letter-spacing: 0;
+    --font-h1--family: var(--font-heading--family);
+    --font-h1--weight: 700;
+    --font-h1--line-height: 1.15;
+    --font-h1--letter-spacing: 0;
+    --font-h2--family: var(--font-heading--family);
+    --font-h2--weight: 700;
+    --font-h2--line-height: 1.2;
+    --font-h2--letter-spacing: 0;
+    --font-h3--family: var(--font-heading--family);
+    --font-h3--weight: 700;
+    --font-h3--line-height: 1.2;
+    --font-h3--letter-spacing: 0;
+    --font-h4--family: var(--font-heading--family);
+    --font-h4--weight: 700;
+    --font-h4--line-height: 1.2;
+    --font-h5--family: var(--font-heading--family);
+    --font-h5--weight: 700;
+    --font-h6--family: var(--font-heading--family);
+    --font-h6--weight: 700;
 
     /* Hardcoded font sizes */
     --font-size--3xs: 0.625rem;
