@@ -1416,7 +1416,7 @@
             "label": "t:options.uppercase"
           }
         ],
-        "default": "default"
+        "default": "uppercase"
       },
       {
         "type": "header",
@@ -1493,7 +1493,7 @@
             "label": "t:options.uppercase"
           }
         ],
-        "default": "default"
+        "default": "uppercase"
       },
       {
         "type": "header",
