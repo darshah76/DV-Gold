@@ -53,39 +53,48 @@
       </div>
     </div>
 
-    <div
-      class="dv-all-products__carousel"
-      role="list"
-      aria-label="{{ section.settings.heading | escape }}"
-      data-dv-all-products-track
-      data-endless-scroll="{{ section.settings.enable_endless_scroll }}"
-      data-scroll-speed="{{ section.settings.endless_scroll_speed }}"
-    >
-      {% if products_collection != blank and products_collection.products_count > 0 %}
-        {% for product in products_collection.products limit: max_products %}
-          {% render 'dv-gold-all-product-card',
-            product: product,
-            description_length: section.settings.description_length,
-            show_description: section.settings.show_description,
-            show_quick_add: section.settings.show_quick_add,
-            is_clone: false
-          %}
-        {% endfor %}
+    <div class="dv-all-products__carousel-wrap">
+      <button
+        type="button"
+        class="dv-all-products__scroll-button dv-all-products__scroll-button--prev"
+        aria-label="Scroll products left"
+        data-dv-all-products-scroll-prev
+      >
+        <span aria-hidden="true">‹</span>
+      </button>
 
-        {% if section.settings.enable_endless_scroll %}
+      <div
+        class="dv-all-products__carousel"
+        role="list"
+        aria-label="{{ section.settings.heading | escape }}"
+        data-dv-all-products-track
+        data-endless-scroll="{{ section.settings.enable_endless_scroll }}"
+        data-scroll-speed="{{ section.settings.endless_scroll_speed }}"
+      >
+        {% if products_collection != blank and products_collection.products_count > 0 %}
           {% for product in products_collection.products limit: max_products %}
             {% render 'dv-gold-all-product-card',
               product: product,
               description_length: section.settings.description_length,
               show_description: section.settings.show_description,
               show_quick_add: section.settings.show_quick_add,
-              is_clone: true
+              is_clone: false
             %}
           {% endfor %}
+
+        {% else %}
+          {% comment %}No products are rendered until a collection with products is selected.{% endcomment %}
         {% endif %}
-      {% else %}
-        {% comment %}No products are rendered until a collection with products is selected.{% endcomment %}
-      {% endif %}
+      </div>
+
+      <button
+        type="button"
+        class="dv-all-products__scroll-button dv-all-products__scroll-button--next"
+        aria-label="Scroll products right"
+        data-dv-all-products-scroll-next
+      >
+        <span aria-hidden="true">›</span>
+      </button>
     </div>
   </div>
 
@@ -139,14 +148,69 @@
   }
 
   #{{ section_anchor }} .dv-all-products__carousel {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
     gap: var(--dv-all-gap);
+    overflow-x: auto;
+    overflow-y: hidden;
     padding: 1px 2px 12px;
+    scroll-padding-inline: 2px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #{{ section_anchor }} .dv-all-products__carousel-wrap {
+    position: relative;
+  }
+
+  #{{ section_anchor }} .dv-all-products__scroll-button {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 50%;
+    background: var(--dv-all-card-bg);
+    color: var(--dv-all-heading);
+    cursor: pointer;
+    font-size: 3rem;
+    line-height: 1;
+    box-shadow: 0 4px 12px rgba(70, 45, 20, 0.14);
+    transform: translateY(-50%);
+  }
+
+  #{{ section_anchor }} .dv-all-products__scroll-button--prev {
+    left: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  #{{ section_anchor }} .dv-all-products__scroll-button--next {
+    right: 0;
+    transform: translate(50%, -50%);
+  }
+
+  #{{ section_anchor }} .dv-all-products__scroll-button:hover,
+  #{{ section_anchor }} .dv-all-products__scroll-button:focus-visible {
+    background: var(--dv-all-accent);
+    color: #fff;
+  }
+
+  #{{ section_anchor }} .dv-all-products__scroll-button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  #{{ section_anchor }} .dv-all-products__scroll-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
   }
 
   #{{ section_anchor }} .dv-all-products__card {
     display: flex;
+    flex: 0 0 min(82vw, var(--dv-all-card-width-desktop));
     flex-direction: column;
     min-height: 100%;
     background: var(--dv-all-card-bg);
@@ -278,8 +342,10 @@
     }
 
     #{{ section_anchor }} .dv-all-products__card {
+      flex-basis: min(78vw, 280px);
       min-width: 0;
       padding: 12px 12px 14px;
+      scroll-snap-align: start;
     }
 
     #{{ section_anchor }} .dv-all-products__body {
@@ -310,6 +376,22 @@
       width: 36px;
       height: 36px;
       border-radius: 12px;
+    }
+
+    #{{ section_anchor }} .dv-all-products__scroll-button {
+      width: 38px;
+      height: 38px;
+      font-size: 2.4rem;
+    }
+
+    #{{ section_anchor }} .dv-all-products__scroll-button--prev {
+      left: 6px;
+      transform: translateY(-50%);
+    }
+
+    #{{ section_anchor }} .dv-all-products__scroll-button--next {
+      right: 6px;
+      transform: translateY(-50%);
     }
   }
 
@@ -346,63 +428,16 @@
       text-align: left;
     }
 
-    #{{ section_anchor }} .dv-all-products__carousel {
-      display: flex;
-      gap: var(--dv-all-gap);
-      overflow-x: auto;
-      overflow-y: hidden;
-      scroll-snap-type: x mandatory;
-      scroll-padding-inline: 2px;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    #{{ section_anchor }} .dv-all-products__carousel[data-endless-scroll='true'] {
-      width: max-content;
-      overflow: visible;
-      scroll-snap-type: none;
-      animation: dv-all-products-marquee-{{ section.id }} {{ section.settings.endless_scroll_speed }}s linear infinite;
-    }
-
-    #{{ section_anchor }} .dv-all-products__carousel[data-endless-scroll='true']:hover,
-    #{{ section_anchor }} .dv-all-products__carousel[data-endless-scroll='true']:focus-within {
-      animation-play-state: paused;
-    }
-
     #{{ section_anchor }} .dv-all-products__carousel::-webkit-scrollbar {
       height: 0;
     }
 
     #{{ section_anchor }} .dv-all-products__card {
-      flex: 0 0 var(--dv-all-card-width-desktop);
+      flex-basis: var(--dv-all-card-width-desktop);
       scroll-snap-align: start;
     }
 
-    #{{ section_anchor }} .dv-all-products__card.is-clone {
-      display: flex;
-      scroll-snap-align: none;
-    }
-
-    @keyframes dv-all-products-marquee-{{ section.id }} {
-      from {
-        transform: translateX(0);
-      }
-      to {
-        transform: translateX(calc(-50% - (var(--dv-all-gap) / 2)));
-      }
-    }
-
     @media (prefers-reduced-motion: reduce) {
-      #{{ section_anchor }} .dv-all-products__carousel[data-endless-scroll='true'] {
-        animation: none;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        width: auto;
-      }
-
-      #{{ section_anchor }} .dv-all-products__card.is-clone {
-        display: none;
-      }
-
       #{{ section_anchor }} .dv-all-products__features-track {
         animation: none;
       }
@@ -410,6 +445,44 @@
   }
 </style>
 
+
+
+<script>
+  (() => {
+    const section = document.getElementById({{ section_anchor | json }});
+    if (!section) return;
+
+    const carousel = section.querySelector('[data-dv-all-products-track]');
+    const previousButton = section.querySelector('[data-dv-all-products-scroll-prev]');
+    const nextButton = section.querySelector('[data-dv-all-products-scroll-next]');
+    if (!carousel || !previousButton || !nextButton) return;
+
+    const getScrollAmount = () => {
+      const card = carousel.querySelector('.dv-all-products__card:not(.is-clone)');
+      const styles = window.getComputedStyle(carousel);
+      const gap = Number.parseFloat(styles.columnGap || styles.gap) || 0;
+      return card ? card.getBoundingClientRect().width + gap : carousel.clientWidth * 0.8;
+    };
+
+    const updateButtons = () => {
+      const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+      previousButton.disabled = carousel.scrollLeft <= 1;
+      nextButton.disabled = carousel.scrollLeft >= maxScrollLeft - 1;
+    };
+
+    previousButton.addEventListener('click', () => {
+      carousel.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+    });
+
+    nextButton.addEventListener('click', () => {
+      carousel.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+    });
+
+    carousel.addEventListener('scroll', updateButtons, { passive: true });
+    window.addEventListener('resize', updateButtons);
+    updateButtons();
+  })();
+</script>
 
 {% schema %}
 {
