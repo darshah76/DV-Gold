@@ -4050,3 +4050,42 @@ main > .shopify-section:first-child .section:not(.disable-section-top-offset) {
     margin-top: calc(var(--header-height) * var(--transparent-header-offset-boolean) * -1);
   }
 }
+
+/* DV Gold premium typography system */
+:where(h1, h2, h3, .h1, .h2, .h3, [class*='__heading'], [class*='__title'], .product-title, .product-card__title, .card__heading) {
+  font-family: var(--font-heading--family);
+  font-style: var(--font-heading--style);
+  font-weight: 700;
+}
+
+:where(h1, h2, h3, .h1, .h2, .h3, [class*='__heading'], [class*='__title'], .product-title, .product-card__title, .card__heading) a {
+  font-family: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+}
+
+:where(body, p, button, input, textarea, select, label, small, .button, .button-secondary, .badge, [class*='__badge'], [class*='__price'], .price) {
+  font-family: var(--font-body--family);
+}
+
+:where(nav, .header, .menu, .menu-list, .header__menu-item) {
+  font-family: var(--font-body--family);
+  font-weight: 600;
+}
+
+:where(.button, .button-secondary, button[type='submit'], input[type='submit'], [class*='__button']) {
+  font-family: var(--font-body--family);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+:where(.price, [class*='__price']) {
+  font-family: var(--font-body--family);
+  font-weight: 800;
+}
+
+:where(.badge, [class*='__badge']) {
+  font-family: var(--font-body--family);
+  font-weight: 700;
+  text-transform: uppercase;
+}

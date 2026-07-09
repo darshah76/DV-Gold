@@ -81,7 +81,7 @@
             "type": "color_background",
             "id": "background_gradient",
             "label": "Background gradient",
-            "default": ""
+            "default": "linear-gradient(#ffffff, #ffffff)"
           },
           {
             "type": "color",
@@ -117,10 +117,14 @@
         "role": {
           "background": "background",
           "text": "text",
-          "solid_button": "button",
-          "solid_button_label": "button_label",
-          "outline_button": "secondary_button_label",
-          "shadow": "shadow"
+          "links": "text",
+          "icons": "text",
+          "primary_button": "button",
+          "on_primary_button": "button_label",
+          "secondary_button": "background",
+          "on_secondary_button": "secondary_button_label",
+          "primary_button_border": "button",
+          "secondary_button_border": "secondary_button_label"
         }
       }
     ]
@@ -1334,7 +1338,7 @@
             "label": "t:options.uppercase"
           }
         ],
-        "default": "none"
+        "default": "uppercase"
       }
     ]
   },
@@ -1416,7 +1420,7 @@
             "label": "t:options.uppercase"
           }
         ],
-        "default": "default"
+        "default": "uppercase"
       },
       {
         "type": "header",
@@ -1493,7 +1497,7 @@
             "label": "t:options.uppercase"
           }
         ],
-        "default": "default"
+        "default": "uppercase"
       },
       {
         "type": "header",
