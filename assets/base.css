@@ -850,6 +850,32 @@ h6,
   }
 }
 
+/* Desktop text blocks use the same preset scale wherever sections repeat them. */
+@media screen and (min-width: 750px) {
+  .text-block {
+    --text-block-desktop-h1-size: var(--font-h1--size);
+    --text-block-desktop-h2-size: var(--font-h2--size);
+    --text-block-desktop-h3-size: var(--font-h3--size);
+    --text-block-desktop-paragraph-size: var(--font-paragraph--size);
+  }
+
+  .text-block.h1 > * {
+    font-size: var(--text-block-desktop-h1-size);
+  }
+
+  .text-block.h2 > * {
+    font-size: var(--text-block-desktop-h2-size);
+  }
+
+  .text-block.h3 > * {
+    font-size: var(--text-block-desktop-h3-size);
+  }
+
+  .text-block.paragraph > * {
+    font-size: var(--text-block-desktop-paragraph-size);
+  }
+}
+
 :first-child:is(.h1, .h2, .h3, .h4, .h5, .h6) {
   margin-block-start: 0;
 }
