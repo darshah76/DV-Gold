@@ -20,7 +20,6 @@
     --dv-community-padding-bottom-mobile: {{ section.settings.mobile_padding_bottom }}px;
     --dv-community-padding-top-desktop: {{ section.settings.desktop_padding_top }}px;
     --dv-community-padding-bottom-desktop: {{ section.settings.desktop_padding_bottom }}px;
-    --dv-community-scroll-speed: {{ section.settings.endless_scroll_speed }}s;
   "
 >
   <div class="dv-community__header">
@@ -34,14 +33,25 @@
   </div>
 
   <div class="dv-community__inner">
-    <div
-      class="dv-community__carousel"
-      role="list"
-      aria-label="{{ section.settings.carousel_label | escape }}"
-      data-endless-scroll="{{ section.settings.enable_endless_scroll }}"
-    >
-      {% if item_count > 0 %}
-        {% for block in section.blocks %}
+    <div class="dv-community__carousel-wrap">
+      <button
+        class="dv-community__carousel-button dv-community__carousel-button--prev"
+        type="button"
+        aria-label="Scroll community carousel left"
+        aria-controls="{{ section_anchor }}-carousel"
+      >
+        <span aria-hidden="true">&#8249;</span>
+      </button>
+
+      <div
+        id="{{ section_anchor }}-carousel"
+        class="dv-community__carousel"
+        role="list"
+        aria-label="{{ section.settings.carousel_label | escape }}"
+        tabindex="0"
+      >
+        {% if item_count > 0 %}
+          {% for block in section.blocks %}
           {% liquid
             assign card_link = block.settings.link
             assign has_video = false
@@ -100,68 +110,9 @@
               <p class="dv-community__caption">{{ block.settings.caption | escape }}</p>
             {% endif %}
           </article>
-        {% endfor %}
-
-        {% if section.settings.enable_endless_scroll %}
-          {% for block in section.blocks %}
-            {% liquid
-              assign card_link = block.settings.link
-              assign has_video = false
-              if block.settings.video != blank
-                assign has_video = true
-              endif
-            %}
-            <article class="dv-community__card dv-community__card--clone" role="listitem" aria-hidden="true">
-              {% if card_link != blank %}
-                <a
-                  class="dv-community__media-link"
-                  href="{{ card_link }}"
-                  tabindex="-1"
-                  {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
-                >
-              {% else %}
-                <div class="dv-community__media-link">
-              {% endif %}
-
-                {% if has_video %}
-                  {{
-                    block.settings.video
-                    | video_tag:
-                      autoplay: true,
-                      loop: true,
-                      muted: true,
-                      controls: false,
-                      playsinline: true,
-                      class: 'dv-community__media dv-community__media--video'
-                  }}
-                {% elsif block.settings.image != blank %}
-                  {{
-                    block.settings.image
-                    | image_url: width: 1000
-                    | image_tag:
-                      class: 'dv-community__media dv-community__media--image',
-                      widths: '320, 480, 640, 800, 1000',
-                      sizes: '(min-width: 990px) 380px, 86vw',
-                      loading: 'lazy',
-                      alt: block.settings.image_alt
-                  }}
-                {% else %}
-                  <div class="dv-community__placeholder">
-                    {{ 'image' | placeholder_svg_tag: 'dv-community__placeholder-svg' }}
-                    <span>Add social media</span>
-                  </div>
-                {% endif %}
-
-              {% if card_link != blank %}
-                </a>
-              {% else %}
-                </div>
-              {% endif %}
-            </article>
           {% endfor %}
-        {% endif %}
-      {% else %}
-        {% for i in (1..3) %}
+        {% else %}
+          {% for i in (1..3) %}
           <article class="dv-community__card dv-community__card--placeholder" role="listitem">
             <div class="dv-community__media-link">
               <div class="dv-community__placeholder">
@@ -170,8 +121,18 @@
               </div>
             </div>
           </article>
-        {% endfor %}
-      {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <button
+        class="dv-community__carousel-button dv-community__carousel-button--next"
+        type="button"
+        aria-label="Scroll community carousel right"
+        aria-controls="{{ section_anchor }}-carousel"
+      >
+        <span aria-hidden="true">&#8250;</span>
+      </button>
     </div>
   </div>
 </section>
@@ -220,16 +181,65 @@
     width: 100%;
   }
 
+  .dv-community__carousel-wrap {
+    align-items: center;
+    display: grid;
+    gap: 12px;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    width: 100%;
+  }
+
   .dv-community__carousel {
     display: flex;
     gap: var(--dv-community-gap);
     margin-inline: auto;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
-    padding: 0 max(28px, calc((100vw - var(--dv-community-max-width)) / 2)) 18px;
+    padding: 0 0 18px;
+    scroll-behavior: smooth;
     scroll-padding-inline: 28px;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
+    width: 100%;
+  }
+
+  .dv-community__carousel:focus-visible {
+    outline: 3px solid var(--dv-community-heading);
+    outline-offset: 6px;
+  }
+
+  .dv-community__carousel-button {
+    align-items: center;
+    background: var(--dv-community-heading);
+    border: 0;
+    border-radius: 999px;
+    box-shadow: 0 10px 24px rgba(70, 45, 20, 0.18);
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    flex: 0 0 auto;
+    font: inherit;
+    font-size: 3.2rem;
+    height: 44px;
+    justify-content: center;
+    line-height: 1;
+    transition: opacity 160ms ease, transform 160ms ease;
+    width: 44px;
+  }
+
+  .dv-community__carousel-button:hover {
+    transform: translateY(-1px);
+  }
+
+  .dv-community__carousel-button:focus-visible {
+    outline: 3px solid var(--dv-community-strip-text);
+    outline-offset: 3px;
+  }
+
+  .dv-community__carousel-button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.45;
+    transform: none;
   }
 
   .dv-community__carousel::-webkit-scrollbar {
@@ -308,9 +318,20 @@
     text-align: center;
   }
 
-  .dv-community__card--clone {
-    display: none;
-    pointer-events: none;
+  @media screen and (max-width: 749px) {
+    .dv-community__inner {
+      padding-inline: 12px;
+    }
+
+    .dv-community__carousel-wrap {
+      gap: 8px;
+    }
+
+    .dv-community__carousel-button {
+      font-size: 2.8rem;
+      height: 38px;
+      width: 38px;
+    }
   }
 
   @media screen and (min-width: 750px) {
@@ -327,57 +348,19 @@
       padding-block-start: 48px;
     }
 
+    .dv-community__carousel-wrap {
+      gap: 18px;
+    }
+
     .dv-community__carousel {
       padding-bottom: 22px;
-      scroll-padding-inline: max(48px, calc((100vw - var(--dv-community-max-width)) / 2));
-    }
-
-    .dv-community__carousel[data-endless-scroll='true'] {
-      margin-inline: 0;
-      overflow: visible;
-      padding-inline: 0;
-      scroll-snap-type: none;
-      width: max-content;
-      animation: dv-community-marquee var(--dv-community-scroll-speed) linear infinite;
-    }
-
-    .dv-community__carousel[data-endless-scroll='true']:hover,
-    .dv-community__carousel[data-endless-scroll='true']:focus-within {
-      animation-play-state: paused;
+      scroll-padding-inline: 48px;
     }
 
     .dv-community__card {
       flex-basis: var(--dv-community-card-width-desktop);
       max-width: var(--dv-community-card-width-desktop);
       scroll-snap-align: start;
-    }
-
-    .dv-community__carousel[data-endless-scroll='true'] .dv-community__card--clone {
-      display: block;
-      scroll-snap-align: none;
-    }
-
-    @keyframes dv-community-marquee {
-      from {
-        transform: translateX(0);
-      }
-      to {
-        transform: translateX(calc(-50% - (var(--dv-community-gap) / 2)));
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .dv-community__carousel[data-endless-scroll='true'] {
-        animation: none;
-        overflow-x: auto;
-        padding-inline: max(48px, calc((100vw - var(--dv-community-max-width)) / 2));
-        scroll-snap-type: x mandatory;
-        width: auto;
-      }
-
-      .dv-community__carousel[data-endless-scroll='true'] .dv-community__card--clone {
-        display: none;
-      }
     }
   }
 {% endstylesheet %}
@@ -399,7 +382,44 @@
       });
     };
 
-    document.querySelectorAll('.dv-community').forEach(initCommunityVideos);
+    const initCommunityCarousel = (section) => {
+      const carousel = section.querySelector('.dv-community__carousel');
+      const previousButton = section.querySelector('.dv-community__carousel-button--prev');
+      const nextButton = section.querySelector('.dv-community__carousel-button--next');
+
+      if (!carousel || !previousButton || !nextButton) {
+        return;
+      }
+
+      const getScrollAmount = () => {
+        const card = carousel.querySelector('.dv-community__card');
+        const gap = parseFloat(window.getComputedStyle(carousel).columnGap || window.getComputedStyle(carousel).gap) || 0;
+        return card ? card.getBoundingClientRect().width + gap : carousel.clientWidth * 0.85;
+      };
+
+      const updateButtonState = () => {
+        const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+        previousButton.disabled = carousel.scrollLeft <= 1;
+        nextButton.disabled = carousel.scrollLeft >= maxScrollLeft - 1;
+      };
+
+      previousButton.addEventListener('click', () => {
+        carousel.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+      });
+
+      nextButton.addEventListener('click', () => {
+        carousel.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+      });
+
+      carousel.addEventListener('scroll', updateButtonState, { passive: true });
+      window.addEventListener('resize', updateButtonState);
+      updateButtonState();
+    };
+
+    document.querySelectorAll('.dv-community').forEach((section) => {
+      initCommunityVideos(section);
+      initCommunityCarousel(section);
+    });
   })();
 </script>
 
@@ -489,22 +509,6 @@
       "step": 2,
       "unit": "px",
       "default": 28
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_endless_scroll",
-      "label": "Enable endless desktop scroll",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "endless_scroll_speed",
-      "label": "Endless scroll duration",
-      "min": 10,
-      "max": 80,
-      "step": 5,
-      "unit": "s",
-      "default": 30
     },
     {
       "type": "range",
