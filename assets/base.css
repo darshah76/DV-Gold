@@ -4051,41 +4051,103 @@ main > .shopify-section:first-child .section:not(.disable-section-top-offset) {
   }
 }
 
-/* DV Gold premium typography system */
-:where(h1, h2, h3, .h1, .h2, .h3, [class*='__heading'], [class*='__title'], .product-title, .product-card__title, .card__heading) {
+/* DV Gold premium editorial typography system */
+body {
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: var(--font-paragraph--size, 1rem);
+  line-height: var(--font-paragraph--line-height, 1.7);
+  letter-spacing: 0;
+}
+
+:where(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, [role='heading'], [class*='__heading'], [class*='__title'], .card__heading, .collection-title, .product-title, .product-card__title) {
   font-family: var(--font-heading--family);
   font-style: var(--font-heading--style);
   font-weight: 700;
+  line-height: var(--line-height--heading-tight, 1.15);
+  letter-spacing: 0;
+  text-transform: none;
 }
 
-:where(h1, h2, h3, .h1, .h2, .h3, [class*='__heading'], [class*='__title'], .product-title, .product-card__title, .card__heading) a {
+:where(h1, .h1) {
+  font-size: var(--font-h1--size, clamp(2.125rem, 1.35rem + 3.3vw, 3.5rem));
+  line-height: 1.15;
+}
+
+:where(h2, .h2) {
+  font-size: var(--font-h2--size, clamp(1.875rem, 1.43rem + 1.9vw, 2.625rem));
+  line-height: 1.2;
+}
+
+:where(h3, .h3) {
+  font-size: var(--font-h3--size, clamp(1.5rem, 1.28rem + 0.95vw, 1.875rem));
+}
+
+:where(h4, .h4) {
+  font-size: var(--font-h4--size, clamp(1.25rem, 1.1rem + 0.65vw, 1.5rem));
+}
+
+:where(h5, h6, .h5, .h6) {
+  font-family: var(--font-heading--family);
+  font-weight: 700;
+}
+
+:where(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, [role='heading'], [class*='__heading'], [class*='__title'], .card__heading, .collection-title, .product-title, .product-card__title) a {
   font-family: inherit;
   font-style: inherit;
   font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
 }
 
-:where(body, p, button, input, textarea, select, label, small, .button, .button-secondary, .badge, [class*='__badge'], [class*='__price'], .price) {
+:where(p, li, blockquote, dd, figcaption, small, label, legend, summary, input, textarea, select, option, table, .rte, .text-block, .text-block *, .card, .header, nav, .menu, .menu-list, .header__menu-item, .footer, .badge, [class*='__badge']) {
   font-family: var(--font-body--family);
 }
 
-:where(nav, .header, .menu, .menu-list, .header__menu-item) {
+:where(p, li, blockquote, dd, figcaption, .rte) {
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+:where(nav, .header, .menu, .menu-list, .header__menu-item, .menu-list__link) {
+  font-weight: 500;
+  font-size: var(--font-size--nav, 1rem);
+  line-height: 1.4;
+}
+
+:where(.button, .button-secondary, button, input[type='button'], input[type='submit'], input[type='reset'], [class*='__button']) {
   font-family: var(--font-body--family);
+  font-size: var(--font-size--button, 0.9375rem);
   font-weight: 600;
+  letter-spacing: 0.01875rem;
 }
 
-:where(.button, .button-secondary, button[type='submit'], input[type='submit'], [class*='__button']) {
-  font-family: var(--font-body--family);
-  font-weight: 600;
-  text-transform: uppercase;
+:where(.product-title, .product-card__title, .resource-card__title, .card__heading) {
+  font-family: var(--font-heading--family);
+  font-size: var(--font-size--product-title, clamp(1.25rem, 1.1rem + 0.65vw, 1.5rem));
+  font-weight: 700;
+  line-height: 1.2;
 }
 
-:where(.price, [class*='__price']) {
-  font-family: var(--font-body--family);
-  font-weight: 800;
+:where(.price, .compare-at-price, product-price, product-price *, [class*='__price']) {
+  font-family: var(--font-price--family, var(--font-body--family));
+}
+
+:where(.price, product-price .price, product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note), [class*='__price']) {
+  font-weight: var(--font-price--weight, 700);
+  color: var(--color-brand-burgundy, #7A1E2C);
+}
+
+:where(product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note)) {
+  font-size: var(--font-price--size, clamp(1.875rem, 1.55rem + 1.4vw, 2.25rem));
+}
+
+:where(small, .small, .caption, .badge, [class*='__badge']) {
+  font-size: var(--font-size--small, 0.875rem);
 }
 
 :where(.badge, [class*='__badge']) {
-  font-family: var(--font-body--family);
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-sm, 0.04em);
   text-transform: uppercase;
 }
