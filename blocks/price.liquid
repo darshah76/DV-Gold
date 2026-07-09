@@ -17,9 +17,8 @@
       endif
     endif
     if block_settings.type_preset == 'custom'
-      echo ' custom-typography'
-      if block_settings.font_size != ''
-        echo ' custom-font-size'
+      if block_settings.font_size != blank
+        echo ' custom-typography custom-font-size'
       endif
       if block_settings.color != ''
         echo ' custom-color'
@@ -163,6 +162,7 @@
           "label": "t:options.custom"
         }
       ],
+      "default": "paragraph",
       "info": "t:info.edit_presets_in_theme_settings"
     },
     {
@@ -287,7 +287,7 @@
           "label": "184px"
         }
       ],
-      "default": "1rem",
+      "default": "",
       "visible_if": "{{ block.settings.type_preset == 'custom' }}"
     },
     {

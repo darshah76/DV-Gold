@@ -32,9 +32,8 @@
       endif
     endif
     if block_settings.type_preset == 'custom'
-      echo ' custom-typography '
-      if block_settings.font_size != ''
-        echo ' custom-font-size '
+      if block_settings.font_size != blank
+        echo ' custom-typography custom-font-size '
       endif
       if block_settings.color != ''
         echo ' custom-color '
