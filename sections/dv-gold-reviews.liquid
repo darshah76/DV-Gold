@@ -164,6 +164,7 @@
   #{{ section_anchor }} {
     background: var(--dv-reviews-bg);
     color: var(--dv-reviews-text);
+    font-family: var(--font-body--family);
     padding-block: var(--dv-reviews-mobile-padding-top) var(--dv-reviews-mobile-padding-bottom);
   }
 
@@ -178,7 +179,7 @@
     color: var(--dv-reviews-heading);
     font-family: var(--font-heading--family);
     font-size: var(--dv-section-heading-size);
-    font-weight: 800;
+    font-weight: 700;
     line-height: 1.05;
     text-align: center;
     text-transform: uppercase;
@@ -263,10 +264,10 @@
     background: var(--dv-reviews-card-bg);
     color: var(--dv-reviews-text);
     cursor: pointer;
-    font: inherit;
+    font-family: var(--font-body--family);
     font-size: 1.2rem;
-    font-weight: 400;
-    text-transform: none;
+    font-weight: 600;
+    text-transform: uppercase;
   }
 
   #{{ section_anchor }} .dv-reviews__grid {
@@ -314,7 +315,7 @@
     justify-content: space-between;
     min-width: 0;
     font-size: 1.32rem;
-    font-weight: 800;
+    font-weight: 700;
     line-height: 1.25;
   }
 
@@ -331,8 +332,10 @@
     border-radius: 0;
     color: var(--dv-reviews-accent);
     font-size: 0.85rem;
+    font-family: var(--font-body--family);
     font-weight: 700;
     letter-spacing: 0.03em;
+    text-transform: uppercase;
     overflow-wrap: anywhere;
   }
 
@@ -417,7 +420,7 @@
   #{{ section_anchor }} .dv-reviews__modal-title { margin: 0; color: var(--dv-reviews-heading); font-size: 2.2rem; text-transform: uppercase; }
   #{{ section_anchor }} .dv-reviews__modal-close { min-width: 44px; min-height: 44px; border: 0; border-radius: 999px; background: transparent; cursor: pointer; font-size: 3rem; line-height: 1; }
   #{{ section_anchor }} .dv-reviews__modal-fields { display: grid; gap: 14px; }
-  #{{ section_anchor }} .dv-reviews__field { display: grid; gap: 6px; font-size: 1.3rem; font-weight: 800; }
+  #{{ section_anchor }} .dv-reviews__field { display: grid; gap: 6px; font-size: 1.3rem; font-weight: 700; }
   #{{ section_anchor }} .dv-reviews__field input,
   #{{ section_anchor }} .dv-reviews__field textarea { width: 100%; min-width: 0; padding: 12px; border: 1px solid var(--dv-reviews-card-border); border-radius: 12px; background: #fff; color: inherit; font: inherit; }
   #{{ section_anchor }} .dv-reviews__submit { width: 100%; margin-block-start: 16px; }
@@ -430,7 +433,7 @@
     #{{ section_anchor }} .dv-reviews__summary { flex-direction: row; gap: 24px; justify-content: space-between; margin-block-end: 28px; padding-inline: 4px; padding-block-end: 0; text-align: left; }
     #{{ section_anchor }} .dv-reviews__summary::after { content: none; }
     #{{ section_anchor }} .dv-reviews__rating-wrap { display: flex; gap: 12px; align-items: center; }
-    #{{ section_anchor }} .dv-reviews__write-button { min-height: 44px; padding: 10px 22px; border: 1px solid var(--dv-reviews-heading); border-radius: 999px; background: var(--dv-reviews-heading); color: var(--dv-reviews-card-bg); font-size: 1.35rem; font-weight: 800; text-transform: uppercase; }
+    #{{ section_anchor }} .dv-reviews__write-button { min-height: 44px; padding: 10px 22px; border: 1px solid var(--dv-reviews-heading); border-radius: 999px; background: var(--dv-reviews-heading); color: var(--dv-reviews-card-bg); font-size: 1.35rem; font-weight: 600; text-transform: uppercase; }
     #{{ section_anchor }} .dv-reviews__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
     #{{ section_anchor }} .dv-reviews__card { gap: 14px; padding: 24px; border-radius: 22px; }
     #{{ section_anchor }} [data-review-pagination-previous],

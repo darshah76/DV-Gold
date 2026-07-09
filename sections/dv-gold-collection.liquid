@@ -159,45 +159,45 @@
 </section>
 
 <style>
-  .dv-collection { background: var(--dv-page-bg); color: var(--dv-text); min-height: 100vh; }
+  .dv-collection { background: var(--dv-page-bg); color: var(--dv-text); font-family: var(--font-body--family); min-height: 100vh; }
   .dv-collection__hero-wrap { padding: 24px 24px 44px; border-bottom: 1px solid rgba(199, 159, 87, .22); }
   .dv-collection__hero { position: relative; width: min(100%, 920px); margin: 0 auto; padding: 26px 22px 0; text-align: center; background: var(--dv-card-bg); border: 1px solid rgba(213, 169, 90, .2); border-radius: 20px; box-shadow: 0 18px 24px rgba(91, 63, 27, .12); }
-  .dv-collection__eyebrow { margin: 0 0 14px; color: var(--dv-accent); font-size: 1.1rem; font-weight: 800; letter-spacing: .18em; line-height: 1; text-transform: uppercase; }
-  .dv-collection__title { max-width: 640px; margin: 0 auto 14px; color: var(--dv-heading); font-family: var(--font-heading--family); font-size: clamp(3.1rem, 8vw, 6.4rem); font-weight: 800; line-height: .95; }
+  .dv-collection__eyebrow { margin: 0 0 14px; color: var(--dv-accent); font-family: var(--font-body--family); font-size: 1.1rem; font-weight: 700; letter-spacing: .18em; line-height: 1; text-transform: uppercase; }
+  .dv-collection__title { max-width: 640px; margin: 0 auto 14px; color: var(--dv-heading); font-family: var(--font-heading--family); font-size: clamp(3.1rem, 8vw, 6.4rem); font-weight: 700; line-height: .95; }
   .dv-collection__intro { max-width: 560px; margin: 0 auto; color: var(--dv-text); font-size: 1.4rem; line-height: 1.45; }
-  .dv-collection__button { display: inline-flex; min-width: 142px; min-height: 36px; align-items: center; justify-content: center; margin: 28px auto -18px; padding: 10px 24px; border-radius: 999px; background: var(--dv-accent); color: #fff; font-size: 1.2rem; font-weight: 800; text-decoration: none; box-shadow: 0 8px 14px rgba(203, 148, 0, .2); }
+  .dv-collection__button { display: inline-flex; min-width: 142px; min-height: 36px; align-items: center; justify-content: center; margin: 28px auto -18px; padding: 10px 24px; border-radius: 999px; background: var(--dv-accent); color: #fff; font-family: var(--font-body--family); font-size: 1.2rem; font-weight: 600; text-transform: uppercase; text-decoration: none; box-shadow: 0 8px 14px rgba(203, 148, 0, .2); }
   .dv-collection__toolbar { display: flex; min-height: 68px; align-items: center; justify-content: space-between; border-block: 1px solid rgba(199, 159, 87, .22); }
   .dv-collection__facets, .dv-collection__facets-form { display: flex; width: 100%; min-height: 68px; }
   .dv-collection__filter-menu { position: relative; flex: 1; margin: 0; }
-  .dv-collection__tool, .dv-collection__sort { flex: 1; display: flex; align-items: center; justify-content: center; gap: 12px; height: 68px; border: 0; background: transparent; color: #6b6255; font: inherit; font-size: 1.8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .dv-collection__tool, .dv-collection__sort { flex: 1; display: flex; align-items: center; justify-content: center; gap: 12px; height: 68px; border: 0; background: transparent; color: #6b6255; font-family: var(--font-body--family); font-size: 1.8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
   .dv-collection__tool { width: 100%; border-right: 1px solid rgba(199, 159, 87, .22); cursor: pointer; list-style: none; }
   .dv-collection__tool::-webkit-details-marker { display: none; }
   .dv-collection__tool--disabled { cursor: default; opacity: .55; }
   .dv-collection__filter-panel { position: absolute; z-index: 4; inset-block-start: calc(100% + 10px); inset-inline-start: 12px; width: min(88vw, 340px); max-height: 70vh; overflow: auto; border: 1px solid rgba(199, 159, 87, .24); border-radius: 18px; background: #fffdf9; padding: 18px; box-shadow: 0 16px 40px rgba(91, 63, 27, .16); }
   .dv-collection__filter-group { margin: 0 0 16px; padding: 0; border: 0; }
-  .dv-collection__filter-group legend { margin-block-end: 8px; color: var(--dv-heading); font-weight: 800; }
+  .dv-collection__filter-group legend { margin-block-end: 8px; color: var(--dv-heading); font-family: var(--font-body--family); font-weight: 700; }
   .dv-collection__filter-option { display: flex; gap: 8px; align-items: center; padding-block: 5px; color: var(--dv-text); font-size: 1.3rem; font-weight: 700; letter-spacing: 0; text-transform: none; }
-  .dv-collection__apply { width: 100%; min-height: 42px; border: 0; border-radius: 999px; background: var(--dv-accent); color: #fff; cursor: pointer; font: inherit; font-weight: 800; }
+  .dv-collection__apply { width: 100%; min-height: 42px; border: 0; border-radius: 999px; background: var(--dv-accent); color: #fff; cursor: pointer; font-family: var(--font-body--family); font-weight: 600; text-transform: uppercase; }
   .dv-collection__filter-icon { width: 17px; height: 17px; background: linear-gradient(var(--dv-accent),var(--dv-accent)) 0 4px/17px 1.5px no-repeat, linear-gradient(var(--dv-accent),var(--dv-accent)) 0 12px/17px 1.5px no-repeat; position: relative; }
   .dv-collection__filter-icon:before, .dv-collection__filter-icon:after { content: ''; position: absolute; width: 4px; height: 4px; border: 1px solid var(--dv-accent); border-radius: 50%; background: var(--dv-page-bg); top: 2px; left: 4px; }
   .dv-collection__filter-icon:after { top: 10px; left: 10px; }
   .dv-collection__sort select { appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-size: inherit; font-weight: inherit; letter-spacing: inherit; text-transform: inherit; max-width: 145px; cursor: pointer; }
   .dv-collection__sort span { color: var(--dv-accent); font-size: 1.8rem; transform: translateY(-2px); }
   .dv-collection__content { width: min(100% - 34px, 1180px); margin: 0 auto; padding: 32px 0 48px; }
-  .dv-collection__section-title { margin: 0 0 56px; color: var(--dv-heading); font-family: var(--font-heading--family); font-size: clamp(2rem, 5.2vw, 4.2rem); font-weight: 800; line-height: 1; text-transform: uppercase; }
+  .dv-collection__section-title { margin: 0 0 56px; color: var(--dv-heading); font-family: var(--font-heading--family); font-size: clamp(2rem, 5.2vw, 4.2rem); font-weight: 700; line-height: 1; text-transform: uppercase; }
   .dv-collection__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 30px; }
   .dv-collection__product { display: flex; flex-direction: column; min-width: 0; overflow: hidden; border-radius: 7px; background: var(--dv-product-bg); box-shadow: 0 5px 12px rgba(98, 68, 32, .12); }
   .dv-collection__image-link { position: relative; display: flex; align-items: center; justify-content: center; margin: 11px 8px 0; aspect-ratio: 1 / 1.06; border-radius: 7px; background: var(--dv-image-bg); overflow: hidden; text-decoration: none; }
-  .dv-collection__badge { position: absolute; top: 8px; left: 8px; z-index: 1; padding: 3px 8px; border-radius: 999px; background: #fffaf0; color: var(--dv-accent); font-size: .8rem; font-weight: 700; line-height: 1; }
+  .dv-collection__badge { position: absolute; top: 8px; left: 8px; z-index: 1; padding: 3px 8px; border-radius: 999px; background: #fffaf0; color: var(--dv-accent); font-family: var(--font-body--family); font-size: .8rem; font-weight: 700; letter-spacing: .08em; line-height: 1; }
   .dv-collection__image, .dv-collection__placeholder { width: 86%; height: 86%; object-fit: contain; display: block; }
   .dv-collection__product-body { display: flex; flex: 1; flex-direction: column; padding: 16px 12px 14px; }
-  .dv-collection__product-title { margin: 0 0 9px; color: var(--dv-heading); font-family: var(--font-heading--family); font-size: 1.3rem; font-weight: 800; line-height: 1.15; text-transform: uppercase; }
+  .dv-collection__product-title { margin: 0 0 9px; color: var(--dv-heading); font-family: var(--font-heading--family); font-size: 1.3rem; font-weight: 700; line-height: 1.15; text-transform: uppercase; }
   .dv-collection__product-title a { color: inherit; text-decoration: none; }
   .dv-collection__description { margin: 0 0 22px; color: var(--dv-text); font-size: 1.1rem; line-height: 1.38; }
   .dv-collection__footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; margin-top: auto; }
-  .dv-collection__price { margin: 0; color: var(--dv-heading); font-size: 1.65rem; font-weight: 900; line-height: 1; }
+  .dv-collection__price { margin: 0; color: var(--dv-heading); font-family: var(--font-body--family); font-size: 1.65rem; font-weight: 800; line-height: 1; }
   .dv-collection__form { margin: 0; }
-  .dv-collection__add { width: 32px; height: 32px; border: 0; border-radius: 10px; background: var(--dv-accent); color: #fff; cursor: pointer; font-size: 1.8rem; font-weight: 800; line-height: 1; }
+  .dv-collection__add { width: 32px; height: 32px; border: 0; border-radius: 10px; background: var(--dv-accent); color: #fff; cursor: pointer; font-family: var(--font-body--family); font-size: 1.8rem; font-weight: 600; text-transform: uppercase; line-height: 1; }
   .dv-collection__pagination { margin-top: 36px; text-align: center; }
   .dv-collection__empty { grid-column: 1 / -1; text-align: center; }
   @media (min-width: 750px) { .dv-collection__hero-wrap { padding: 48px 40px 64px; } .dv-collection__hero { padding: 48px 44px 0; border-radius: 28px; } .dv-collection__toolbar { width: min(100%, 1180px); margin: 0 auto; border-inline: 1px solid rgba(199,159,87,.22); } .dv-collection__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; } .dv-collection__product-title { font-size: 1.6rem; } .dv-collection__description { font-size: 1.35rem; } .dv-collection__price { font-size: 2rem; } .dv-collection__add { width: 40px; height: 40px; border-radius: 13px; } }
