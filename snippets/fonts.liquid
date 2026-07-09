@@ -4,8 +4,11 @@
 {%- unless settings.type_subheading_font.system? -%}
   {{ settings.type_subheading_font | font_url | preload_tag: as: 'font', type: 'font/woff2', fetchpriority: 'low' }}
 {%- endunless -%}
+{%- liquid
+  assign heading_font_bold = settings.type_heading_font | font_modify: 'weight', '700'
+-%}
 {%- unless settings.type_heading_font.system? -%}
-  {{ settings.type_heading_font | font_url | preload_tag: as: 'font', type: 'font/woff2', fetchpriority: 'low' }}
+  {{ heading_font_bold | default: settings.type_heading_font | font_url | preload_tag: as: 'font', type: 'font/woff2', fetchpriority: 'low' }}
 {%- endunless -%}
 {%- unless settings.type_accent_font.system? -%}
   {{ settings.type_accent_font | font_url | preload_tag: as: 'font', type: 'font/woff2', fetchpriority: 'low' }}
