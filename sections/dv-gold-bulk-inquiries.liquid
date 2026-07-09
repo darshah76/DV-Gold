@@ -57,30 +57,32 @@
       </div>
 
       {% if section.settings.button_label != blank %}
-        <a
-          class="dv-bulk-inquiries__button{% if whatsapp_number == blank %} dv-bulk-inquiries__button--disabled{% endif %}"
-          href="{{ whatsapp_href }}"
-          {% if whatsapp_number == blank %}
-            role="link"
-            aria-disabled="true"
-            tabindex="-1"
-          {% else %}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="{{ section.settings.button_label | escape }}"
-          {% endif %}
-        >
-          <svg
-            class="dv-bulk-inquiries__button-icon"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-            focusable="false"
-            aria-hidden="true"
+        <div class="dv-bulk-inquiries__button-wrapper whatsapp-button-wrapper">
+          <a
+            class="dv-bulk-inquiries__button whatsapp-button{% if whatsapp_number == blank %} dv-bulk-inquiries__button--disabled{% endif %}"
+            href="{{ whatsapp_href }}"
+            {% if whatsapp_number == blank %}
+              role="link"
+              aria-disabled="true"
+              tabindex="-1"
+            {% else %}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="{{ section.settings.button_label | escape }}"
+            {% endif %}
           >
-            {% render 'icon', icon: 'whatsapp' %}
-          </svg>
-          <span>{{ section.settings.button_label }}</span>
-        </a>
+            <svg
+              class="dv-bulk-inquiries__button-icon"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+              focusable="false"
+              aria-hidden="true"
+            >
+              {% render 'icon', icon: 'whatsapp' %}
+            </svg>
+            <span>{{ section.settings.button_label }}</span>
+          </a>
+        </div>
       {% endif %}
     </div>
   </div>
@@ -107,7 +109,7 @@
     min-height: clamp(456px, 103.6vw, 484px);
     padding: clamp(56px, 12.4vw, 58px) clamp(28px, 7vw, 86px) clamp(58px, 12.8vw, 60px);
     padding-inline: clamp(28px, 7vw, 86px);
-    overflow: hidden;
+    overflow: visible;
     border: 1px solid var(--dv-bulk-card-border);
     border-radius: 28px;
     background: var(--dv-bulk-card-bg);
@@ -189,32 +191,41 @@
     mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='black' d='M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.3-.3.75-.4 1.14-.27 1.25.41 2.6.63 3.95.63.61 0 1.1.49 1.1 1.1v3.48c0 .61-.49 1.1-1.1 1.1C10.56 21.72 2.5 13.66 2.5 3.72c0-.61.49-1.1 1.1-1.1h3.5c.61 0 1.1.49 1.1 1.1 0 1.37.22 2.7.63 3.96.12.38.03.82-.28 1.13l-1.93 1.98Zm.52 8.79c.44 0 .8-.36.8-.8s-.36-.8-.8-.8-.8.36-.8.8.36.8.8.8Zm-2.64-2.7c.35 0 .64-.29.64-.64s-.29-.64-.64-.64-.64.29-.64.64.29.64.64.64Zm13.08-9.9c.44 0 .8-.36.8-.8s-.36-.8-.8-.8-.8.36-.8.8.36.8.8.8Zm-2.64-2.7c.35 0 .64-.29.64-.64S15.29 3 14.94 3s-.64.29-.64.64.29.64.64.64Z'/%3E%3C/svg%3E") center / contain no-repeat;
   }
 
+  #{{ section_anchor }} .dv-bulk-inquiries__button-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: clamp(38px, 9vw, 42px);
+    overflow: visible;
+  }
+
   #{{ section_anchor }} .dv-bulk-inquiries__button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 13px;
-    width: min(100%, 360px);
-    max-width: 360px;
+    gap: 10px;
+    box-sizing: border-box;
+    width: auto;
+    max-width: 100%;
     min-height: clamp(66px, 15.85vw, 74px);
-    margin-top: clamp(38px, 9vw, 42px);
-    padding: 18px clamp(22px, 6vw, 30px);
+    margin: 0;
+    padding: 16px 28px;
     border-radius: 8px;
     background: var(--dv-bulk-button-bg);
     color: var(--dv-bulk-button-text);
-    font-family: var(--font-body--family);
-    font-size: clamp(1.8rem, 5.4vw, 2.2rem);
-    font-weight: 800;
+    font-family: "Inter", var(--font-body--family), sans-serif;
+    font-size: clamp(18px, 2vw, 28px);
+    font-weight: 700;
     line-height: 1;
     text-decoration: none;
     white-space: nowrap;
-    transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+    overflow: visible;
+    transition: box-shadow 180ms ease, opacity 180ms ease;
     box-shadow: 0 17px 26px rgba(74, 42, 20, 0.11);
   }
 
   #{{ section_anchor }} .dv-bulk-inquiries__button:hover,
   #{{ section_anchor }} .dv-bulk-inquiries__button:focus-visible {
-    transform: translateY(-2px);
     box-shadow: 0 20px 32px rgba(74, 42, 20, 0.15);
   }
 
