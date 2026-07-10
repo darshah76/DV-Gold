@@ -410,7 +410,7 @@
         "button_background": "#25d366",
         "button_text_color": "#ffffff",
         "max_width": 760,
-        "mobile_padding_top": 108,
+        "mobile_padding_top": 48,
         "mobile_padding_bottom": 76,
         "desktop_padding_top": 72,
         "desktop_padding_bottom": 72

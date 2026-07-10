@@ -158,19 +158,17 @@
 
   @media screen and (max-width: 749px) {
     #{{ section_anchor }} {
-      width: 100%;
-      padding-inline: 0;
-      padding-block: 48px var(--dv-certifications-mobile-padding-bottom);
-      overflow-x: hidden;
+      padding-top: 48px;
     }
 
     #{{ section_anchor }} .dv-certifications__panel {
-      width: calc(100% - 32px);
-      max-width: none;
-      margin: 0 auto;
-      padding: 48px 20px;
-      border-radius: 32px;
-      box-sizing: border-box;
+      padding-top: 48px;
+      padding-bottom: 48px;
+    }
+
+    #{{ section_anchor }} .dv-certifications__badges {
+      margin-top: 32px;
+      margin-bottom: 40px;
     }
 
     #{{ section_anchor }} .dv-certifications__heading {
