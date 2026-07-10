@@ -92,11 +92,12 @@
     font-weight: 800;
     line-height: 1.33;
     letter-spacing: var(--dv-certifications-heading-letter-spacing);
-    overflow-wrap: anywhere;
     text-align: center;
     text-transform: var(--dv-certifications-heading-transform);
     word-break: normal;
-    hyphens: manual;
+    overflow-wrap: normal;
+    hyphens: none;
+    white-space: normal;
     text-wrap: balance;
   }
 
@@ -153,6 +154,27 @@
 
   #{{ section_anchor }} .dv-certifications__text p {
     margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    #{{ section_anchor }} .dv-certifications__heading {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 8px;
+      font-family: "Playfair Display", serif;
+      font-weight: 700;
+      font-size: clamp(30px, 9vw, 42px);
+      line-height: 1.12;
+      letter-spacing: 0;
+      text-align: center;
+      color: #9f2933;
+      word-break: normal;
+      overflow-wrap: normal;
+      hyphens: none;
+      white-space: normal;
+      text-wrap: balance;
+    }
   }
 
   @media screen and (min-width: 750px) {
