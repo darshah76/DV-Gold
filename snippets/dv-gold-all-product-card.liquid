@@ -13,28 +13,35 @@
 %}
 
 <article class="dv-all-products__card{{ clone_class }}{{ description_class }}" role="listitem" {% if is_clone %}aria-hidden="true"{% endif %}>
-  <a class="dv-all-products__image-link" href="{{ product.url }}" aria-label="{{ product.title | escape }}" {% if is_clone %}tabindex="-1"{% endif %}>
-    <span class="dv-all-products__view-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" focusable="false">
+  <div class="dv-all-products__media">
+    <a class="dv-all-products__image-link" href="{{ product.url }}" aria-label="{{ product.title | escape }}" {% if is_clone %}tabindex="-1"{% endif %}>
+      {% if product_image != blank %}
+        {{
+          product_image
+          | image_url: width: 700
+          | image_tag:
+            loading: 'lazy',
+            widths: '240, 320, 420, 560, 700',
+            sizes: '(min-width: 990px) 220px, 42vw',
+            class: 'dv-all-products__image',
+            alt: product_image.alt
+        }}
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'dv-all-products__placeholder' }}
+      {% endif %}
+    </a>
+
+    <a
+      class="dv-all-products__view-icon"
+      href="{{ product.url }}"
+      aria-label="View {{ product.title | escape }}"
+      {% if is_clone %}tabindex="-1"{% endif %}
+    >
+      <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
         <path d="M12 5.5c4.2 0 7.5 3.6 8.7 5.2.6.8.6 1.8 0 2.6-1.2 1.6-4.5 5.2-8.7 5.2s-7.5-3.6-8.7-5.2a2.1 2.1 0 0 1 0-2.6C4.5 9.1 7.8 5.5 12 5.5Zm0 2c-3.2 0-6 2.8-7.1 4.1a.6.6 0 0 0 0 .8c1 1.3 3.9 4.1 7.1 4.1s6-2.8 7.1-4.1a.6.6 0 0 0 0-.8c-1-1.3-3.9-4.1-7.1-4.1Zm0 2.1a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8Z" />
       </svg>
-    </span>
-
-    {% if product_image != blank %}
-      {{
-        product_image
-        | image_url: width: 700
-        | image_tag:
-          loading: 'lazy',
-          widths: '240, 320, 420, 560, 700',
-          sizes: '(min-width: 990px) 220px, 42vw',
-          class: 'dv-all-products__image',
-          alt: product_image.alt
-      }}
-    {% else %}
-      {{ 'product-1' | placeholder_svg_tag: 'dv-all-products__placeholder' }}
-    {% endif %}
-  </a>
+    </a>
+  </div>
 
   <div class="dv-all-products__body">
     <h3 class="dv-all-products__title"><a href="{{ product.url }}" {% if is_clone %}tabindex="-1"{% endif %}>{{ product.title }}</a></h3>
