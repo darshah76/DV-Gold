@@ -213,6 +213,7 @@
   }
 
   #{{ section_anchor }} .dv-category__meta {
+    z-index: 3;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -240,9 +241,9 @@
   #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__underline {
     z-index: 3;
     display: block;
-    width: 32px;
+    width: 24px;
     height: 2px;
-    margin: 8px auto 0;
+    margin-top: 7px;
     background: var(--dv-category-accent);
   }
 
@@ -289,22 +290,16 @@
       margin-top: 14px;
     }
 
-
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__underline {
-      width: 38px;
-      margin-top: 9px;
-    }
-
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item-connector {
+    #{{ section_anchor }} .dv-category__item-connector {
       height: 58px;
       margin-top: 16px;
     }
   }
 
   @media screen and (min-width: 990px) {
-    #{{ section_anchor }} .dv-category__title {
-      font-size: 20px;
-      letter-spacing: 0.16em;
+    #{{ section_anchor }} .dv-category__underline {
+      width: 30px;
+      margin-top: 8px;
     }
 
     #{{ section_anchor }} .dv-category__heading {
