@@ -27,6 +27,24 @@
     <div class="dv-category__list" role="list">
       {% for block in section.blocks %}
         {% liquid
+          assign category_collection = block.settings.collection
+          assign category_title = block.settings.title | default: category_collection.title
+          assign category_link = block.settings.link
+          if category_link == blank and category_collection != blank
+            assign category_link = category_collection.url
+          endif
+          if category_link == blank
+            assign category_link = '#'
+          endif
+          assign category_image = block.settings.image
+          if category_image == blank and category_collection != blank
+            assign category_image = category_collection.featured_image
+            if category_image == blank
+              assign category_image = category_collection.image
+            endif
+          endif
+          assign category_aria_label = category_title | default: block.settings.button_label
+          assign category_image_alt = category_image.alt | default: category_title
           assign rotation = block.settings.card_rotation | default: 0
           assign block_card_bg = block.settings.card_background
           if block_card_bg == blank or block_card_bg == 'rgba(0,0,0,0)'
@@ -41,20 +59,20 @@
           >
             <a
               class="dv-category__card"
-              href="{{ block.settings.link | default: '#' }}"
+              href="{{ category_link }}"
               {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
-              aria-label="{{ block.settings.title | default: block.settings.button_label | escape }}"
+              aria-label="{{ category_aria_label | escape }}"
             >
-              {% if block.settings.image != blank %}
+              {% if category_image != blank %}
                 {{
-                  block.settings.image
+                  category_image
                   | image_url: width: 1200
                   | image_tag:
                     loading: 'lazy',
                     widths: '320, 480, 640, 800, 1000, 1200',
                     sizes: '(min-width: 990px) 520px, 86vw',
                     class: 'dv-category__image',
-                    alt: block.settings.image.alt
+                    alt: category_image_alt
                 }}
               {% else %}
                 <div class="dv-category__placeholder" aria-hidden="true">
@@ -68,8 +86,8 @@
             </a>
           </div>
 
-          {% if block.settings.title != blank %}
-            <h3 class="dv-category__title">{{ block.settings.title }}</h3>
+          {% if category_title != blank %}
+            <h3 class="dv-category__title">{{ category_title }}</h3>
           {% endif %}
 
           {% unless forloop.last %}
@@ -255,6 +273,7 @@
       "name": "Category",
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "collection", "id": "collection", "label": "Collection" },
         { "type": "text", "id": "title", "label": "Category name", "default": "TEA" },
         { "type": "text", "id": "button_label", "label": "Button text", "default": "SHOP NOW" },
         { "type": "url", "id": "link", "label": "Button and card link" },
