@@ -228,10 +228,10 @@
     background: var(--dv-category-bg);
     color: var(--dv-category-heading);
     font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(17px, 4.6vw, 19px);
+    font-size: 17px;
     font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: 0.13em;
+    line-height: 1.1;
+    letter-spacing: 0.14em;
     text-align: center;
     text-transform: uppercase;
     white-space: nowrap;
@@ -289,10 +289,6 @@
       margin-top: 14px;
     }
 
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__title {
-      font-size: clamp(20px, 1.4vw, 22px);
-      letter-spacing: 0.14em;
-    }
 
     #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__underline {
       width: 38px;
@@ -306,8 +302,9 @@
   }
 
   @media screen and (min-width: 990px) {
-    #{{ section_anchor }} .dv-category__card-wrap {
-      width: clamp(400px, 36vw, 520px);
+    #{{ section_anchor }} .dv-category__title {
+      font-size: 20px;
+      letter-spacing: 0.16em;
     }
 
     #{{ section_anchor }} .dv-category__heading {
