@@ -79,12 +79,10 @@
             {% endif %}
 
             {% unless forloop.last %}
-              <div class="dv-category__item-connector" aria-hidden="true">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
+              <div class="dv-category__item-connector dv-category-connector" aria-hidden="true">
+                <svg viewBox="0 0 36 82" focusable="false">
+                  <path d="M18 0 C34 20 2 38 18 82" fill="none" stroke="currentColor"/>
+                </svg>
               </div>
             {% endunless %}
           </div>
@@ -247,46 +245,32 @@
   }
 
   #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item-connector {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 7px;
-    width: 28px;
-    margin-inline: auto;
     margin-top: 10px;
     margin-bottom: 26px;
     pointer-events: none;
     transform: none;
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item-connector span {
+  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category-connector {
     display: block;
-    width: 5px;
-    height: 13px;
-    border-radius: 1px;
-    background: var(--dv-category-accent);
+    width: 36px;
+    height: 82px;
+    margin-inline: auto;
+    color: #c99000;
+    flex: 0 0 auto;
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item-connector span:nth-child(1) {
-    transform: translateX(-4px);
+  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category-connector svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item-connector span:nth-child(2) {
-    transform: translateX(1px);
-  }
-
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item-connector span:nth-child(3) {
-    transform: translateX(5px);
-  }
-
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item-connector span:nth-child(4) {
-    transform: translateX(1px);
-  }
-
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item-connector span:nth-child(5) {
-    display: none;
-    transform: translateX(-3px);
+  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category-connector path {
+    stroke-width: 7;
+    stroke-dasharray: 12 14;
+    stroke-linecap: butt;
   }
 
   #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item:last-child .dv-category__item-connector {
@@ -324,19 +308,20 @@
     }
 
     #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item-connector {
-      gap: 8px;
-      width: 32px;
       margin-top: 11px;
       margin-bottom: 30px;
     }
+  }
 
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item-connector span {
-      width: 6px;
-      height: 15px;
+  @media screen and (min-width: 750px) {
+    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category-connector {
+      width: 42px;
+      height: 94px;
     }
 
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item-connector span:nth-child(5) {
-      display: block;
+    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category-connector path {
+      stroke-width: 8;
+      stroke-dasharray: 14 16;
     }
   }
 
