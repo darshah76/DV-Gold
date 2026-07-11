@@ -41,33 +41,37 @@
 
         <div class="dv-category__item" role="listitem" {{ block.shopify_attributes }}>
           <div class="dv-category__card-wrap">
-            <a
-              class="dv-category__card"
-              href="{{ category_collection.url | default: '#' }}"
-              aria-label="{{ category_collection_title | escape }}"
+            <div
+              class="dv-category__card-shell"
               style="--dv-category-rotation: {{ rotation }}deg; --dv-category-block-card-bg: {{ block_card_bg }};"
             >
-              {% if category_collection_image != blank %}
-                {{
-                  category_collection_image
-                  | image_url: width: 1200
-                  | image_tag:
-                    loading: 'lazy',
-                    widths: '320, 480, 640, 800, 1000, 1200',
-                    sizes: '(min-width: 990px) 520px, 86vw',
-                    class: 'dv-category__image',
-                    alt: category_collection_image_alt
-                }}
-              {% else %}
-                <div class="dv-category__placeholder" aria-hidden="true">
-                  {{ 'collection-1' | placeholder_svg_tag: 'dv-category__placeholder-svg' }}
-                </div>
-              {% endif %}
+              <a
+                class="dv-category__card"
+                href="{{ category_collection.url | default: '#' }}"
+                aria-label="{{ category_collection_title | escape }}"
+              >
+                {% if category_collection_image != blank %}
+                  {{
+                    category_collection_image
+                    | image_url: width: 1200
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '320, 480, 640, 800, 1000, 1200',
+                      sizes: '(min-width: 990px) 520px, 86vw',
+                      class: 'dv-category__image',
+                      alt: category_collection_image_alt
+                  }}
+                {% else %}
+                  <div class="dv-category__placeholder" aria-hidden="true">
+                    {{ 'collection-1' | placeholder_svg_tag: 'dv-category__placeholder-svg' }}
+                  </div>
+                {% endif %}
 
-              {% if block.settings.button_label != blank %}
-                <span class="dv-category__button">{{ block.settings.button_label }}</span>
-              {% endif %}
-            </a>
+                {% if block.settings.button_label != blank %}
+                  <span class="dv-category__button">{{ block.settings.button_label }}</span>
+                {% endif %}
+              </a>
+            </div>
           </div>
 
           <div class="dv-category__meta">
@@ -138,6 +142,13 @@
   #{{ section_anchor }} .dv-category__card-wrap {
     width: clamp(230px, 66vw, 290px);
     margin-inline: auto;
+  }
+
+  #{{ section_anchor }} .dv-category__card-shell {
+    position: relative;
+    z-index: 2;
+    transform: rotate(var(--dv-category-rotation));
+    filter: drop-shadow(0 7px 10px rgba(45, 28, 14, 0.13));
   }
 
   #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__card {
@@ -270,7 +281,11 @@
       margin-top: 28px;
     }
 
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__meta {
+    #{{ section_anchor }} .dv-category__card-wrap {
+      width: clamp(310px, 46vw, 420px);
+    }
+
+    #{{ section_anchor }} .dv-category__meta {
       margin-top: clamp(18px, 2.4vw, 24px);
     }
 
