@@ -134,7 +134,7 @@
   }
 
   #{{ section_anchor }} .dv-category__item + .dv-category__item {
-    margin-top: 22px;
+    margin-top: 28px;
   }
 
   #{{ section_anchor }} .dv-category__card-shell {
@@ -261,10 +261,6 @@
       width: min(100% - 64px, var(--dv-category-max-width));
     }
 
-    #{{ section_anchor }} .dv-category__item + .dv-category__item {
-      margin-top: 28px;
-    }
-
     #{{ section_anchor }} .dv-category__meta {
       margin-top: clamp(18px, 2.4vw, 24px);
     }
@@ -286,6 +282,10 @@
   }
 
   @media screen and (min-width: 990px) {
+    #{{ section_anchor }} .dv-category__item + .dv-category__item {
+      margin-top: 38px;
+    }
+
     #{{ section_anchor }} .dv-category__heading {
       text-align: left;
       margin-left: max(0px, calc((var(--dv-category-max-width) - 720px) / 2));
