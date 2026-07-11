@@ -40,14 +40,12 @@
         %}
 
         <div class="dv-category__item" role="listitem" {{ block.shopify_attributes }}>
-          <div
-            class="dv-category__card-shell"
-            style="--dv-category-rotation: {{ rotation }}deg; --dv-category-block-card-bg: {{ block_card_bg }};"
-          >
+          <div class="dv-category__card-wrap">
             <a
               class="dv-category__card"
               href="{{ category_collection.url | default: '#' }}"
               aria-label="{{ category_collection_title | escape }}"
+              style="--dv-category-rotation: {{ rotation }}deg; --dv-category-block-card-bg: {{ block_card_bg }};"
             >
               {% if category_collection_image != blank %}
                 {{
@@ -137,18 +135,18 @@
     margin-top: 22px;
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__card-shell {
-    position: relative;
-    z-index: 2;
-    width: min(100%, 640px);
-    transform: rotate(var(--dv-category-rotation));
-    filter: drop-shadow(0 7px 10px rgba(45, 28, 14, 0.13));
+  #{{ section_anchor }} .dv-category__card-wrap {
+    width: clamp(230px, 66vw, 290px);
+    margin-inline: auto;
   }
 
   #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__card {
     position: relative;
     z-index: 2;
     display: block;
+    width: 100%;
+    transform: rotate(var(--dv-category-rotation, 0deg));
+    transform-origin: center center;
     aspect-ratio: 1.52 / 1;
     padding: clamp(10px, 2vw, 16px);
     overflow: hidden;
@@ -157,6 +155,7 @@
     border: 1px solid rgba(255, 255, 255, 0.75);
     border-radius: 2px;
     box-shadow: 0 0 0 1px rgba(117, 87, 45, 0.04), 0 2px 4px rgba(45, 28, 14, 0.08);
+    filter: drop-shadow(0 7px 10px rgba(45, 28, 14, 0.13));
     text-decoration: none;
   }
 
@@ -252,6 +251,12 @@
     transform: none;
   }
 
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    #{{ section_anchor }} .dv-category__card-wrap {
+      width: clamp(310px, 46vw, 420px);
+    }
+  }
+
   @media screen and (min-width: 750px) {
     #{{ section_anchor }}.dv-gold-shop-by-category {
       padding-block: var(--dv-category-desktop-padding-top) var(--dv-category-desktop-padding-bottom);
@@ -286,7 +291,11 @@
   }
 
   @media screen and (min-width: 990px) {
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__heading {
+    #{{ section_anchor }} .dv-category__card-wrap {
+      width: clamp(400px, 36vw, 520px);
+    }
+
+    #{{ section_anchor }} .dv-category__heading {
       text-align: left;
       margin-left: max(0px, calc((var(--dv-category-max-width) - 720px) / 2));
     }
