@@ -95,7 +95,7 @@
     position: relative;
     background: var(--dv-category-bg);
     font-family: var(--font-body--family);
-    padding-block: var(--dv-category-mobile-padding-top) var(--dv-category-mobile-padding-bottom);
+    padding-block: var(--dv-category-mobile-padding-top) 36px;
     overflow: hidden;
   }
 
@@ -270,8 +270,8 @@
   }
 
   @media screen and (min-width: 750px) {
-    #{{ section_anchor }}.dv-gold-shop-by-category {
-      padding-block: var(--dv-category-desktop-padding-top) var(--dv-category-desktop-padding-bottom);
+    #{{ section_anchor }} {
+      padding-block: var(--dv-category-desktop-padding-top) 72px;
     }
 
     #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__inner {
@@ -343,9 +343,9 @@
     { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#ffffff" },
     { "type": "range", "id": "max_width", "label": "Content max width", "min": 640, "max": 1400, "step": 20, "unit": "px", "default": 760 },
     { "type": "range", "id": "mobile_padding_top", "label": "Mobile top padding", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 120 },
-    { "type": "range", "id": "mobile_padding_bottom", "label": "Mobile bottom padding", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "Mobile bottom padding", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 36 },
     { "type": "range", "id": "desktop_padding_top", "label": "Desktop top padding", "min": 0, "max": 220, "step": 4, "unit": "px", "default": 120 },
-    { "type": "range", "id": "desktop_padding_bottom", "label": "Desktop bottom padding", "min": 0, "max": 220, "step": 4, "unit": "px", "default": 96 }
+    { "type": "range", "id": "desktop_padding_bottom", "label": "Desktop bottom padding", "min": 0, "max": 220, "step": 4, "unit": "px", "default": 72 }
   ],
   "blocks": [
     {
