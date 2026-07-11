@@ -88,10 +88,21 @@
             "card_background": "#fbefd9"
           }
         },
+        "category_thV4hd": {
+          "type": "category",
+          "settings": {
+            "title": "DRY FRUITS",
+            "button_label": "SHOP NOW",
+            "link": "",
+            "open_in_new_tab": false,
+            "card_rotation": -2,
+            "card_background": "#fbefd9"
+          }
+        },
         "category_powder": {
           "type": "category",
           "settings": {
-            "title": "POWDER",
+            "title": "FARALLI ITEMS",
             "button_label": "SHOP NOW",
             "link": "shopify://collections/all",
             "open_in_new_tab": false,
@@ -103,6 +114,7 @@
       "block_order": [
         "category_tea",
         "category_spice",
+        "category_thV4hd",
         "category_powder"
       ],
       "name": "DV Gold shop by category",
@@ -367,8 +379,6 @@
         "mobile_card_width": 86,
         "desktop_card_width": 280,
         "card_gap": 28,
-        "enable_endless_scroll": true,
-        "endless_scroll_speed": 30,
         "card_radius": 10,
         "max_width": 1240,
         "mobile_padding_top": 64,
