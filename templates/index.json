@@ -69,49 +69,49 @@
         "category_tea": {
           "type": "category",
           "settings": {
+            "collection": "tea",
             "title": "TEA",
             "button_label": "SHOP NOW",
             "link": "",
             "open_in_new_tab": false,
             "card_rotation": 2,
-            "card_background": "#fbefd9",
-            "collection": "shopify://collections/premium-tea"
+            "card_background": "#fbefd9"
           }
         },
         "category_spice": {
           "type": "category",
           "settings": {
+            "collection": "spices",
             "title": "SPICE",
             "button_label": "SHOP NOW",
             "link": "",
             "open_in_new_tab": false,
             "card_rotation": -4,
-            "card_background": "#fbefd9",
-            "collection": "shopify://collections/spices"
+            "card_background": "#fbefd9"
           }
         },
         "category_thV4hd": {
           "type": "category",
           "settings": {
+            "collection": "dry-fruits",
             "title": "DRY FRUITS",
             "button_label": "SHOP NOW",
             "link": "",
             "open_in_new_tab": false,
-            "card_rotation": -2,
-            "card_background": "#fbefd9",
-            "collection": "shopify://collections/dry-fruits"
+            "card_rotation": 4,
+            "card_background": "#fbefd9"
           }
         },
         "category_powder": {
           "type": "category",
           "settings": {
+            "collection": "farali-items",
             "title": "FARALLI ITEMS",
             "button_label": "SHOP NOW",
             "link": "",
             "open_in_new_tab": false,
-            "card_rotation": 3,
-            "card_background": "#fbefd9",
-            "collection": "shopify://collections/farali-items"
+            "card_rotation": -4,
+            "card_background": "#fbefd9"
           }
         }
       },
