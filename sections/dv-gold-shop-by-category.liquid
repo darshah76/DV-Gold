@@ -12,11 +12,6 @@
     --dv-category-card-bg: {{ section.settings.card_background }};
     --dv-category-button-bg: {{ section.settings.button_background }};
     --dv-category-button-text: {{ section.settings.button_text_color }};
-    --dv-category-connector-width: {{ section.settings.connector_width }}px;
-    --dv-category-connector-height: {{ section.settings.connector_height }}px;
-    --dv-category-connector-thickness: {{ section.settings.connector_thickness }}px;
-    --dv-category-connector-dash: {{ section.settings.connector_dash_length }}px;
-    --dv-category-connector-gap: {{ section.settings.connector_gap_length }}px;
     --dv-category-max-width: {{ section.settings.max_width }}px;
     --dv-category-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
     --dv-category-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
@@ -24,13 +19,6 @@
     --dv-category-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
   "
 >
-  {% liquid
-    assign connector_center = 30
-    assign connector_curve = section.settings.connector_curve
-    assign connector_right = connector_center | plus: connector_curve
-    assign connector_left = connector_center | minus: connector_curve
-  %}
-
   <div class="dv-category__inner">
     {% if section.settings.heading != blank %}
       <h2 class="dv-category__heading">{{ section.settings.heading }}</h2>
@@ -84,28 +72,17 @@
             </a>
           </div>
 
-          {% if category_collection_title != blank %}
-            <h3 class="dv-category__title">{{ category_collection_title }}</h3>
-          {% endif %}
+          <div class="dv-category__meta">
+            {% if category_collection_title != blank %}
+              <h3 class="dv-category__title">{{ category_collection_title }}</h3>
+              <span class="dv-category__underline" aria-hidden="true"></span>
+            {% endif %}
 
+            {% unless forloop.last %}
+              <span class="dv-category__item-connector" aria-hidden="true"></span>
+            {% endunless %}
+          </div>
         </div>
-
-        {% unless forloop.last %}
-          <svg
-            class="dv-category__item-connector"
-            aria-hidden="true"
-            focusable="false"
-            role="presentation"
-            viewBox="0 0 60 100"
-            preserveAspectRatio="none"
-          >
-            <path
-              class="dv-category__item-connector-path"
-              d="M30 0 C {{ connector_right }} 30 {{ connector_left }} 70 30 100"
-              pathLength="100"
-            />
-          </svg>
-        {% endunless %}
       {% endfor %}
     </div>
   </div>
@@ -118,27 +95,6 @@
     font-family: var(--font-body--family);
     padding-block: var(--dv-category-mobile-padding-top) var(--dv-category-mobile-padding-bottom);
     overflow: hidden;
-  }
-
-  #{{ section_anchor }} .dv-category__item-connector {
-    position: relative;
-    z-index: 1;
-    display: block;
-    flex: 0 0 var(--dv-category-connector-height);
-    width: var(--dv-category-connector-width);
-    height: var(--dv-category-connector-height);
-    margin-block: clamp(22px, 6vw, 38px);
-    overflow: visible;
-    pointer-events: none;
-  }
-
-  #{{ section_anchor }} .dv-category__item-connector-path {
-    fill: none;
-    stroke: var(--dv-category-accent);
-    stroke-width: var(--dv-category-connector-thickness);
-    stroke-linecap: square;
-    stroke-dasharray: var(--dv-category-connector-dash) var(--dv-category-connector-gap);
-    vector-effect: non-scaling-stroke;
   }
 
   #{{ section_anchor }} .dv-category__inner {
@@ -175,6 +131,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  #{{ section_anchor }} .dv-category__item + .dv-category__item {
+    margin-top: 22px;
   }
 
   #{{ section_anchor }} .dv-category__card-shell {
@@ -242,31 +202,54 @@
     white-space: nowrap;
   }
 
+  #{{ section_anchor }} .dv-category__meta {
+    z-index: 3;
+    width: 100%;
+    margin-top: clamp(14px, 3vw, 18px);
+    text-align: center;
+    transform: none;
+  }
+
   #{{ section_anchor }} .dv-category__title {
     position: relative;
     z-index: 3;
-    margin: clamp(18px, 4vw, 28px) 0 0;
-    padding-inline: 14px;
+    margin: 0;
+    padding-inline: 10px;
     background: var(--dv-category-bg);
     color: var(--dv-category-heading);
-    font-family: var(--font-heading--family);
-    font-size: clamp(2.2rem, 6vw, 3.1rem);
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: 0.18em;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(17px, 4.6vw, 19px);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: 0.13em;
     text-align: center;
     text-transform: uppercase;
+    white-space: nowrap;
   }
 
-  #{{ section_anchor }} .dv-category__title::after {
-    content: '';
-    position: relative;
+  #{{ section_anchor }} .dv-category__underline {
     z-index: 3;
     display: block;
-    width: 86px;
+    width: 32px;
     height: 2px;
-    margin: 10px auto 0;
+    margin: 8px auto 0;
     background: var(--dv-category-accent);
+  }
+
+  #{{ section_anchor }} .dv-category__item-connector {
+    display: block;
+    width: 3px;
+    height: 52px;
+    margin: 13px auto 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--dv-category-accent) 0,
+      var(--dv-category-accent) 9px,
+      transparent 9px,
+      transparent 17px
+    );
+    pointer-events: none;
+    transform: none;
   }
 
   @media screen and (min-width: 750px) {
@@ -278,8 +261,27 @@
       width: min(100% - 64px, var(--dv-category-max-width));
     }
 
+    #{{ section_anchor }} .dv-category__item + .dv-category__item {
+      margin-top: 28px;
+    }
+
+    #{{ section_anchor }} .dv-category__meta {
+      margin-top: clamp(18px, 2.4vw, 24px);
+    }
+
+    #{{ section_anchor }} .dv-category__title {
+      font-size: clamp(20px, 1.4vw, 22px);
+      letter-spacing: 0.14em;
+    }
+
+    #{{ section_anchor }} .dv-category__underline {
+      width: 38px;
+      margin-top: 9px;
+    }
+
     #{{ section_anchor }} .dv-category__item-connector {
-      margin-block: clamp(28px, 4vw, 52px);
+      height: 58px;
+      margin-top: 16px;
     }
   }
 
@@ -308,13 +310,6 @@
     { "type": "color", "id": "card_background", "label": "Default card background", "default": "#fbefd9" },
     { "type": "color", "id": "button_background", "label": "Button background", "default": "#c99739" },
     { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#ffffff" },
-    { "type": "header", "content": "Curved connector" },
-    { "type": "range", "id": "connector_curve", "label": "Curve amount", "min": 0, "max": 24, "step": 2, "unit": "px", "default": 8 },
-    { "type": "range", "id": "connector_width", "label": "Connector width", "min": 16, "max": 80, "step": 2, "unit": "px", "default": 32 },
-    { "type": "range", "id": "connector_height", "label": "Connector height", "min": 80, "max": 220, "step": 4, "unit": "px", "default": 156 },
-    { "type": "range", "id": "connector_thickness", "label": "Dash thickness", "min": 4, "max": 18, "step": 1, "unit": "px", "default": 11 },
-    { "type": "range", "id": "connector_dash_length", "label": "Dash length", "min": 12, "max": 40, "step": 2, "unit": "px", "default": 18 },
-    { "type": "range", "id": "connector_gap_length", "label": "Dash gap", "min": 10, "max": 42, "step": 2, "unit": "px", "default": 28 },
     { "type": "range", "id": "max_width", "label": "Content max width", "min": 640, "max": 1400, "step": 20, "unit": "px", "default": 760 },
     { "type": "range", "id": "mobile_padding_top", "label": "Mobile top padding", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 120 },
     { "type": "range", "id": "mobile_padding_bottom", "label": "Mobile bottom padding", "min": 0, "max": 180, "step": 4, "unit": "px", "default": 72 },
