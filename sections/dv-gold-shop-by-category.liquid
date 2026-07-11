@@ -4,7 +4,7 @@
 
 <section
   id="{{ section_anchor }}"
-  class="dv-category dv-gold-shop-by-category color-{{ section.settings.color_scheme }}"
+  class="dv-category color-{{ section.settings.color_scheme }}"
   style="
     --dv-category-bg: {{ section.settings.background_color }};
     --dv-category-heading: {{ section.settings.heading_color }};
@@ -27,11 +27,6 @@
     <div class="dv-category__list" role="list">
       {% for block in section.blocks %}
         {% liquid
-          assign category_collection = block.settings.collection
-          assign category_collection_title = category_collection.title
-          assign category_collection_title = block.settings.title_override | default: category_collection.title
-          assign category_collection_image = category_collection.featured_image | default: category_collection.image
-          assign category_collection_image_alt = category_collection_image.alt | default: category_collection_title
           assign rotation = block.settings.card_rotation | default: 0
           assign block_card_bg = block.settings.card_background
           if block_card_bg == blank or block_card_bg == 'rgba(0,0,0,0)'
@@ -46,23 +41,24 @@
           >
             <a
               class="dv-category__card"
-              href="{{ category_collection.url | default: '#' }}"
-              aria-label="{{ category_collection_title | escape }}"
+              href="{{ block.settings.link | default: '#' }}"
+              {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+              aria-label="{{ block.settings.title | default: block.settings.button_label | escape }}"
             >
-              {% if category_collection_image != blank %}
+              {% if block.settings.image != blank %}
                 {{
-                  category_collection_image
+                  block.settings.image
                   | image_url: width: 1200
                   | image_tag:
                     loading: 'lazy',
                     widths: '320, 480, 640, 800, 1000, 1200',
                     sizes: '(min-width: 990px) 520px, 86vw',
                     class: 'dv-category__image',
-                    alt: category_collection_image_alt
+                    alt: block.settings.image.alt
                 }}
               {% else %}
                 <div class="dv-category__placeholder" aria-hidden="true">
-                  {{ 'collection-1' | placeholder_svg_tag: 'dv-category__placeholder-svg' }}
+                  {{ 'image' | placeholder_svg_tag: 'dv-category__placeholder-svg' }}
                 </div>
               {% endif %}
 
@@ -72,20 +68,13 @@
             </a>
           </div>
 
-          <div class="dv-category__meta">
-            {% if category_collection_title != blank %}
-              <h3 class="dv-category__title">{{ category_collection_title }}</h3>
-              <span class="dv-category__underline" aria-hidden="true"></span>
-            {% endif %}
+          {% if block.settings.title != blank %}
+            <h3 class="dv-category__title">{{ block.settings.title }}</h3>
+          {% endif %}
 
-            {% unless forloop.last %}
-              <div class="dv-category__item-connector dv-category-connector" aria-hidden="true">
-                <svg viewBox="0 0 43 102" focusable="false">
-                  <path d="M12 4 C32 18 33 36 22 50 C11 66 13 83 31 98" fill="none" stroke="currentColor"/>
-                </svg>
-              </div>
-            {% endunless %}
-          </div>
+          {% unless forloop.last %}
+            <div class="dv-category__connector" aria-hidden="true"></div>
+          {% endunless %}
         </div>
       {% endfor %}
     </div>
@@ -93,70 +82,53 @@
 </section>
 
 <style>
-  #{{ section_anchor }}.dv-gold-shop-by-category {
-    position: relative;
+  #{{ section_anchor }} {
     background: var(--dv-category-bg);
-    font-family: var(--font-body--family);
     padding-block: var(--dv-category-mobile-padding-top) var(--dv-category-mobile-padding-bottom);
     overflow: hidden;
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__inner {
-    position: relative;
-    z-index: 2;
+  #{{ section_anchor }} .dv-category__inner {
     width: min(100% - 32px, var(--dv-category-max-width));
     margin-inline: auto;
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__heading {
+  #{{ section_anchor }} .dv-category__heading {
     margin: 0 0 clamp(46px, 12vw, 92px);
     color: var(--dv-category-heading);
     font-family: var(--font-heading--family);
-    font-size: min(var(--dv-section-heading-size), clamp(2.4rem, 7.2vw, 4.4rem));
+    font-size: clamp(2.8rem, 8vw, 4.4rem);
     font-weight: 700;
     line-height: 1;
     letter-spacing: -0.03em;
     text-align: center;
     text-transform: uppercase;
-    white-space: nowrap;
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__list {
+  #{{ section_anchor }} .dv-category__list {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0;
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item {
-    position: relative;
-    z-index: 2;
+  #{{ section_anchor }} .dv-category__item {
     width: min(100%, 720px);
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item + .dv-category__item {
-    margin-top: 0;
-  }
-
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__card-shell {
-    position: relative;
-    z-index: 2;
+  #{{ section_anchor }} .dv-category__card-shell {
     width: min(100%, 640px);
     transform: rotate(var(--dv-category-rotation));
     filter: drop-shadow(0 7px 10px rgba(45, 28, 14, 0.13));
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__card {
+  #{{ section_anchor }} .dv-category__card {
     position: relative;
-    z-index: 2;
     display: block;
     aspect-ratio: 1.52 / 1;
     padding: clamp(10px, 2vw, 16px);
-    overflow: hidden;
-    box-sizing: border-box;
     background: var(--dv-category-block-card-bg);
     border: 1px solid rgba(255, 255, 255, 0.75);
     border-radius: 2px;
@@ -164,29 +136,26 @@
     text-decoration: none;
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__image,
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__placeholder {
+  #{{ section_anchor }} .dv-category__image,
+  #{{ section_anchor }} .dv-category__placeholder {
     width: 100%;
     height: 100%;
     display: block;
-    box-sizing: border-box;
-    object-fit: cover;
-    object-position: center;
+    object-fit: contain;
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__placeholder {
+  #{{ section_anchor }} .dv-category__placeholder {
     background: rgba(255, 255, 255, 0.34);
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__placeholder-svg {
+  #{{ section_anchor }} .dv-category__placeholder-svg {
     width: 100%;
     height: 100%;
     opacity: 0.35;
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__button {
+  #{{ section_anchor }} .dv-category__button {
     position: absolute;
-    z-index: 4;
     left: 50%;
     bottom: clamp(10px, 2.5vw, 18px);
     transform: translateX(-50%);
@@ -198,142 +167,59 @@
     border-radius: 7px;
     background: var(--dv-category-button-bg);
     color: var(--dv-category-button-text);
-    font-family: var(--font-body--family);
     font-size: clamp(1.3rem, 3vw, 1.7rem);
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1;
     text-transform: uppercase;
     white-space: nowrap;
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__meta {
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-top: 10px;
-    text-align: center;
-    transform: none;
-  }
-
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__title {
-    position: relative;
-    z-index: 3;
-    margin: 0;
-    padding-inline: 10px;
-    background: var(--dv-category-bg);
+  #{{ section_anchor }} .dv-category__title {
+    margin: clamp(22px, 5vw, 34px) 0 8px;
     color: var(--dv-category-heading);
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: 0.14em;
+    font-family: var(--font-heading--family);
+    font-size: clamp(2.2rem, 6vw, 3.1rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.18em;
     text-align: center;
     text-transform: uppercase;
-    white-space: nowrap;
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__underline {
-    z-index: 3;
+  #{{ section_anchor }} .dv-category__title::after {
+    content: '';
     display: block;
-    width: 24px;
+    width: 86px;
     height: 2px;
-    margin-inline: auto;
-    margin-top: 7px;
+    margin: 10px auto 0;
     background: var(--dv-category-accent);
   }
 
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item-connector {
-    margin-top: 10px;
-    margin-bottom: 26px;
-    pointer-events: none;
-    transform: none;
-  }
-
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category-connector {
-    display: block;
-    width: 42px;
-    height: 88px;
-    margin-inline: auto;
-    color: #c99000;
-    flex: 0 0 auto;
-  }
-
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category-connector svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-  }
-
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category-connector path {
-    stroke-width: 8;
-    stroke-dasharray: 12 18;
-    stroke-linecap: butt;
-  }
-
-  #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item:last-child .dv-category__item-connector {
-    display: none;
+  #{{ section_anchor }} .dv-category__connector {
+    width: 13px;
+    height: clamp(92px, 18vw, 150px);
+    margin: -2px auto clamp(34px, 9vw, 66px);
+    background-image: repeating-linear-gradient(
+      to bottom,
+      var(--dv-category-accent) 0,
+      var(--dv-category-accent) 25px,
+      transparent 25px,
+      transparent 51px
+    );
   }
 
   @media screen and (min-width: 750px) {
-    #{{ section_anchor }}.dv-gold-shop-by-category {
+    #{{ section_anchor }} {
       padding-block: var(--dv-category-desktop-padding-top) var(--dv-category-desktop-padding-bottom);
     }
 
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__inner {
+    #{{ section_anchor }} .dv-category__inner {
       width: min(100% - 64px, var(--dv-category-max-width));
     }
-
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item + .dv-category__item {
-      margin-top: 0;
-    }
-
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__title {
-      font-size: 20px;
-      line-height: 1.1;
-      letter-spacing: 0.15em;
-    }
   }
 
   @media screen and (min-width: 990px) {
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__meta {
-      margin-top: 12px;
-    }
-
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__title {
-      font-size: 20px;
-      letter-spacing: 0.15em;
-    }
-
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__underline {
-      width: 28px;
-      height: 2px;
-      margin-top: 8px;
-    }
-
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__item-connector {
-      margin-top: 11px;
-      margin-bottom: 30px;
-    }
-  }
-
-  @media screen and (min-width: 750px) {
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category-connector {
-      width: 48px;
-      height: 100px;
-    }
-
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category-connector path {
-      stroke-width: 9;
-      stroke-dasharray: 14 20;
-      stroke-linecap: butt;
-    }
-  }
-
-  @media screen and (min-width: 990px) {
-    #{{ section_anchor }}.dv-gold-shop-by-category .dv-category__heading {
+    #{{ section_anchor }} .dv-category__heading {
       text-align: left;
       margin-left: max(0px, calc((var(--dv-category-max-width) - 720px) / 2));
     }
@@ -368,9 +254,11 @@
       "type": "category",
       "name": "Category",
       "settings": [
-        { "type": "collection", "id": "collection", "label": "Collection" },
-        { "type": "text", "id": "title_override", "label": "Category title override" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Category name", "default": "TEA" },
         { "type": "text", "id": "button_label", "label": "Button text", "default": "SHOP NOW" },
+        { "type": "url", "id": "link", "label": "Button and card link" },
+        { "type": "checkbox", "id": "open_in_new_tab", "label": "Open link in new tab", "default": false },
         { "type": "range", "id": "card_rotation", "label": "Card rotation", "min": -8, "max": 8, "step": 1, "unit": "deg", "default": -2 },
         { "type": "color", "id": "card_background", "label": "Card background override", "default": "#fbefd9" }
       ]
@@ -380,10 +268,9 @@
     {
       "name": "DV Gold shop by category",
       "blocks": [
-        { "type": "category", "settings": { "collection": "tea", "card_rotation": 2 } },
-        { "type": "category", "settings": { "collection": "spice", "card_rotation": -4 } },
-        { "type": "category", "settings": { "collection": "dry-fruits", "card_rotation": 3 } },
-        { "type": "category", "settings": { "collection": "farali-items", "card_rotation": -3 } }
+        { "type": "category", "settings": { "title": "TEA", "card_rotation": 2 } },
+        { "type": "category", "settings": { "title": "SPICE", "card_rotation": -4 } },
+        { "type": "category", "settings": { "title": "POWDER", "card_rotation": 3 } }
       ]
     }
   ]

@@ -69,9 +69,10 @@
         "category_tea": {
           "type": "category",
           "settings": {
-            "collection": "tea",
-            "title_override": "",
+            "title": "TEA",
             "button_label": "SHOP NOW",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
             "card_rotation": 2,
             "card_background": "#fbefd9"
           }
@@ -79,30 +80,22 @@
         "category_spice": {
           "type": "category",
           "settings": {
-            "collection": "spices",
-            "title_override": "",
+            "title": "SPICE",
             "button_label": "SHOP NOW",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
             "card_rotation": -4,
             "card_background": "#fbefd9"
           }
         },
-        "category_dry_fruits": {
+        "category_powder": {
           "type": "category",
           "settings": {
-            "collection": "dry-fruits",
-            "title_override": "",
+            "title": "POWDER",
             "button_label": "SHOP NOW",
-            "card_rotation": -3,
-            "card_background": "#fbefd9"
-          }
-        },
-        "category_farali_items": {
-          "type": "category",
-          "settings": {
-            "collection": "farali-items",
-            "title_override": "",
-            "button_label": "SHOP NOW",
-            "card_rotation": 2,
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "card_rotation": 3,
             "card_background": "#fbefd9"
           }
         }
@@ -110,8 +103,7 @@
       "block_order": [
         "category_tea",
         "category_spice",
-        "category_dry_fruits",
-        "category_farali_items"
+        "category_powder"
       ],
       "name": "DV Gold shop by category",
       "settings": {
@@ -123,12 +115,6 @@
         "card_background": "#fbefd9",
         "button_background": "#c99739",
         "button_text_color": "#ffffff",
-        "connector_curve": 8,
-        "connector_width": 32,
-        "connector_height": 156,
-        "connector_thickness": 11,
-        "connector_dash_length": 18,
-        "connector_gap_length": 28,
         "max_width": 760,
         "mobile_padding_top": 120,
         "mobile_padding_bottom": 72,
