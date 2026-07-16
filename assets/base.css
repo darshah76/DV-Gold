@@ -4070,21 +4070,11 @@ body {
 }
 
 :where(h1, .h1) {
-  font-size: var(--font-h1--size, clamp(2.125rem, 1.35rem + 3.3vw, 3.5rem));
-  line-height: 1.15;
+  line-height: var(--font-h1--line-height, 1.15);
 }
 
 :where(h2, .h2) {
-  font-size: var(--font-h2--size, clamp(1.875rem, 1.43rem + 1.9vw, 2.625rem));
-  line-height: 1.2;
-}
-
-:where(h3, .h3) {
-  font-size: var(--font-h3--size, clamp(1.5rem, 1.28rem + 0.95vw, 1.875rem));
-}
-
-:where(h4, .h4) {
-  font-size: var(--font-h4--size, clamp(1.25rem, 1.1rem + 0.65vw, 1.5rem));
+  line-height: var(--font-h2--line-height, 1.2);
 }
 
 :where(h5, h6, .h5, .h6) {
