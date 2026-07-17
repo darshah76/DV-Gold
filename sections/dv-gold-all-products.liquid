@@ -126,7 +126,7 @@
     margin: 0;
     color: var(--dv-all-heading);
     font-family: var(--font-heading--family);
-    font-size: clamp(2.8rem, 6vw, 4.6rem);
+    font-size: var(--dv-section-heading-size);
     font-weight: 700;
     line-height: 0.95;
     text-transform: uppercase;
@@ -294,7 +294,7 @@
     margin: 0 0 7px;
     color: var(--dv-all-heading);
     font-family: var(--font-heading--family);
-    font-size: 1.55rem;
+    font-size: var(--dv-product-title-size);
     font-weight: 700;
     line-height: 1.1;
   }
@@ -307,7 +307,7 @@
   #{{ section_anchor }} .dv-all-products__description {
     margin: 0 0 18px;
     color: var(--dv-all-text);
-    font-size: 1.5rem;
+    font-size: var(--dv-product-description-size);
     line-height: 1.28;
   }
 
@@ -323,7 +323,7 @@
     margin: 0;
     color: var(--dv-all-heading);
     font-family: var(--font-body--family);
-    font-size: 1.8rem;
+    font-size: var(--dv-product-price-size);
     font-weight: 800;
     line-height: 1;
   }
@@ -344,7 +344,7 @@
     color: #fff;
     cursor: pointer;
     font-family: var(--font-body--family);
-    font-size: 1.75rem;
+    font-size: var(--dv-add-action-size);
     font-weight: 600;
     text-transform: uppercase;
     line-height: 1;
@@ -381,7 +381,7 @@
 
     #{{ section_anchor }} .dv-all-products__title {
       margin-block-end: 6px;
-      font-size: 1.45rem;
+      font-size: var(--dv-product-title-size);
       line-height: 1.12;
     }
 
@@ -389,14 +389,14 @@
       display: -webkit-box;
       margin-block-end: 12px;
       overflow: hidden;
-      font-size: 1.25rem;
+      font-size: var(--dv-product-description-size);
       line-height: 1.25;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
     }
 
     #{{ section_anchor }} .dv-all-products__price {
-      font-size: 1.55rem;
+      font-size: var(--dv-product-price-size);
     }
 
     #{{ section_anchor }} .dv-all-products__add {
