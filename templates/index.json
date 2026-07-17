@@ -48,8 +48,6 @@
       "settings": {
         "accessibility_label": "DV Gold featured tea promotion",
         "color_scheme": "scheme-1",
-        "mobile_height": 680,
-        "desktop_height": 760,
         "show_button": true,
         "button_label": "Shop Now",
         "button_product": "",
