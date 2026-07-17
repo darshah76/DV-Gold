@@ -23,13 +23,13 @@ body {
   --surface-transition-timing: var(--ease-out-quad);
   --submenu-animation-speed: 360ms;
   --submenu-animation-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
-  --dv-section-heading-size: clamp(3rem, 8vw, 4.8rem);
-}
-
-@media screen and (min-width: 750px) {
-  :root {
-    --dv-section-heading-size: clamp(4.2rem, 4.8vw, 5.8rem);
-  }
+  /* Shared DV Gold type scale */
+  --dv-display-heading-size: clamp(2.75rem, 2.5rem + 1vw, 3.25rem);
+  --dv-section-heading-size: var(--dv-display-heading-size);
+  --dv-product-title-size: clamp(1rem, 0.9375rem + 0.25vw, 1.125rem);
+  --dv-product-description-size: clamp(1rem, 0.9375rem + 0.25vw, 1.125rem);
+  --dv-product-price-size: clamp(0.875rem, 0.8125rem + 0.25vw, 1rem);
+  --dv-add-action-size: 1.375rem;
 }
 
 html {
