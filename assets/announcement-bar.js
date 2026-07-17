@@ -65,10 +65,15 @@ export class AnnouncementBar extends Component {
     track.appendChild(secondGroup);
 
     const gap = Number.parseFloat(getComputedStyle(track).columnGap) || 0;
+    const distance = group.getBoundingClientRect().width + gap;
+    const speedSetting = Number.parseFloat(getComputedStyle(this).getPropertyValue("--announcement-speed")) || 8;
+    const pixelsPerSecond = speedSetting * 10;
+
     track.style.setProperty(
       "--announcement-distance",
-      `${group.getBoundingClientRect().width + gap}px`,
+      `${distance}px`,
     );
+    track.style.setProperty("--announcement-duration", `${distance / pixelsPerSecond}s`);
   }
 }
 
