@@ -1,130 +1,77 @@
-import { Component } from '@theme/component';
+import { Component } from "@theme/component";
 
 /**
- * Announcement banner custom element that allows fading between content.
- * Based on the Slideshow component.
- *
- * @typedef {object} Refs
- * @property {HTMLElement} slideshowContainer
- * @property {HTMLElement[]} [slides]
- * @property {HTMLButtonElement} [previous]
- * @property {HTMLButtonElement} [next]
- *
- * @extends {Component<Refs>}
+ * Creates a continuous, width-aware loop from the announcement blocks.
+ * Copies are added at runtime so short and long messages both fill the viewport
+ * without leaving an empty space in the animation.
  */
 export class AnnouncementBar extends Component {
-  #current = 0;
+  /** @type {ResizeObserver | undefined} */
+  #resizeObserver;
 
-  /**
-   * The interval ID for automatic playback.
-   * @type {number|undefined}
-   */
-  #interval = undefined;
+  /** @type {number | undefined} */
+  #resizeFrame;
 
   connectedCallback() {
     super.connectedCallback();
+    this.#buildMarquee();
 
-    this.addEventListener('mouseenter', this.suspend);
-    this.addEventListener('mouseleave', this.resume);
-    document.addEventListener('visibilitychange', this.#handleVisibilityChange);
-
-    this.play();
+    this.#resizeObserver = new ResizeObserver(() => {
+      cancelAnimationFrame(this.#resizeFrame);
+      this.#resizeFrame = requestAnimationFrame(() => this.#buildMarquee());
+    });
+    this.#resizeObserver.observe(this);
   }
 
-  next() {
-    this.current += 1;
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.#resizeObserver?.disconnect();
+    cancelAnimationFrame(this.#resizeFrame);
   }
 
-  previous() {
-    this.current -= 1;
-  }
+  #buildMarquee() {
+    const track = this.querySelector(".announcement-bar__track");
+    const group = track?.querySelector(".announcement-bar__group");
+    if (!(track instanceof HTMLElement) || !(group instanceof HTMLElement))
+      return;
 
-  /**
-   * Starts automatic slide playback.
-   * @param {number} [interval] - The time interval in seconds between slides.
-   */
-  play(interval = this.autoplayInterval) {
-    if (!this.autoplay) return;
+    track
+      .querySelectorAll('.announcement-bar__group[aria-hidden="true"]')
+      .forEach((copy) => copy.remove());
+    group
+      .querySelectorAll("[data-announcement-copy]")
+      .forEach((copy) => copy.remove());
 
-    this.paused = false;
+    const announcements = Array.from(group.children);
+    if (announcements.length === 0) return;
 
-    this.#interval = setInterval(() => {
-      if (this.matches(':hover') || document.hidden) return;
-
-      this.next();
-    }, interval);
-  }
-
-  /**
-   * Pauses automatic slide playback.
-   */
-  pause() {
-    this.paused = true;
-    this.suspend();
-  }
-
-  get paused() {
-    return this.hasAttribute('paused');
-  }
-
-  set paused(paused) {
-    this.toggleAttribute('paused', paused);
-  }
-
-  /**
-   * Suspends automatic slide playback.
-   */
-  suspend() {
-    clearInterval(this.#interval);
-    this.#interval = undefined;
-  }
-
-  /**
-   * Resumes automatic slide playback if autoplay is enabled.
-   */
-  resume() {
-    if (!this.autoplay || this.paused) return;
-
-    this.pause();
-    this.play();
-  }
-
-  get autoplay() {
-    return Boolean(this.autoplayInterval);
-  }
-
-  get autoplayInterval() {
-    const interval = this.getAttribute('autoplay');
-    const value = parseInt(`${interval}`, 10);
-
-    if (Number.isNaN(value)) return undefined;
-
-    return value * 1000;
-  }
-
-  get current() {
-    return this.#current;
-  }
-
-  set current(current) {
-    this.#current = current;
-
-    let relativeIndex = current % (this.refs.slides ?? []).length;
-    if (relativeIndex < 0) {
-      relativeIndex += (this.refs.slides ?? []).length;
+    // Make one group wider than the viewport, then animate to its identical twin.
+    let index = 0;
+    while (group.scrollWidth < this.clientWidth + 1) {
+      const copy = announcements[index % announcements.length].cloneNode(true);
+      if (!(copy instanceof HTMLElement)) break;
+      copy.dataset.announcementCopy = "";
+      copy.setAttribute("aria-hidden", "true");
+      group.appendChild(copy);
+      index += 1;
     }
 
-    this.refs.slides?.forEach((slide, index) => {
-      slide.setAttribute('aria-hidden', `${index !== relativeIndex}`);
-    });
-  }
+    const secondGroup = group.cloneNode(true);
+    if (!(secondGroup instanceof HTMLElement)) return;
+    secondGroup.setAttribute("aria-hidden", "true");
+    secondGroup
+      .querySelectorAll("[id]")
+      .forEach((element) => element.removeAttribute("id"));
+    track.appendChild(secondGroup);
 
-  /**
-   * Pause the slideshow when the page is hidden.
-   */
-  #handleVisibilityChange = () => (document.hidden ? this.pause() : this.resume());
+    const gap = Number.parseFloat(getComputedStyle(track).columnGap) || 0;
+    track.style.setProperty(
+      "--announcement-distance",
+      `${group.getBoundingClientRect().width + gap}px`,
+    );
+  }
 }
 
-if (!customElements.get('announcement-bar-component')) {
-  customElements.define('announcement-bar-component', AnnouncementBar);
+if (!customElements.get("announcement-bar-component")) {
+  customElements.define("announcement-bar-component", AnnouncementBar);
 }
