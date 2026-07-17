@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <div class="dv-collection__toolbar" aria-label="Collection controls">
+  <div class="dv-collection__toolbar dv-section-container" aria-label="Collection controls">
     <facets-form-component
       class="dv-collection__facets"
       section-id="{{ section.id }}"
@@ -89,7 +89,7 @@
     </facets-form-component>
   </div>
 
-  <div id="dv-gold-collection-products" class="dv-collection__content">
+  <div id="dv-gold-collection-products" class="dv-collection__content dv-section-container">
     {% if section.settings.products_heading != blank %}
       <h2 class="dv-collection__section-title">{{ section.settings.products_heading }}</h2>
     {% endif %}

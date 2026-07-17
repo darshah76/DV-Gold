@@ -26,7 +26,7 @@
     --dv-certifications-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
   "
 >
-  <div class="dv-certifications__panel">
+  <div class="dv-certifications__panel dv-section-container">
     {% if section.settings.heading != blank %}
       <h2 class="dv-certifications__heading">{{ section.settings.heading | escape | newline_to_br }}</h2>
     {% endif %}
@@ -70,7 +70,6 @@
   #{{ section_anchor }} {
     background: var(--dv-certifications-page-bg);
     padding-block: var(--dv-certifications-mobile-padding-top) var(--dv-certifications-mobile-padding-bottom);
-    padding-inline: 30px;
   }
 
   #{{ section_anchor }} .dv-certifications__panel {
