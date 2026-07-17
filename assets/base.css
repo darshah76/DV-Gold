@@ -339,6 +339,15 @@ p:empty {
   --page-width: calc(var(--page-content-width) + (var(--page-margin) * 2));
 }
 
+/* Keep custom storefront sections on the same responsive content boundary as
+   native page-width sections. Full-bleed bars, heroes, and marquees intentionally
+   omit this utility so their backgrounds and media can reach the viewport edges. */
+.dv-section-container {
+  width: min(calc(100% - (var(--page-margin) * 2)), var(--page-content-width)) !important;
+  max-width: var(--page-content-width) !important;
+  margin-inline: auto !important;
+}
+
 /* Section width full vs. page
    The reason we use a grid to contain the section is to allow for the section to have a
    full-width background image even if the section content is constrained by the page width. Do not try
