@@ -13,7 +13,7 @@
 >
   <announcement-bar-component
     class="announcement-bar__slider"
-    style="--announcement-speed: {{ section.settings.speed }}s;"
+    style="--announcement-speed: {{ section.settings.speed }};"
   >
     <div class="announcement-bar__track">
       <div class="announcement-bar__group">
@@ -44,7 +44,7 @@
     display: flex;
     width: max-content;
     column-gap: var(--announcement-gap);
-    animation: announcement-marquee var(--announcement-speed) linear infinite;
+    animation: announcement-marquee var(--announcement-duration, 20s) linear infinite;
     will-change: transform;
   }
 
@@ -95,11 +95,12 @@
     {
       "type": "range",
       "id": "speed",
-      "label": "t:settings.scroll_speed",
+      "label": "Marquee speed",
       "min": 2,
-      "max": 10,
-      "default": 5,
-      "unit": "sec"
+      "max": 20,
+      "step": 1,
+      "default": 8,
+      "info": "Higher values move the announcements faster."
     },
     {
       "type": "header",
