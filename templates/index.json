@@ -182,6 +182,7 @@
       ],
       "name": "DV Gold seasonal specials",
       "settings": {
+        "product_display_mode": "carousel",
         "heading": "FEATURED COMBOS & SEASONAL SPECIALS",
         "show_heading_accent": true,
         "color_scheme": "scheme-1",
