@@ -125,15 +125,22 @@
         "color_scheme": "scheme-1",
         "background_color": "#fbf5ee",
         "heading_color": "#9b2d32",
+        "normal_desktop_layout": true,
         "show_connectors": true,
         "connector_color": "#c89100",
         "connector_style": "dashed",
         "connector_thickness": 13,
+        "connector_mobile_length": 120,
+        "connector_desktop_length": 64,
+        "connector_dash_length": 24,
+        "connector_gap": 16,
         "show_underlines": true,
         "underline_color": "#c89100",
         "underline_width": 86,
         "underline_thickness": 2,
         "card_background": "#fbefd9",
+        "mobile_aspect_ratio": "1 / 1",
+        "desktop_aspect_ratio": "3 / 2",
         "button_background": "#c99739",
         "button_text_color": "#ffffff",
         "max_width": 760,
@@ -146,10 +153,28 @@
     "dv_gold_seasonal_specials": {
       "type": "dv-gold-seasonal-specials",
       "blocks": {
+        "side_product_gjEdwK": {
+          "type": "side_product",
+          "settings": {
+            "product": "gum-powder",
+            "button_action": "add_to_cart",
+            "button_label": "+",
+            "link": ""
+          }
+        },
+        "side_product_63ezrU": {
+          "type": "side_product",
+          "settings": {
+            "product": "ginger-powder",
+            "button_action": "add_to_cart",
+            "button_label": "+",
+            "link": ""
+          }
+        },
         "combo_festive_heritage": {
           "type": "combo",
           "settings": {
-            "product": "festive-heritage-hamper",
+            "product": "dhana-powder",
             "badge_text": "HOT SELLING COMBO",
             "button_action": "link",
             "button_label": "ADD TO CART",
@@ -159,7 +184,7 @@
         "product_card_1": {
           "type": "side_product",
           "settings": {
-            "product": "dv-gold-tea",
+            "product": "dv-silver-tea",
             "button_action": "link",
             "button_label": "+",
             "link": "shopify://collections/all"
@@ -176,13 +201,14 @@
         }
       },
       "block_order": [
+        "side_product_gjEdwK",
+        "side_product_63ezrU",
         "combo_festive_heritage",
         "product_card_1",
         "product_card_2"
       ],
       "name": "DV Gold seasonal specials",
       "settings": {
-        "product_display_mode": "carousel",
         "heading": "FEATURED COMBOS & SEASONAL SPECIALS",
         "show_heading_accent": true,
         "color_scheme": "scheme-1",
@@ -197,6 +223,7 @@
         "badge_text_color": "#ffffff",
         "button_background": "#c99739",
         "button_text_color": "#ffffff",
+        "product_display_mode": "right_scroll",
         "show_product_dots": true,
         "product_autoplay": true,
         "product_autoplay_speed": 4,
