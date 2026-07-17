@@ -18,6 +18,8 @@
     --dv-category-underline-width: {{ section.settings.underline_width }}px;
     --dv-category-underline-thickness: {{ section.settings.underline_thickness }}px;
     --dv-category-card-bg: {{ section.settings.card_background }};
+    --dv-category-mobile-aspect-ratio: {{ section.settings.mobile_aspect_ratio }};
+    --dv-category-desktop-aspect-ratio: {{ section.settings.desktop_aspect_ratio }};
     --dv-category-button-bg: {{ section.settings.button_background }};
     --dv-category-button-text: {{ section.settings.button_text_color }};
     --dv-category-max-width: {{ section.settings.max_width }}px;
@@ -51,8 +53,11 @@
               assign category_image = category_collection.image
             endif
           endif
+          assign mobile_category_image = block.settings.mobile_image | default: category_image
+          assign category_image = category_image | default: mobile_category_image
           assign category_aria_label = category_title | default: block.settings.button_label
           assign category_image_alt = category_image.alt | default: category_title
+          assign mobile_category_image_alt = mobile_category_image.alt | default: category_image_alt
           assign rotation = block.settings.card_rotation | default: 0
           assign block_card_bg = block.settings.card_background
           if block_card_bg == blank or block_card_bg == 'rgba(0,0,0,0)'
@@ -72,16 +77,30 @@
               aria-label="{{ category_aria_label | escape }}"
             >
               {% if category_image != blank %}
-                {{
-                  category_image
-                  | image_url: width: 1200
-                  | image_tag:
-                    loading: 'lazy',
-                    widths: '320, 480, 640, 800, 1000, 1200',
-                    sizes: '(min-width: 990px) 520px, 86vw',
-                    class: 'dv-category__image',
-                    alt: category_image_alt
-                }}
+                <picture class="dv-category__picture">
+                  <source
+                    media="(min-width: 750px)"
+                    srcset="
+                      {{ category_image | image_url: width: 320 }} 320w,
+                      {{ category_image | image_url: width: 480 }} 480w,
+                      {{ category_image | image_url: width: 640 }} 640w,
+                      {{ category_image | image_url: width: 800 }} 800w,
+                      {{ category_image | image_url: width: 1000 }} 1000w,
+                      {{ category_image | image_url: width: 1200 }} 1200w
+                    "
+                    sizes="(min-width: 750px) 25vw, 86vw"
+                  >
+                  {{
+                    mobile_category_image
+                    | image_url: width: 1000
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '320, 480, 640, 800, 1000',
+                      sizes: '86vw',
+                      class: 'dv-category__image',
+                      alt: mobile_category_image_alt
+                  }}
+                </picture>
               {% else %}
                 <div class="dv-category__placeholder" aria-hidden="true">
                   {{ 'image' | placeholder_svg_tag: 'dv-category__placeholder-svg' }}
@@ -154,7 +173,7 @@
   #{{ section_anchor }} .dv-category__card {
     position: relative;
     display: block;
-    aspect-ratio: 1.52 / 1;
+    aspect-ratio: var(--dv-category-mobile-aspect-ratio);
     padding: clamp(10px, 2vw, 16px);
     background: var(--dv-category-block-card-bg);
     border: 1px solid rgba(255, 255, 255, 0.75);
@@ -163,6 +182,7 @@
     text-decoration: none;
   }
 
+  #{{ section_anchor }} .dv-category__picture,
   #{{ section_anchor }} .dv-category__image,
   #{{ section_anchor }} .dv-category__placeholder {
     width: 100%;
@@ -265,6 +285,7 @@
     }
 
     #{{ section_anchor }} .dv-category__card {
+      aspect-ratio: var(--dv-category-desktop-aspect-ratio);
       padding: clamp(6px, 1vw, 12px);
     }
 
@@ -353,6 +374,9 @@
     { "type": "range", "id": "underline_width", "label": "Underline width", "min": 20, "max": 160, "step": 2, "unit": "px", "default": 86 },
     { "type": "range", "id": "underline_thickness", "label": "Underline thickness", "min": 1, "max": 8, "step": 1, "unit": "px", "default": 2 },
     { "type": "color", "id": "card_background", "label": "Default card background", "default": "#fbefd9" },
+    { "type": "header", "content": "Card image proportions" },
+    { "type": "select", "id": "mobile_aspect_ratio", "label": "Mobile aspect ratio", "default": "1 / 1", "options": [{ "value": "4 / 5", "label": "Portrait (4:5)" }, { "value": "1 / 1", "label": "Square (1:1)" }, { "value": "3 / 2", "label": "Landscape (3:2)" }, { "value": "16 / 9", "label": "Wide (16:9)" }] },
+    { "type": "select", "id": "desktop_aspect_ratio", "label": "Desktop aspect ratio", "default": "3 / 2", "options": [{ "value": "4 / 5", "label": "Portrait (4:5)" }, { "value": "1 / 1", "label": "Square (1:1)" }, { "value": "3 / 2", "label": "Landscape (3:2)" }, { "value": "16 / 9", "label": "Wide (16:9)" }] },
     { "type": "color", "id": "button_background", "label": "Button background", "default": "#c99739" },
     { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#ffffff" },
     { "type": "range", "id": "max_width", "label": "Content max width", "min": 640, "max": 1400, "step": 20, "unit": "px", "default": 760 },
@@ -366,7 +390,8 @@
       "type": "category",
       "name": "Category",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "image_picker", "id": "image", "label": "Desktop image" },
+        { "type": "image_picker", "id": "mobile_image", "label": "Mobile image", "info": "Falls back to the desktop image when left blank." },
         { "type": "collection", "id": "collection", "label": "Collection" },
         { "type": "text", "id": "title", "label": "Category name", "default": "TEA" },
         { "type": "text", "id": "button_label", "label": "Button text", "default": "SHOP NOW" },
