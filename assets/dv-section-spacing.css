@@ -1,0 +1,49 @@
+/* Shared vertical rhythm for DV Gold content sections. Keeping these values in one
+ * place prevents adjacent sections from accumulating mismatched top/bottom space. */
+:root {
+  --dv-section-padding-block: clamp(4.8rem, 8vw, 8.8rem);
+  --dv-section-title-gap: clamp(3.2rem, 5vw, 4rem);
+}
+
+.dv-content-section {
+  padding-block: var(--dv-section-padding-block) !important;
+}
+
+/* A section heading (or heading group) always hands off to its primary content
+ * using the same gap, regardless of the section's original editor defaults. */
+.dv-category__heading,
+.dv-seasonal-specials__heading-wrap,
+.dv-promise__heading-wrap,
+.dv-all-products__header,
+.dv-history__heading,
+.dv-faq__heading {
+  margin-block-end: var(--dv-section-title-gap) !important;
+}
+
+.dv-community__heading {
+  margin-block-end: var(--dv-section-title-gap) !important;
+}
+
+.dv-community__inner {
+  padding-block-start: var(--dv-section-title-gap) !important;
+}
+
+.dv-certifications__heading {
+  margin-block-end: var(--dv-section-title-gap) !important;
+}
+
+.dv-reviews__heading {
+  margin-block-end: 1.6rem !important;
+}
+
+.dv-reviews__subheading {
+  margin-block-end: var(--dv-section-title-gap) !important;
+}
+
+/* The announcement is viewport-wide even when a saved section setting from an
+ * older theme version still contains "page-width". */
+#header-group .announcement-bar {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
