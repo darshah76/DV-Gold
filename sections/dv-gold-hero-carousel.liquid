@@ -13,8 +13,6 @@
   data-dv-gold-hero
   aria-label="{{ section.settings.accessibility_label | escape }}"
   style="
-    --dv-hero-mobile-height: {{ section.settings.mobile_height }}px;
-    --dv-hero-desktop-height: {{ section.settings.desktop_height }}px;
     --dv-hero-button-bottom-mobile: {{ section.settings.button_bottom_mobile }}%;
     --dv-hero-button-bottom-desktop: {{ section.settings.button_bottom_desktop }}%;
     --dv-hero-dots-bottom: {{ section.settings.dots_bottom }}px;
@@ -112,7 +110,7 @@
   }
 
   .dv-gold-hero__viewport {
-    height: var(--dv-hero-mobile-height);
+    aspect-ratio: 3 / 4;
     position: relative;
     overflow: hidden;
   }
@@ -126,7 +124,7 @@
 
   .dv-gold-hero__slide {
     flex: 0 0 100%;
-    height: var(--dv-hero-mobile-height);
+    height: 100%;
     position: relative;
   }
 
@@ -152,7 +150,6 @@
     gap: 1rem;
     height: 100%;
     justify-content: center;
-    min-height: var(--dv-hero-mobile-height);
     text-align: center;
   }
 
@@ -218,10 +215,8 @@
   }
 
   @media screen and (min-width: 750px) {
-    .dv-gold-hero__viewport,
-    .dv-gold-hero__slide,
-    .dv-gold-hero__placeholder {
-      height: var(--dv-hero-desktop-height);
+    .dv-gold-hero__viewport {
+      aspect-ratio: 5 / 2;
     }
 
     .dv-gold-hero__button {
@@ -304,26 +299,6 @@
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-1"
-    },
-    {
-      "type": "range",
-      "id": "mobile_height",
-      "label": "Mobile height",
-      "min": 420,
-      "max": 900,
-      "step": 20,
-      "unit": "px",
-      "default": 680
-    },
-    {
-      "type": "range",
-      "id": "desktop_height",
-      "label": "Desktop height",
-      "min": 420,
-      "max": 1000,
-      "step": 20,
-      "unit": "px",
-      "default": 760
     },
     {
       "type": "checkbox",
@@ -414,12 +389,12 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Desktop image"
+          "label": "Desktop & tablet image (2.5:1)"
         },
         {
           "type": "image_picker",
           "id": "mobile_image",
-          "label": "Mobile image"
+          "label": "Mobile image (3:4)"
         },
         {
           "type": "text",
