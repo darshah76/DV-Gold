@@ -138,8 +138,9 @@
 
         {% if product_card_count > 0 %}
           <div
-            class="dv-seasonal-specials__products-wrap"
+            class="dv-seasonal-specials__products-wrap dv-seasonal-specials__products-wrap--{{ section.settings.product_display_mode }}"
             data-dv-seasonal-products
+            data-display-mode="{{ section.settings.product_display_mode }}"
             data-autoplay="{{ section.settings.product_autoplay }}"
             data-autoplay-speed="{{ section.settings.product_autoplay_speed | times: 1000 }}"
           >
@@ -221,7 +222,7 @@
               {% endfor %}
             </div>
 
-            {% if section.settings.show_product_dots and product_card_count > 1 %}
+            {% if section.settings.product_display_mode == 'carousel' and section.settings.show_product_dots and product_card_count > 1 %}
               {% assign product_dot_index = 0 %}
               <div class="dv-seasonal-specials__product-dots" role="tablist" aria-label="Featured product cards">
                 {% for block in section.blocks %}
@@ -444,6 +445,7 @@
   #{{ section_anchor }} .dv-seasonal-specials__products-wrap {
     display: grid;
     gap: 22px;
+    min-width: 0;
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__product-grid {
@@ -457,6 +459,20 @@
 
   #{{ section_anchor }} .dv-seasonal-specials__product-grid::-webkit-scrollbar {
     display: none;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__products-wrap--right_scroll .dv-seasonal-specials__product-grid {
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__products-wrap--right_scroll .dv-seasonal-specials__product-grid::-webkit-scrollbar {
+    display: initial;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__products-wrap--right_scroll .dv-seasonal-specials__product-card {
+    flex-basis: min(78vw, 280px);
+    min-width: min(78vw, 280px);
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__product-card {
@@ -602,12 +618,20 @@
     #{{ section_anchor }} .dv-seasonal-specials__inner {
       width: min(100% - 64px, var(--dv-seasonal-max-width));
     }
-  }
 
-  @media screen and (min-width: 990px) {
     #{{ section_anchor }} .dv-seasonal-specials__layout {
       align-items: start;
-      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      grid-template-columns: minmax(0, 35vw) minmax(0, 1fr);
+    }
+
+    #{{ section_anchor }} .dv-seasonal-specials__combo-list {
+      max-width: 35vw;
+      width: 100%;
+    }
+
+    #{{ section_anchor }} .dv-seasonal-specials__products-wrap--right_scroll .dv-seasonal-specials__product-card {
+      flex-basis: min(30vw, 280px);
+      min-width: min(30vw, 280px);
     }
   }
 </style>
@@ -617,6 +641,7 @@
     const initSeasonalProducts = (root = document) => {
       root.querySelectorAll('[data-dv-seasonal-products]').forEach((carousel) => {
         if (carousel.dataset.dvSeasonalProductsInitialized === 'true') return;
+        if (carousel.dataset.displayMode !== 'carousel') return;
 
         const track = carousel.querySelector('[data-dv-seasonal-products-track]');
         const slides = Array.from(carousel.querySelectorAll('[data-dv-seasonal-products-slide]'));
@@ -724,6 +749,16 @@
     { "type": "color", "id": "badge_text_color", "label": "Badge text color", "default": "#ffffff" },
     { "type": "color", "id": "button_background", "label": "Button background", "default": "#c99739" },
     { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#ffffff" },
+    {
+      "type": "select",
+      "id": "product_display_mode",
+      "label": "Product card display",
+      "options": [
+        { "value": "carousel", "label": "Carousel" },
+        { "value": "right_scroll", "label": "Right scroll" }
+      ],
+      "default": "carousel"
+    },
     { "type": "checkbox", "id": "show_product_dots", "label": "Show product carousel dots", "default": true },
     { "type": "checkbox", "id": "product_autoplay", "label": "Auto-scroll product carousel", "default": true },
     { "type": "range", "id": "product_autoplay_speed", "label": "Product carousel auto-scroll time", "min": 2, "max": 12, "step": 1, "unit": "s", "default": 4 },
