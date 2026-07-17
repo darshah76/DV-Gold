@@ -1,10 +1,7 @@
 {%- assign block_settings = block.settings -%}
 {%- assign plain_text = block_settings.text | strip_newlines | strip_html | strip -%}
-{%- assign block_index = section.blocks | find_index: 'id', block.id -%}
-
 {%- unless plain_text == '' -%}
-  <slideshow-slide
-    ref="slides[]"
+  <div
     class="
       announcement-bar__slide
       text-block
@@ -23,7 +20,6 @@
       --line-height: 1;
     "
     {{ block.shopify_attributes }}
-    aria-hidden="{% if block_index == 0 %}false{% else %}true{% endif %}"
   >
     <p class="announcement-bar__text">
       {{ block.settings.text }}
@@ -39,7 +35,7 @@
         </span>
       </a>
     {% endif %}
-  </slideshow-slide>
+  </div>
 {%- endunless -%}
 
 {% stylesheet %}
