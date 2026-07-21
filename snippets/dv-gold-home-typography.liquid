@@ -1,0 +1,79 @@
+{%- comment -%}
+  Shared DV Gold homepage typography rules.
+  Render inside each homepage section stylesheet with section_anchor set to the section root id.
+{%- endcomment -%}
+#{{ section_anchor }} {
+  --dv-home-heading-size: var(--dv-section-heading-size);
+  --dv-home-heading-weight: 700;
+  --dv-home-heading-line-height: 1.15;
+  --dv-home-heading-letter-spacing: 0;
+  --dv-home-body-size: var(--font-size--paragraph, 1rem);
+  --dv-home-body-weight: 400;
+  --dv-home-body-line-height: var(--font-paragraph--line-height, 1.7);
+  --dv-home-body-letter-spacing: 0;
+  --dv-home-eyebrow-size: var(--font-size--small, 0.875rem);
+  --dv-home-eyebrow-weight: 600;
+  --dv-home-eyebrow-line-height: 1.4;
+  --dv-home-eyebrow-letter-spacing: var(--letter-spacing-sm, 0.04em);
+  --dv-home-card-title-size: var(--dv-product-title-size);
+  --dv-home-card-title-weight: 700;
+  --dv-home-card-title-line-height: 1.2;
+  --dv-home-button-size: var(--font-size--button, 0.9375rem);
+  --dv-home-button-weight: 600;
+  --dv-home-button-line-height: 1.2;
+  font-family: var(--font-body--family);
+  font-size: var(--dv-home-body-size);
+  font-weight: var(--dv-home-body-weight);
+  line-height: var(--dv-home-body-line-height);
+  letter-spacing: var(--dv-home-body-letter-spacing);
+}
+
+#{{ section_anchor }} :where([class^='dv-'], [class*=' dv-']) {
+  font-family: var(--font-body--family) !important;
+  font-size: var(--dv-home-body-size) !important;
+  font-weight: var(--dv-home-body-weight) !important;
+  line-height: var(--dv-home-body-line-height) !important;
+  letter-spacing: var(--dv-home-body-letter-spacing) !important;
+}
+
+#{{ section_anchor }} :where(h1, h2, h3, h4, h5, h6, [class*='__heading'], [class*='__title']) {
+  font-family: var(--font-heading--family) !important;
+  font-weight: var(--dv-home-heading-weight) !important;
+  line-height: var(--dv-home-heading-line-height) !important;
+  letter-spacing: var(--dv-home-heading-letter-spacing) !important;
+}
+
+#{{ section_anchor }} :where([class*='__heading']) {
+  font-size: var(--dv-home-heading-size) !important;
+  text-align: center !important;
+}
+
+#{{ section_anchor }} :where([class*='__title'], [class*='product-title'], [class*='card-title']) {
+  font-size: var(--dv-home-card-title-size) !important;
+  font-weight: var(--dv-home-card-title-weight) !important;
+  line-height: var(--dv-home-card-title-line-height) !important;
+}
+
+#{{ section_anchor }} :where(p, li, .rte, .rte *, [class*='__text'], [class*='__description'], [class*='__subheading'], [class*='__quote'], [class*='__answer']) {
+  font-family: var(--font-body--family) !important;
+  font-size: var(--dv-home-body-size) !important;
+  font-weight: var(--dv-home-body-weight) !important;
+  line-height: var(--dv-home-body-line-height) !important;
+  letter-spacing: var(--dv-home-body-letter-spacing) !important;
+}
+
+#{{ section_anchor }} :where(button, .button, [role='button'], [class*='__button'], [class*='__add'], [class*='__action']) {
+  font-family: var(--font-body--family) !important;
+  font-size: var(--dv-home-button-size) !important;
+  font-weight: var(--dv-home-button-weight) !important;
+  line-height: var(--dv-home-button-line-height) !important;
+  letter-spacing: var(--dv-home-eyebrow-letter-spacing) !important;
+}
+
+#{{ section_anchor }} :where(.price, product-price, product-price *, [class*='__price'], [class*='__rating'], [class*='__badge'], [class*='__eyebrow'], [class*='marquee__text']) {
+  font-family: var(--font-body--family) !important;
+  font-size: var(--dv-home-eyebrow-size) !important;
+  font-weight: var(--dv-home-eyebrow-weight) !important;
+  line-height: var(--dv-home-eyebrow-line-height) !important;
+  letter-spacing: var(--dv-home-eyebrow-letter-spacing) !important;
+}
