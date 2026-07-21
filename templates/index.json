@@ -67,6 +67,7 @@
         "category_tea": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/tea-home-banner.png",
             "collection": "tea",
             "title": "TEA",
             "button_label": "SHOP NOW",
