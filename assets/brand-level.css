@@ -444,7 +444,22 @@ header,
   }
 }
 
-/* Hide Profile / Account Icon on Navbar */
+/* Completely Hide Profile / Account Icon Everywhere on Navbar & Mobile Drawer */
+.account-button,
+shopify-account,
+shop-user-avatar,
+.menu-drawer__account,
+.header-actions__action:has(shopify-account),
+.header-actions__action:has(.account-button),
+.header-actions__action:has(shop-user-avatar),
 :is(.header__icon--account, a[href*="/account"], .header__account, [class*="account-link"], [class*="header__icon--account"], a[href*="account_login"], [aria-label*="account"], [aria-label*="Account"]) {
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
 }
