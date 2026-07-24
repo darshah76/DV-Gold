@@ -1,0 +1,184 @@
+/* Brand-level design system tokens & typography overrides */
+
+:root {
+  /* Semantic brand typography scale */
+  --brand-font-size-micro: 0.625rem;
+  --brand-font-size-overline: 0.6875rem;
+  --brand-font-size-caption: 1rem;
+  --brand-font-size-body-xs: 0.8125rem;
+  --brand-font-size-body-sm: 0.875rem;
+  --brand-font-size-body: 1rem;
+  --brand-font-size-body-lg: 1.125rem;
+  --brand-font-size-h6: 1.1875rem;
+  --brand-font-size-h5: 1.25rem;
+  --brand-font-size-h4: 1.5rem;
+  --brand-font-size-h3: clamp(1.625rem, 2.2vw, 1.875rem);
+  --brand-font-size-h2: clamp(2rem, 3vw, 2.5rem);
+  --brand-font-size-h1: clamp(2.5rem, 4.5vw, 3.5rem);
+  --brand-font-size-display: clamp(3.25rem, 7vw, 5rem);
+
+  /* Page Layout Widths */
+  --narrow-page-width: 90rem;
+  --normal-page-width: 120rem;
+  --wide-page-width: 150rem;
+
+  --narrow-content-width: 36rem;
+  --normal-content-width: 42rem;
+  --wide-content-width: 46rem;
+  --sidebar-width: 25rem;
+
+  /* Typography Roles & Fonts */
+  --brand-home-hero-heading-size: var(--brand-font-size-h1);
+  --brand-home-section-heading-size: var(--brand-font-size-h2);
+  --brand-home-section-subheading-size: var(--brand-font-size-body);
+  --brand-home-card-title-size: var(--brand-font-size-body-sm);
+  --brand-home-card-meta-size: var(--brand-font-size-caption);
+  --brand-home-cta-size: var(--brand-font-size-body-sm);
+  --brand-home-stat-size: var(--brand-font-size-display);
+  --brand-home-heading-font: 'Century Gothic Custom', 'Century Gothic', Arial, sans-serif;
+  --brand-home-heading-font-bold: 'Century Gothic Custom Bold', 'Century Gothic Custom', 'Century Gothic', Arial, sans-serif;
+
+  /* Layout Rhythm & Spacing */
+  --brand-home-section-padding-top: 30px;
+  --brand-home-section-padding-bottom: 30px;
+  --brand-home-section-padding-top-mobile: 20px;
+  --brand-home-section-padding-bottom-mobile: 28px;
+  --brand-home-section-margin-top: 0px;
+  --brand-home-section-margin-bottom: 0px;
+  --brand-home-container-gutter: 68px;
+  --brand-home-container-gutter-tablet: 44px;
+  --brand-home-container-gutter-mobile: 28px;
+  --brand-home-card-padding-block: 42px 58px;
+  --brand-home-card-padding-inline: 38px;
+  --brand-home-card-padding-mobile: 30px 18px 40px;
+  --brand-home-card-radius: 24px;
+  --brand-home-card-radius-mobile: 18px;
+
+  --brand-body-font-size: var(--brand-font-size-body);
+  --brand-body-line-height: 1.6;
+
+  --brand-h1-size: var(--brand-font-size-h1);
+  --brand-h2-size: var(--brand-font-size-h2);
+  --brand-h3-size: var(--brand-font-size-h3);
+  --brand-h4-size: var(--brand-font-size-h4);
+  --brand-h5-size: var(--brand-font-size-h5);
+  --brand-h6-size: var(--brand-font-size-h6);
+}
+
+/* Universal Typography Rules Across Homepage, Collection, Product Pages */
+:is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .heading, .card__heading, .product-title, .product__title, .collection__title, [class*="__heading"], [class*="-heading"], [class*="__title"], [class*="-title"]) {
+  font-family: var(--brand-home-heading-font) !important;
+}
+
+body {
+  font-size: var(--brand-body-font-size) !important;
+  line-height: var(--brand-body-line-height) !important;
+}
+
+h1, .h1, .product__title, .hero__heading {
+  font-size: var(--brand-h1-size) !important;
+  line-height: 1.2 !important;
+}
+
+h2, .h2, .section__heading, .collection__title {
+  font-size: var(--brand-h2-size) !important;
+  line-height: 1.25 !important;
+}
+
+h3, .h3, .card__title, .cp-card__title {
+  font-size: var(--brand-h3-size) !important;
+  line-height: 1.3 !important;
+}
+
+h4, .h4 {
+  font-size: var(--brand-h4-size) !important;
+  line-height: 1.35 !important;
+}
+
+h5, .h5 {
+  font-size: var(--brand-h5-size) !important;
+  line-height: 1.4 !important;
+}
+
+h6, .h6 {
+  font-size: var(--brand-h6-size) !important;
+  line-height: 1.4 !important;
+}
+
+/* Universal Border Radii & Geometry */
+:is(.button, button.button, a.button, .btn, button[type="submit"], .product-form__submit, .cp-card__add, [data-add-to-cart], .cart-drawer__checkout, .cart-page__checkout) {
+  border-radius: 14px !important;
+}
+
+:is(.card, .product-card, .cp-card, .collection-card, .article-card, .resource-card, .product-grid__item, .predictive-search-results__card) {
+  border-radius: var(--brand-home-card-radius) !important;
+}
+
+@media screen and (max-width: 749px) {
+  :is(.card, .product-card, .cp-card, .collection-card, .article-card, .resource-card, .product-grid__item, .predictive-search-results__card) {
+    border-radius: var(--brand-home-card-radius-mobile) !important;
+  }
+}
+
+:is(.badge, .price__badge, .product-badge, .discount-badge, [class*="badge"]) {
+  border-radius: 100px !important;
+}
+
+:is(input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="search"], select, textarea, .field__input) {
+  border-radius: 4px !important;
+}
+
+:is(.popover, .modal-dialog, .search-modal__content, .cart-drawer, .menu-drawer, .quick-add-modal__content) {
+  border-radius: 14px !important;
+}
+
+/* Search Modal Width */
+:is(.search-modal__content, .search-modal) {
+  --modal-width: 78dvw;
+  width: 78dvw !important;
+  max-width: 78dvw !important;
+}
+
+/* Section Spacing & Container Width Constraints */
+.page-width,
+.section-width--narrow,
+.container,
+.main-collection,
+.main-product,
+.product-grid-container {
+  max-width: var(--narrow-page-width) !important;
+}
+
+.shopify-section {
+  padding-block-start: var(--brand-home-section-padding-top) !important;
+  padding-block-end: var(--brand-home-section-padding-bottom) !important;
+}
+
+@media screen and (max-width: 749px) {
+  .shopify-section {
+    padding-block-start: var(--brand-home-section-padding-top-mobile) !important;
+    padding-block-end: var(--brand-home-section-padding-bottom-mobile) !important;
+  }
+
+  .page-width,
+  .container,
+  .product-grid-container {
+    padding-inline: var(--brand-home-container-gutter-mobile) !important;
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .page-width,
+  .container,
+  .product-grid-container {
+    padding-inline: var(--brand-home-container-gutter-tablet) !important;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .page-width,
+  .container,
+  .product-grid-container {
+    padding-inline: var(--brand-home-container-gutter) !important;
+  }
+}
