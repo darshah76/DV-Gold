@@ -372,7 +372,7 @@ footer.dv-footer,
   display: none !important;
 }
 
-/* Header Announcement Bar: 10px Top & Bottom Padding */
+/* Header Announcement Bar: 10px Top & Bottom Padding (No Bottom Border) */
 #shopify-section-sections--21674398548108__header_announcements_9jGBFp,
 [id*="__header_announcements"],
 .header-announcements,
@@ -382,6 +382,10 @@ footer.dv-footer,
   padding-block: 10px !important;
   padding-block-start: 10px !important;
   padding-block-end: 10px !important;
+  border: none !important;
+  border-bottom: none !important;
+  border-block-end: none !important;
+  box-shadow: none !important;
 }
 
 /* Main Header Navbar: 0px Top & Bottom Padding */
