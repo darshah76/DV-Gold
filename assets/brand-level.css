@@ -426,6 +426,25 @@ header,
     max-width: none !important;
     object-fit: contain !important;
   }
+/* Navbar Navigation Menu Font Weight Bold & Center Alignment */
+:is(.header__menu-item, .header__menu a, .header-menu__link, nav.header__inline-menu a, header nav a, .header-menu__item, [class*="header__menu-item"], [class*="header-menu__link"], [class*="header__menu"]) {
+  font-weight: 700 !important;
 }
 
+@media screen and (min-width: 990px) {
+  :is(.header-menu, nav.header__inline-menu, header nav, .header__menu, [class*="header__inline-menu"], .header__menu-wrapper) {
+    margin-inline: auto !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
 
+  :is(.header-menu__list, nav.header__inline-menu > ul, .header__inline-menu > ul, header nav > ul) {
+    justify-content: center !important;
+    margin-inline: auto !important;
+  }
+}
+
+/* Hide Profile / Account Icon on Navbar */
+:is(.header__icon--account, a[href*="/account"], .header__account, [class*="account-link"], [class*="header__icon--account"], a[href*="account_login"], [aria-label*="account"], [aria-label*="Account"]) {
+  display: none !important;
+}
