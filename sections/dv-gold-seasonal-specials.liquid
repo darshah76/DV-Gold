@@ -101,7 +101,11 @@
                         {% endif %}
                       </div>
 
-                      {% if button_label != blank %}
+                      {% assign combo_btn_label = button_label %}
+                      {% if combo_btn_label == blank or combo_btn_label == '+' %}
+                        {% assign combo_btn_label = 'Add to Cart' %}
+                      {% endif %}
+                      {% if combo_btn_label != blank %}
                         {% if button_action == 'add_to_cart' and product_variant != blank %}
                           <form method="post" action="{{ routes.cart_add_url }}" class="dv-seasonal-specials__form">
                             <input type="hidden" name="id" value="{{ product_variant.id }}">
@@ -109,10 +113,10 @@
                             <button
                               type="submit"
                               class="dv-seasonal-specials__button"
-                              aria-label="{{ button_label | default: 'Add to Cart' | escape }} {{ card_title | escape }}"
+                              aria-label="{{ combo_btn_label | escape }} {{ card_title | escape }}"
                               {% unless product_variant.available %}disabled{% endunless %}
                             >
-                              <span class="dv-btn-text">{{ button_label | default: 'Add to Cart' }}</span>
+                              <span class="dv-btn-text">{{ combo_btn_label }}</span>
                               <span class="dv-btn-icon">+</span>
                             </button>
                           </form>
@@ -120,9 +124,9 @@
                           <a
                             class="dv-seasonal-specials__button"
                             href="{{ card_link | default: routes.all_products_collection_url }}"
-                            aria-label="{{ button_label | default: 'Add to Cart' | escape }} {{ card_title | escape }}"
+                            aria-label="{{ combo_btn_label | escape }} {{ card_title | escape }}"
                           >
-                            <span class="dv-btn-text">{{ button_label | default: 'Add to Cart' }}</span>
+                            <span class="dv-btn-text">{{ combo_btn_label }}</span>
                             <span class="dv-btn-icon">+</span>
                           </a>
                         {% endif %}
@@ -209,7 +213,11 @@
                         <span class="dv-seasonal-specials__product-price">{{ card_product.price | money }}</span>
                       {% endif %}
 
-                      {% if block.settings.button_label != blank %}
+                      {% assign side_btn_label = block.settings.button_label %}
+                      {% if side_btn_label == blank or side_btn_label == '+' %}
+                        {% assign side_btn_label = 'Add to Cart' %}
+                      {% endif %}
+                      {% if side_btn_label != blank %}
                         {% if block.settings.button_action == 'add_to_cart' and card_variant != blank %}
                           <form method="post" action="{{ routes.cart_add_url }}" class="dv-seasonal-specials__product-form">
                             <input type="hidden" name="id" value="{{ card_variant.id }}">
@@ -217,10 +225,10 @@
                             <button
                               type="submit"
                               class="dv-seasonal-specials__product-button"
-                              aria-label="{{ block.settings.button_label | default: 'Add to Cart' | escape }} {{ product_title | escape }}"
+                              aria-label="{{ side_btn_label | escape }} {{ product_title | escape }}"
                               {% unless card_variant.available %}disabled{% endunless %}
                             >
-                              <span class="dv-btn-text">{{ block.settings.button_label | default: 'Add to Cart' }}</span>
+                              <span class="dv-btn-text">{{ side_btn_label }}</span>
                               <span class="dv-btn-icon">+</span>
                             </button>
                           </form>
@@ -228,9 +236,9 @@
                           <a
                             class="dv-seasonal-specials__product-button"
                             href="{{ product_link | default: routes.all_products_collection_url }}"
-                            aria-label="{{ block.settings.button_label | default: 'Add to Cart' | escape }} {{ product_title | escape }}"
+                            aria-label="{{ side_btn_label | escape }} {{ product_title | escape }}"
                           >
-                            <span class="dv-btn-text">{{ block.settings.button_label | default: 'Add to Cart' }}</span>
+                            <span class="dv-btn-text">{{ side_btn_label }}</span>
                             <span class="dv-btn-icon">+</span>
                           </a>
                         {% endif %}
@@ -454,8 +462,8 @@
   #{{ section_anchor }} .dv-seasonal-specials__button:focus-visible,
   #{{ section_anchor }} .dv-seasonal-specials__product-button:hover,
   #{{ section_anchor }} .dv-seasonal-specials__product-button:focus-visible {
-    box-shadow: 0 8px 14px rgba(70, 43, 18, 0.18);
-    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(65, 45, 25, 0.28) !important;
+    transform: none !important;
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__button:disabled,
