@@ -542,29 +542,35 @@
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__button,
-  #{{ section_anchor }} .dv-seasonal-specials__product-button {
-    align-items: center;
-    appearance: none;
-    background: var(--dv-seasonal-button-bg);
-    border: 0;
-    border-radius: 50%;
-    color: var(--dv-seasonal-button-text);
-    cursor: pointer;
-    display: inline-flex;
-    flex: 0 0 auto;
-    font: inherit;
-    font-size: clamp(1.3rem, 2vw, 1.7rem);
-    font-weight: 700;
-    height: 38px;
-    width: 38px;
-    min-height: 38px;
-    min-width: 38px;
-    justify-content: center;
-    line-height: 1;
-    padding: 0;
-    text-decoration: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 10px rgba(65, 45, 25, 0.18);
+  #{{ section_anchor }} .dv-seasonal-specials__product-button,
+  #{{ section_anchor }} .dv-seasonal-specials__form button,
+  #{{ section_anchor }} .dv-seasonal-specials__product-form button {
+    align-items: center !important;
+    appearance: none !important;
+    background: var(--dv-seasonal-button-bg) !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    color: var(--dv-seasonal-button-text) !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    flex: 0 0 38px !important;
+    font: inherit !important;
+    font-size: clamp(1.3rem, 2vw, 1.7rem) !important;
+    font-weight: 700 !important;
+    height: 38px !important;
+    width: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    aspect-ratio: 1 / 1 !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    padding: 0 !important;
+    text-decoration: none !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    box-shadow: 0 4px 10px rgba(65, 45, 25, 0.18) !important;
+    box-sizing: border-box !important;
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__product-dots {
