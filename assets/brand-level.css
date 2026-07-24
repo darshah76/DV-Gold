@@ -49,8 +49,8 @@ main[data-template="index"] [class*="-wrapper"] {
   --brand-font-size-display: clamp(3.25rem, 7vw, 5rem);
 
   /* Page Layout Widths */
-  --narrow-page-width: 1180px;
-  --normal-page-width: 1180px;
+  --narrow-page-width: 90rem;
+  --normal-page-width: 120rem;
   --wide-page-width: 150rem;
 
   --narrow-content-width: 36rem;
@@ -237,9 +237,12 @@ h6, .h6 {
 .main-cart,
 .main-search,
 .main-account,
+.dv-footer__inner,
+.dv-section-container,
 [class*="-container"],
+[class*="__inner"],
 :is(footer, .footer, #footer-group) .page-width {
-  max-width: 1180px !important;
+  max-width: var(--narrow-page-width, 90rem) !important;
   margin-inline: auto !important;
 }
 
@@ -343,8 +346,8 @@ footer,
 
 :is(footer, .footer, #footer-group, .dv-footer) .page-width,
 .dv-footer__inner {
-  width: min(100% - 24px, 1180px) !important;
-  max-width: 1180px !important;
+  width: min(100% - 24px, var(--narrow-page-width, 90rem)) !important;
+  max-width: var(--narrow-page-width, 90rem) !important;
   margin-inline: auto !important;
   padding-inline: 0 !important;
 }
