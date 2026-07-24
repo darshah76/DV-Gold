@@ -85,6 +85,7 @@ main[data-template="index"] [class*="-wrapper"] {
   --brand-home-card-radius: 24px;
   --brand-home-card-radius-mobile: 18px;
 
+  --font-body--family: 'Manrope', sans-serif;
   --brand-body-font-size: var(--brand-font-size-body);
   --brand-body-line-height: 1.6;
 
@@ -99,6 +100,27 @@ main[data-template="index"] [class*="-wrapper"] {
 /* Universal Typography Rules Across Homepage, Collection, Product Pages */
 :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .heading, .card__heading, .product-title, .product__title, .collection__title, [class*="__heading"], [class*="-heading"], [class*="__title"], [class*="-title"]) {
   font-family: var(--brand-home-heading-font) !important;
+}
+
+body,
+p,
+li,
+a,
+span,
+div,
+input,
+button,
+select,
+textarea,
+.button,
+.cp-card,
+.footer,
+.header,
+.drawer,
+.popover,
+[class*="text"],
+[class*="content"] {
+  font-family: 'Manrope', sans-serif !important;
 }
 
 body {
