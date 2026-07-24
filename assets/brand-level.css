@@ -804,3 +804,47 @@ shop-user-avatar,
     border-color: var(--dv-seasonal-heading, #9b2d32) !important;
   }
 }
+
+/* ==========================================================================
+   GLOBAL DV PRODUCT CARD (.dv-product-card) COMPONENT STYLES
+   ========================================================================== */
+.dv-product-card,
+.dv-seasonal-specials__product-card {
+  background: #fffdf9 !important;
+  border: 1px solid rgba(154, 107, 53, 0.18) !important;
+  border-radius: 24px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+}
+
+.dv-product-card .dv-seasonal-specials__product-title,
+.dv-seasonal-specials__product-card .dv-seasonal-specials__product-title {
+  color: var(--dv-seasonal-heading, #9b2d32) !important;
+  font-family: var(--font-heading--family) !important;
+  font-size: clamp(1.4rem, 1.6vw, 1.7rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.15 !important;
+  margin: 0 0 6px 0 !important;
+  text-transform: uppercase !important;
+}
+
+.dv-product-card .dv-seasonal-specials__product-price,
+.dv-seasonal-specials__product-card .dv-seasonal-specials__product-price {
+  color: var(--dv-seasonal-heading, #9b2d32) !important;
+  font-size: clamp(1.5rem, 1.8vw, 1.9rem) !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+}
+
+.dv-all-products__carousel .dv-product-card,
+.dv-all-products__carousel .dv-seasonal-specials__product-card {
+  flex: 0 0 clamp(240px, 20vw, 280px) !important;
+  min-width: clamp(240px, 20vw, 280px) !important;
+  max-width: clamp(240px, 20vw, 280px) !important;
+}
