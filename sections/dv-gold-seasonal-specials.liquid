@@ -163,24 +163,54 @@
 
                 {% assign product_slide_index = product_slide_index | plus: 1 %}
                 <article class="dv-seasonal-specials__product-card" role="listitem" data-dv-seasonal-products-slide data-slide-index="{{ product_slide_index | minus: 1 }}" {{ block.shopify_attributes }}>
-                  <a class="dv-seasonal-specials__product-media" href="{{ product_link | default: routes.all_products_collection_url }}">
-                    {% if card_product.featured_image != blank %}
-                      {{
-                        card_product.featured_image
-                        | image_url: width: 600
-                        | image_tag:
-                          loading: 'lazy',
-                          widths: '180, 260, 360, 480, 600',
-                          sizes: '(min-width: 990px) 240px, 44vw',
-                          class: 'dv-seasonal-specials__product-image',
-                          alt: card_product.featured_image.alt
-                      }}
-                    {% else %}
-                      <div class="dv-seasonal-specials__product-placeholder" aria-hidden="true">
-                        {{ 'product-2' | placeholder_svg_tag: 'dv-seasonal-specials__product-placeholder-svg' }}
-                      </div>
+                  <div class="dv-seasonal-specials__product-media" data-dv-media-gallery data-current-index="0">
+                    <a class="dv-seasonal-specials__media-link" href="{{ product_link | default: routes.all_products_collection_url }}" aria-label="{{ product_title | escape }}">
+                      {% if card_product != blank and card_product.images.size > 1 %}
+                        <div class="dv-seasonal-specials__media-track" data-dv-media-track>
+                          {% for img in card_product.images %}
+                            <div class="dv-seasonal-specials__media-slide">
+                              {{
+                                img
+                                | image_url: width: 600
+                                | image_tag:
+                                  loading: 'lazy',
+                                  widths: '180, 260, 360, 480, 600',
+                                  sizes: '(min-width: 990px) 240px, 44vw',
+                                  class: 'dv-seasonal-specials__product-image',
+                                  alt: img.alt | default: product_title
+                              }}
+                            </div>
+                          {% endfor %}
+                        </div>
+                      {% elsif card_product.featured_image != blank %}
+                        <div class="dv-seasonal-specials__media-slide">
+                          {{
+                            card_product.featured_image
+                            | image_url: width: 600
+                            | image_tag:
+                              loading: 'lazy',
+                              widths: '180, 260, 360, 480, 600',
+                              sizes: '(min-width: 990px) 240px, 44vw',
+                              class: 'dv-seasonal-specials__product-image',
+                              alt: card_product.featured_image.alt
+                          }}
+                        </div>
+                      {% else %}
+                        <div class="dv-seasonal-specials__product-placeholder" aria-hidden="true">
+                          {{ 'product-2' | placeholder_svg_tag: 'dv-seasonal-specials__product-placeholder-svg' }}
+                        </div>
+                      {% endif %}
+                    </a>
+
+                    {% if card_product != blank and card_product.images.size > 1 %}
+                      <button type="button" class="dv-seasonal-specials__media-nav dv-seasonal-specials__media-nav--prev" aria-label="Previous image" data-dv-media-prev>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                      </button>
+                      <button type="button" class="dv-seasonal-specials__media-nav dv-seasonal-specials__media-nav--next" aria-label="Next image" data-dv-media-next>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                      </button>
                     {% endif %}
-                  </a>
+                  </div>
 
                   <div class="dv-seasonal-specials__product-content">
                     {% if product_title != blank %}
@@ -528,7 +558,76 @@
     border-radius: clamp(12px, 2vw, 18px);
     display: block;
     overflow: hidden;
+    position: relative !important;
     text-decoration: none;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__media-link {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    text-decoration: none !important;
+    color: inherit !important;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__media-track {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__media-slide {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__media-nav {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    border: 1.5px solid var(--dv-seasonal-heading, #9b2d32) !important;
+    background: transparent !important;
+    color: var(--dv-seasonal-heading, #9b2d32) !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 10 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: opacity 0.25s ease, visibility 0.25s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease !important;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__media-nav--prev {
+    left: 8px !important;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__media-nav--next {
+    right: 8px !important;
+  }
+
+  @media screen and (min-width: 750px) {
+    #{{ section_anchor }} .dv-seasonal-specials__product-media:hover .dv-seasonal-specials__media-nav {
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
+
+    #{{ section_anchor }} .dv-seasonal-specials__media-nav:hover {
+      background: var(--dv-seasonal-heading, #9b2d32) !important;
+      color: #ffffff !important;
+      border-color: var(--dv-seasonal-heading, #9b2d32) !important;
+    }
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__product-image,
@@ -866,6 +965,33 @@
     };
 
     document.addEventListener('click', (e) => {
+      const prevBtn = e.target.closest('[data-dv-media-prev]');
+      const nextBtn = e.target.closest('[data-dv-media-next]');
+
+      if (prevBtn || nextBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const btn = prevBtn || nextBtn;
+        const gallery = btn.closest('[data-dv-media-gallery]');
+        if (!gallery) return;
+
+        const track = gallery.querySelector('[data-dv-media-track]');
+        const slides = gallery.querySelectorAll('.dv-seasonal-specials__media-slide');
+        if (!track || slides.length < 2) return;
+
+        let currentIndex = parseInt(gallery.dataset.currentIndex || '0', 10);
+        if (nextBtn) {
+          currentIndex = (currentIndex + 1) % slides.length;
+        } else {
+          currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        }
+
+        gallery.dataset.currentIndex = currentIndex;
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        return;
+      }
+
       const pill = e.target.closest('.dv-seasonal-specials__variant-pill');
       if (!pill) return;
 
