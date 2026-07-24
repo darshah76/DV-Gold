@@ -601,3 +601,12 @@ shop-user-avatar,
   background: #ffffff !important;
   background-color: #ffffff !important;
 }
+
+/* Individual Product Content Left/Right Padding */
+.dv-seasonal-specials__product-content,
+[class*="dv-seasonal-specials__product-content"] {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  padding-inline: 16px !important;
+  padding-bottom: 16px !important;
+}
