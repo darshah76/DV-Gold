@@ -501,11 +501,26 @@ shop-user-avatar,
   }
 }
 
-/* Individual Product Cards Border Radius & + Button UI */
+/* Individual Product Cards Border Radius, No Scrollbar, & No Box Shadow */
 .dv-seasonal-specials__product-card,
 [class*="dv-seasonal-specials__product-card"] {
   border-radius: var(--brand-home-card-radius, 24px) !important;
   overflow: hidden !important;
+  box-shadow: none !important;
+}
+
+.dv-seasonal-specials__product-grid,
+[class*="dv-seasonal-specials__product-grid"] {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.dv-seasonal-specials__product-grid::-webkit-scrollbar,
+[class*="dv-seasonal-specials__product-grid"]::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
 
 :is(.dv-seasonal-specials__button, .dv-seasonal-specials__product-button, [class*="dv-seasonal-specials__button"], [class*="dv-seasonal-specials__product-button"], .dv-seasonal-specials__form button, .dv-seasonal-specials__product-form button) {

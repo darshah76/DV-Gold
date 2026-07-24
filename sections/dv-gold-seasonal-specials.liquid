@@ -456,12 +456,16 @@
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__products-wrap--right_scroll .dv-seasonal-specials__product-grid {
-    scroll-snap-type: x proximity;
-    scrollbar-width: thin;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__products-wrap--right_scroll .dv-seasonal-specials__product-grid::-webkit-scrollbar {
-    display: initial;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__products-wrap--right_scroll .dv-seasonal-specials__product-card {
@@ -480,7 +484,7 @@
     min-width: 100%;
     padding: clamp(18px, 4.5vw, 24px);
     scroll-snap-align: start;
-    box-shadow: 0 14px 28px rgba(65, 45, 25, 0.08);
+    box-shadow: none !important;
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__product-media {
