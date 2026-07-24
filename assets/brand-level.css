@@ -176,8 +176,11 @@ h6, .h6 {
 .container,
 .main-collection,
 .main-product,
-.product-grid-container {
+.product-grid-container,
+.dv-footer__inner,
+:is(footer, .footer, #footer-group) .page-width {
   max-width: var(--narrow-page-width) !important;
+  margin-inline: auto !important;
 }
 
 .shopify-section {
@@ -193,7 +196,8 @@ h6, .h6 {
 
   .page-width,
   .container,
-  .product-grid-container {
+  .product-grid-container,
+  .dv-footer__inner {
     padding-inline: var(--brand-home-container-gutter-mobile) !important;
   }
 }
@@ -201,7 +205,8 @@ h6, .h6 {
 @media screen and (min-width: 750px) and (max-width: 989px) {
   .page-width,
   .container,
-  .product-grid-container {
+  .product-grid-container,
+  .dv-footer__inner {
     padding-inline: var(--brand-home-container-gutter-tablet) !important;
   }
 }
@@ -209,7 +214,8 @@ h6, .h6 {
 @media screen and (min-width: 990px) {
   .page-width,
   .container,
-  .product-grid-container {
+  .product-grid-container,
+  .dv-footer__inner {
     padding-inline: var(--brand-home-container-gutter) !important;
   }
 }
@@ -218,31 +224,33 @@ h6, .h6 {
 footer,
 .footer,
 #footer-group,
+.dv-footer,
 .footer-block,
 .footer-block__heading,
 .footer__title {
   font-family: var(--font-body--family) !important;
 }
 
-:is(footer, .footer, #footer-group, .footer-section) :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .footer-block__heading, .footer__title, [class*="__heading"], [class*="-heading"]) {
+:is(footer, .footer, #footer-group, .dv-footer, .footer-section) :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .footer-block__heading, .footer__title, .dv-footer__heading, [class*="__heading"], [class*="-heading"]) {
   font-family: var(--brand-home-heading-font) !important;
   font-size: var(--brand-font-size-h5) !important;
 }
 
-:is(footer, .footer, #footer-group) :is(p, li, a, span, div, .footer-block__details-content, .footer__copyright) {
+:is(footer, .footer, #footer-group, .dv-footer) :is(p, li, a, span, div, .footer-block__details-content, .footer__copyright, .dv-footer__list a, .dv-footer__tagline) {
   font-size: var(--brand-font-size-body-sm) !important;
   line-height: var(--brand-body-line-height) !important;
 }
 
-:is(footer, .footer, #footer-group) :is(button, .button, input[type="submit"], .field__button, .newsletter-form__button) {
+:is(footer, .footer, #footer-group, .dv-footer) :is(button, .button, input[type="submit"], .field__button, .newsletter-form__button, .dv-footer__submit) {
   border-radius: 14px !important;
 }
 
-:is(footer, .footer, #footer-group) :is(input[type="text"], input[type="email"], .field__input) {
+:is(footer, .footer, #footer-group, .dv-footer) :is(input[type="text"], input[type="email"], .field__input, .dv-footer__input) {
   border-radius: 4px !important;
 }
 
-:is(footer, .footer, #footer-group) .page-width {
+:is(footer, .footer, #footer-group, .dv-footer) .page-width,
+.dv-footer__inner {
   max-width: var(--narrow-page-width) !important;
 }
 
