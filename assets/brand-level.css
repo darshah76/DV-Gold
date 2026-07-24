@@ -49,8 +49,8 @@ main[data-template="index"] [class*="-wrapper"] {
   --brand-font-size-display: clamp(3.25rem, 7vw, 5rem);
 
   /* Page Layout Widths */
-  --narrow-page-width: 1240px;
-  --normal-page-width: 1240px;
+  --narrow-page-width: 1180px;
+  --normal-page-width: 1180px;
   --wide-page-width: 150rem;
 
   --narrow-content-width: 36rem;
@@ -251,7 +251,7 @@ footer,
 
 :is(footer, .footer, #footer-group, .dv-footer) .page-width,
 .dv-footer__inner {
-  max-width: 1240px !important;
+  max-width: 1180px !important;
   width: 100% !important;
   margin-inline: auto !important;
 }
