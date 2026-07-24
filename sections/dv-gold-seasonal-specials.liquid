@@ -180,7 +180,22 @@
                     {% if product_title != blank %}
                       <h3 class="dv-seasonal-specials__product-title">{{ product_title }}</h3>
                     {% endif %}
-                    {% if card_variant != blank and card_variant.title != 'Default Title' %}
+                    {% if card_product != blank and card_product.variants.size > 1 %}
+                      <div class="dv-seasonal-specials__product-variants" role="radiogroup" aria-label="Product options">
+                        {% for variant in card_product.variants %}
+                          <button
+                            type="button"
+                            class="dv-seasonal-specials__variant-pill{% if variant.id == card_variant.id %} is-active{% endif %}"
+                            data-variant-id="{{ variant.id }}"
+                            data-variant-price="{{ variant.price | money }}"
+                            data-variant-available="{{ variant.available }}"
+                            {% unless variant.available %}disabled{% endunless %}
+                          >
+                            {{ variant.title }}
+                          </button>
+                        {% endfor %}
+                      </div>
+                    {% elsif card_variant != blank and card_variant.title != 'Default Title' %}
                       <div class="dv-seasonal-specials__product-variant">{{ card_variant.title }}</div>
                     {% endif %}
                     <div class="dv-seasonal-specials__product-footer">
@@ -537,6 +552,44 @@
     opacity: 0.9;
   }
 
+  #{{ section_anchor }} .dv-seasonal-specials__product-variants {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+    margin-bottom: 10px;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__variant-pill {
+    appearance: none;
+    background: transparent;
+    border: 1.5px solid var(--dv-seasonal-heading, #9b2d32);
+    border-radius: 999px;
+    color: var(--dv-seasonal-heading, #9b2d32);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body--family);
+    font-size: clamp(1.1rem, 1.3vw, 1.25rem);
+    font-weight: 600;
+    line-height: 1;
+    padding: 5px 12px;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__variant-pill.is-active {
+    background: var(--dv-seasonal-heading, #9b2d32);
+    color: #ffffff;
+    border-color: var(--dv-seasonal-heading, #9b2d32);
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__variant-pill:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
   #{{ section_anchor }} .dv-seasonal-specials__product-description {
     font-size: var(--dv-product-description-size);
   }
@@ -731,6 +784,36 @@
         startAutoplay();
       });
     };
+
+    document.addEventListener('click', (e) => {
+      const pill = e.target.closest('.dv-seasonal-specials__variant-pill');
+      if (!pill) return;
+
+      const card = pill.closest('.dv-seasonal-specials__product-card');
+      if (!card) return;
+
+      const variantId = pill.dataset.variantId;
+      const variantPrice = pill.dataset.variantPrice;
+      const variantAvailable = pill.dataset.variantAvailable === 'true';
+
+      card.querySelectorAll('.dv-seasonal-specials__variant-pill').forEach((p) => {
+        p.classList.remove('is-active');
+        p.setAttribute('aria-selected', 'false');
+      });
+      pill.classList.add('is-active');
+      pill.setAttribute('aria-selected', 'true');
+
+      const input = card.querySelector('input[name="id"]');
+      if (input) input.value = variantId;
+
+      const priceElem = card.querySelector('.dv-seasonal-specials__product-price');
+      if (priceElem && variantPrice) priceElem.textContent = variantPrice;
+
+      const button = card.querySelector('.dv-seasonal-specials__product-button');
+      if (button) {
+        button.disabled = !variantAvailable;
+      }
+    });
 
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => initSeasonalProducts());

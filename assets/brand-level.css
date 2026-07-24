@@ -610,3 +610,45 @@ shop-user-avatar,
   padding-inline: 16px !important;
   padding-bottom: 16px !important;
 }
+
+/* Variant Pills for Individual Product Cards */
+.dv-seasonal-specials__product-variants,
+[class*="dv-seasonal-specials__product-variants"] {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  margin-top: 6px !important;
+  margin-bottom: 10px !important;
+}
+
+.dv-seasonal-specials__variant-pill,
+[class*="dv-seasonal-specials__variant-pill"] {
+  appearance: none !important;
+  background: transparent !important;
+  border: 1.5px solid var(--dv-seasonal-heading, #9b2d32) !important;
+  border-radius: 999px !important;
+  color: var(--dv-seasonal-heading, #9b2d32) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: clamp(1.1rem, 1.3vw, 1.25rem) !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  padding: 5px 12px !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.dv-seasonal-specials__variant-pill.is-active,
+[class*="dv-seasonal-specials__variant-pill"].is-active {
+  background: var(--dv-seasonal-heading, #9b2d32) !important;
+  color: #ffffff !important;
+  border-color: var(--dv-seasonal-heading, #9b2d32) !important;
+}
+
+.dv-seasonal-specials__variant-pill:disabled,
+[class*="dv-seasonal-specials__variant-pill"]:disabled {
+  opacity: 0.45 !important;
+  cursor: not-allowed !important;
+}
