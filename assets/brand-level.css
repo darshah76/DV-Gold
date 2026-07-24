@@ -635,6 +635,11 @@ shop-user-avatar,
   border-radius: 999px !important;
 }
 
+.dv-seasonal-specials__product-card,
+[class*="dv-seasonal-specials__product-card"] {
+  cursor: pointer !important;
+}
+
 /* Individual Product Cards Selected Variant Display */
 .dv-seasonal-specials__product-variant,
 [class*="dv-seasonal-specials__product-variant"] {

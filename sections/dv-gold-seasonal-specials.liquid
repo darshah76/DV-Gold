@@ -1015,8 +1015,7 @@
     }, { passive: true });
 
     document.addEventListener('click', (e) => {
-      const link = e.target.closest('.dv-seasonal-specials__media-link');
-      if (link && isSwipingMedia) {
+      if (isSwipingMedia) {
         e.preventDefault();
         e.stopPropagation();
         return;
@@ -1050,34 +1049,47 @@
       }
 
       const pill = e.target.closest('.dv-seasonal-specials__variant-pill');
-      if (!pill) return;
+      if (pill) {
+        const card = pill.closest('.dv-seasonal-specials__product-card');
+        if (!card) return;
 
-      const card = pill.closest('.dv-seasonal-specials__product-card');
-      if (!card) return;
+        const variantId = pill.dataset.variantId;
+        const variantPrice = pill.dataset.variantPrice;
+        const variantAvailable = pill.dataset.variantAvailable === 'true';
 
-      const variantId = pill.dataset.variantId;
-      const variantPrice = pill.dataset.variantPrice;
-      const variantAvailable = pill.dataset.variantAvailable === 'true';
+        card.querySelectorAll('.dv-seasonal-specials__variant-pill').forEach((p) => {
+          p.classList.remove('is-active');
+          p.setAttribute('aria-selected', 'false');
+        });
+        pill.classList.add('is-active');
+        pill.setAttribute('aria-selected', 'true');
 
-      card.querySelectorAll('.dv-seasonal-specials__variant-pill').forEach((p) => {
-        p.classList.remove('is-active');
-        p.setAttribute('aria-selected', 'false');
-      });
-      pill.classList.add('is-active');
-      pill.setAttribute('aria-selected', 'true');
+        const input = card.querySelector('input[name="id"]');
+        if (input) input.value = variantId;
 
-      const input = card.querySelector('input[name="id"]');
-      if (input) input.value = variantId;
+        const priceElem = card.querySelector('.dv-seasonal-specials__product-price');
+        if (priceElem && variantPrice) {
+          priceElem.textContent = variantPrice;
+          priceElem.innerHTML = variantPrice;
+        }
 
-      const priceElem = card.querySelector('.dv-seasonal-specials__product-price');
-      if (priceElem && variantPrice) {
-        priceElem.textContent = variantPrice;
-        priceElem.innerHTML = variantPrice;
+        const button = card.querySelector('.dv-seasonal-specials__product-button');
+        if (button) {
+          button.disabled = !variantAvailable;
+        }
+        return;
       }
 
-      const button = card.querySelector('.dv-seasonal-specials__product-button');
-      if (button) {
-        button.disabled = !variantAvailable;
+      // Handle whole card click (whitespace, title, media, card body)
+      const interactiveControl = e.target.closest('.dv-seasonal-specials__variant-pill, .dv-seasonal-specials__product-button, .dv-seasonal-specials__media-nav, button, input, form');
+      if (interactiveControl) return;
+
+      const card = e.target.closest('.dv-seasonal-specials__product-card');
+      if (card) {
+        const link = card.querySelector('.dv-seasonal-specials__media-link');
+        if (link && link.href) {
+          window.location.href = link.href;
+        }
       }
     });
 
