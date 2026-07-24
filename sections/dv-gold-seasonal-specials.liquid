@@ -681,6 +681,9 @@
     line-height: 1 !important;
     flex: 0 0 auto !important;
     margin: 0 !important;
+    opacity: 1 !important;
+    max-width: 20px !important;
+    transition: opacity 0.2s ease, max-width 0.25s ease !important;
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__button .dv-btn-text,
@@ -689,7 +692,7 @@
     max-width: 0 !important;
     overflow: hidden !important;
     white-space: nowrap !important;
-    font-size: 14px !important;
+    font-size: 12px !important;
     font-weight: 700 !important;
     letter-spacing: 0.02em !important;
     text-transform: uppercase !important;
@@ -701,17 +704,25 @@
     #{{ section_anchor }} .dv-seasonal-specials__button:hover,
     #{{ section_anchor }} .dv-seasonal-specials__product-button:hover {
       width: auto !important;
-      min-width: 142px !important;
-      max-width: 190px !important;
-      padding: 0 16px !important;
+      min-width: 125px !important;
+      max-width: 160px !important;
+      padding: 0 14px !important;
       box-shadow: 0 6px 16px rgba(65, 45, 25, 0.28) !important;
+    }
+
+    #{{ section_anchor }} .dv-seasonal-specials__button:hover .dv-btn-icon,
+    #{{ section_anchor }} .dv-seasonal-specials__product-button:hover .dv-btn-icon {
+      opacity: 0 !important;
+      max-width: 0 !important;
+      margin: 0 !important;
+      overflow: hidden !important;
     }
 
     #{{ section_anchor }} .dv-seasonal-specials__button:hover .dv-btn-text,
     #{{ section_anchor }} .dv-seasonal-specials__product-button:hover .dv-btn-text {
       opacity: 1 !important;
-      max-width: 140px !important;
-      margin-right: 8px !important;
+      max-width: 130px !important;
+      margin-right: 0 !important;
     }
   }
 
