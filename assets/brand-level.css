@@ -416,12 +416,21 @@ header,
   padding-block-end: 0 !important;
 }
 
+/* Allow Navbar Header Container to Expand Height & Prevent Logo Clipping */
+:is(.header-wrapper, .header, header, .header__heading, .header__heading-link, .header__heading-logo-wrapper, sticky-header, .header-section, [id*="__header_section"]) {
+  min-height: auto !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
 /* Navbar Logo 5px Top and 5px Bottom Padding */
 :is(.header__heading-logo, .header__heading-logo-wrapper, .header__heading-link, .header-logo, .header-logo__image-container, .header-logo__image, .header__heading img, a.header-logo, a.header-logo img, header img, header .logo img, header a img, [class*="header__heading-logo"], [class*="header__heading-link"]) {
   padding-top: 5px !important;
   padding-bottom: 5px !important;
   padding-block: 5px !important;
-  box-sizing: border-box !important;
+  box-sizing: content-box !important;
+  overflow: visible !important;
 }
 
 /* Navbar Desktop Logo Height Override (90px height, width auto) */
@@ -433,6 +442,7 @@ header,
     width: auto !important;
     max-width: none !important;
     object-fit: contain !important;
+    display: block !important;
   }
 }/* Navbar Navigation Menu Font Weight Bold & Center Alignment */
 :is(.header__menu-item, .header__menu a, .header-menu__link, nav.header__inline-menu a, header nav a, .header-menu__item, [class*="header__menu-item"], [class*="header-menu__link"], [class*="header__menu"]) {
