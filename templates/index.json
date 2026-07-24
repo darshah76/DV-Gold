@@ -145,10 +145,10 @@
         "button_background": "#c99739",
         "button_text_color": "#ffffff",
         "max_width": 1180,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40,
-        "desktop_padding_top": 40,
-        "desktop_padding_bottom": 40
+        "mobile_padding_top": 60,
+        "mobile_padding_bottom": 60,
+        "desktop_padding_top": 60,
+        "desktop_padding_bottom": 60
       }
     },
     "dv_gold_seasonal_specials": {
@@ -229,10 +229,10 @@
         "product_autoplay": true,
         "product_autoplay_speed": 4,
         "max_width": 1180,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40,
-        "desktop_padding_top": 40,
-        "desktop_padding_bottom": 40
+        "mobile_padding_top": 60,
+        "mobile_padding_bottom": 60,
+        "desktop_padding_top": 60,
+        "desktop_padding_bottom": 60
       }
     },
     "dv_gold_promise": {
@@ -291,10 +291,10 @@
         "icon_background": "#f8e8c9",
         "icon_border_color": "#e6ca8f",
         "max_width": 1180,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40,
-        "desktop_padding_top": 40,
-        "desktop_padding_bottom": 40
+        "mobile_padding_top": 60,
+        "mobile_padding_bottom": 60,
+        "desktop_padding_top": 60,
+        "desktop_padding_bottom": 60
       }
     },
     "product_list_fa6P9H": {
@@ -323,10 +323,10 @@
         "desktop_card_width": 240,
         "card_gap": 30,
         "max_width": 1180,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40,
-        "desktop_padding_top": 40,
-        "desktop_padding_bottom": 40
+        "mobile_padding_top": 60,
+        "mobile_padding_bottom": 60,
+        "desktop_padding_top": 60,
+        "desktop_padding_bottom": 60
       }
     },
     "dv_gold_features_marquee": {
@@ -359,10 +359,10 @@
         "image_border_color": "#f0dfbf",
         "image_radius": 10,
         "max_width": 1180,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40,
-        "desktop_padding_top": 40,
-        "desktop_padding_bottom": 40
+        "mobile_padding_top": 60,
+        "mobile_padding_bottom": 60,
+        "desktop_padding_top": 60,
+        "desktop_padding_bottom": 60
       }
     },
     "dv_gold_community_carousel": {
@@ -419,10 +419,10 @@
         "card_gap": 28,
         "card_radius": 10,
         "max_width": 1180,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40,
-        "desktop_padding_top": 40,
-        "desktop_padding_bottom": 40
+        "mobile_padding_top": 60,
+        "mobile_padding_bottom": 60,
+        "desktop_padding_top": 60,
+        "desktop_padding_bottom": 60
       }
     },
     "dv_gold_bulk_inquiries": {
@@ -444,10 +444,10 @@
         "button_background": "#25d366",
         "button_text_color": "#ffffff",
         "max_width": 1180,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40,
-        "desktop_padding_top": 40,
-        "desktop_padding_bottom": 40
+        "mobile_padding_top": 60,
+        "mobile_padding_bottom": 60,
+        "desktop_padding_top": 60,
+        "desktop_padding_bottom": 60
       }
     },
     "dv_gold_certifications": {
@@ -502,10 +502,10 @@
         "icon_shadow_color": "#eadfce",
         "placeholder_color": "#9b2d32",
         "max_width": 1180,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40,
-        "desktop_padding_top": 40,
-        "desktop_padding_bottom": 40
+        "mobile_padding_top": 60,
+        "mobile_padding_bottom": 60,
+        "desktop_padding_top": 60,
+        "desktop_padding_bottom": 60
       }
     },
     "dv_gold_faq": {
@@ -557,10 +557,10 @@
         "text_color": "#191512",
         "icon_color": "#c99700",
         "max_width": 1180,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40,
-        "desktop_padding_top": 40,
-        "desktop_padding_bottom": 40
+        "mobile_padding_top": 60,
+        "mobile_padding_bottom": 60,
+        "desktop_padding_top": 60,
+        "desktop_padding_bottom": 60
       }
     },
     "dv_gold_reviews_dDqAix": {
@@ -662,10 +662,10 @@
         "text_color": "#191512",
         "accent_color": "#c99700",
         "max_width": 1180,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40,
-        "desktop_padding_top": 40,
-        "desktop_padding_bottom": 40
+        "mobile_padding_top": 60,
+        "mobile_padding_bottom": 60,
+        "desktop_padding_top": 60,
+        "desktop_padding_bottom": 60
       }
     }
   },

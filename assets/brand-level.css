@@ -70,9 +70,9 @@ main[data-template="index"] [class*="-wrapper"] {
   --brand-home-heading-font-bold: 'Century Gothic Custom Bold', 'Century Gothic Custom', 'Century Gothic', Arial, sans-serif;
 
   /* Layout Rhythm & Spacing */
-  --brand-home-section-padding-top: 40px;
-  --brand-home-section-padding-bottom: 40px;
-  --brand-home-section-padding-top-mobile: 40px;
+  --brand-home-section-padding-top: 60px;
+  --brand-home-section-padding-bottom: 60px;
+  --brand-home-section-padding-top-mobile: 60px;
   --brand-home-section-padding-bottom-mobile: 40px;
   --brand-home-section-margin-top: 0px;
   --brand-home-section-margin-bottom: 0px;
@@ -248,10 +248,10 @@ h6, .h6 {
 
 /* Outer Section Wrapper Gets Exactly 40px Top & Bottom Padding */
 .shopify-section {
-  padding-block-start: 40px !important;
-  padding-block-end: 40px !important;
-  padding-top: 40px !important;
-  padding-bottom: 40px !important;
+  padding-block-start: 60px !important;
+  padding-block-end: 60px !important;
+  padding-top: 60px !important;
+  padding-bottom: 60px !important;
 }
 
 /* Prevent Compounding & ID Specificity Overrides: Reset Inner Section Tags to 0 */
@@ -271,10 +271,10 @@ section[id^="dv-gold-"] {
 
 @media screen and (max-width: 749px) {
   .shopify-section {
-    padding-block-start: 40px !important;
-    padding-block-end: 40px !important;
-    padding-top: 40px !important;
-    padding-bottom: 40px !important;
+    padding-block-start: 60px !important;
+    padding-block-end: 60px !important;
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
   }
 
   .shopify-section section,
