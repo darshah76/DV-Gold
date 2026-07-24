@@ -130,7 +130,7 @@
   {% render 'dv-gold-home-typography', section_anchor: section_anchor %}
   #{{ section_anchor }} {
     background: var(--dv-category-bg);
-    padding-block: var(--dv-category-mobile-padding-top) var(--dv-category-mobile-padding-bottom);
+    padding-block: 0;
     overflow: hidden;
   }
 
@@ -265,7 +265,7 @@
 
   @media screen and (min-width: 750px) {
     #{{ section_anchor }} {
-      padding-block: var(--dv-category-desktop-padding-top) var(--dv-category-desktop-padding-bottom);
+      padding-block: 0;
     }
 
     #{{ section_anchor }} .dv-category__inner {

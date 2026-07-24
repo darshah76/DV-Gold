@@ -251,17 +251,19 @@ h6, .h6 {
   padding-bottom: 40px !important;
 }
 
-/* Prevent Compounding: Reset Inner Nested Section Tags & Containers to 0 Padding */
+/* Prevent Compounding & ID Specificity Overrides: Reset Inner Section Tags to 0 */
 .shopify-section section,
 .shopify-section [class*="-section"],
 .shopify-section .dv-content-section,
 .shopify-section .dv-section-container,
-section section,
-section .dv-content-section {
+[id^="dv-gold-"],
+[id*="dv-gold-"],
+section[id^="dv-gold-"] {
   padding-block-start: 0 !important;
   padding-block-end: 0 !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
+  padding-block: 0 !important;
 }
 
 @media screen and (max-width: 749px) {
@@ -276,12 +278,14 @@ section .dv-content-section {
   .shopify-section [class*="-section"],
   .shopify-section .dv-content-section,
   .shopify-section .dv-section-container,
-  section section,
-  section .dv-content-section {
+  [id^="dv-gold-"],
+  [id*="dv-gold-"],
+  section[id^="dv-gold-"] {
     padding-block-start: 0 !important;
     padding-block-end: 0 !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
+    padding-block: 0 !important;
   }
 }
 

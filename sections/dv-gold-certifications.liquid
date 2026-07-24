@@ -70,7 +70,7 @@
   {% render 'dv-gold-home-typography', section_anchor: section_anchor %}
   #{{ section_anchor }} {
     background: var(--dv-certifications-page-bg);
-    padding-block: var(--dv-certifications-mobile-padding-top) var(--dv-certifications-mobile-padding-bottom);
+    padding-block: 0;
   }
 
   #{{ section_anchor }} .dv-certifications__panel {
@@ -225,7 +225,7 @@
 
   @media screen and (min-width: 750px) {
     #{{ section_anchor }} {
-      padding-block: var(--dv-certifications-desktop-padding-top) var(--dv-certifications-desktop-padding-bottom);
+      padding-block: 0;
       padding-inline: 48px;
     }
 

@@ -166,7 +166,7 @@
     background: var(--dv-reviews-bg);
     color: var(--dv-reviews-text);
     font-family: var(--font-body--family);
-    padding-block: var(--dv-reviews-mobile-padding-top) var(--dv-reviews-mobile-padding-bottom);
+    padding-block: 0;
   }
 
   #{{ section_anchor }} .dv-reviews__inner {
@@ -427,7 +427,7 @@
   #{{ section_anchor }} .dv-reviews__submit { width: 100%; margin-block-start: 16px; }
 
   @media screen and (min-width: 750px) {
-    #{{ section_anchor }} { padding-block: var(--dv-reviews-desktop-padding-top) var(--dv-reviews-desktop-padding-bottom); }
+    #{{ section_anchor }} { padding-block: 0; }
     #{{ section_anchor }} .dv-reviews__inner { width: min(calc(100% - 48px), var(--dv-reviews-max-width)); }
     #{{ section_anchor }} .dv-reviews__heading { max-width: none; margin-block-end: 18px; font-size: var(--dv-section-heading-size); }
     #{{ section_anchor }} .dv-reviews__subheading { display: block; margin-block-end: 26px; font-size: 1.7rem; }

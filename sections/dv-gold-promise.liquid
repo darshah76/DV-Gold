@@ -83,7 +83,7 @@
   {% render 'dv-gold-home-typography', section_anchor: section_anchor %}
   #{{ section_anchor }} {
     background: var(--dv-promise-bg);
-    padding-block: var(--dv-promise-mobile-padding-top) var(--dv-promise-mobile-padding-bottom);
+    padding-block: 0;
   }
 
   #{{ section_anchor }} .dv-promise__inner {
@@ -183,7 +183,7 @@
 
   @media screen and (min-width: 750px) {
     #{{ section_anchor }} {
-      padding-block: var(--dv-promise-desktop-padding-top) var(--dv-promise-desktop-padding-bottom);
+      padding-block: 0;
     }
 
     #{{ section_anchor }} .dv-promise__grid {
