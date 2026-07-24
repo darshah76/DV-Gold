@@ -594,3 +594,10 @@ shop-user-avatar,
   padding-top: 0 !important;
   padding-block-start: 0 !important;
 }
+
+/* Individual Product Media White Background */
+.dv-seasonal-specials__product-media,
+[class*="dv-seasonal-specials__product-media"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
