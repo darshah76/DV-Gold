@@ -337,9 +337,18 @@
         transform: none;
       }
 
+      #{{ section_anchor }} .dv-category__card {
+        border-radius: var(--brand-home-card-radius, 24px) !important;
+        overflow: hidden !important;
+      }
+
       #{{ section_anchor }} .dv-category__title,
       #{{ section_anchor }} .dv-category__connector {
         display: none;
+      }
+    {% else %}
+      #{{ section_anchor }} .dv-category__card {
+        border-radius: 0 !important;
       }
     {% endif %}
   }
