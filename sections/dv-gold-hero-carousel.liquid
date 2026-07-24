@@ -28,10 +28,22 @@
             if mobile_image == blank
               assign mobile_image = desktop_image
             endif
+
+            assign slide_button_link = block.settings.button_link
+            if slide_button_link == blank and block.settings.button_product != blank
+              assign slide_button_link = block.settings.button_product.url
+            endif
+            if slide_button_link == blank
+              assign slide_button_link = button_link
+            endif
+            if slide_button_link == blank
+              assign slide_button_link = routes.all_products_collection_url
+            endif
           %}
           <div
             class="dv-gold-hero__slide{% if forloop.first %} is-active{% endif %}"
             data-dv-gold-hero-slide
+            data-slide-button-link="{{ slide_button_link | escape }}"
             role="group"
             aria-roledescription="slide"
             aria-label="{{ forloop.index }} of {{ slide_count }}"
@@ -79,6 +91,7 @@
     {%- if section.settings.show_button and section.settings.button_label != blank -%}
       <a
         class="dv-gold-hero__button"
+        data-dv-gold-hero-button
         href="{{ button_link | default: routes.all_products_collection_url }}"
         {% if section.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
       >
@@ -323,7 +336,8 @@
       const track = section.querySelector('[data-dv-gold-hero-track]');
       const slides = Array.from(section.querySelectorAll('[data-dv-gold-hero-slide]'));
       const dots = Array.from(section.querySelectorAll('[data-dv-gold-hero-dot]'));
-      if (!track || slides.length <= 1) return;
+      const button = section.querySelector('[data-dv-gold-hero-button]');
+      if (!track || slides.length === 0) return;
 
       let currentIndex = 0;
       let timer;
@@ -338,28 +352,53 @@
           dot.classList.toggle('is-active', dotIndex === currentIndex);
           dot.setAttribute('aria-selected', dotIndex === currentIndex ? 'true' : 'false');
         });
+
+        const activeSlide = slides[currentIndex];
+        if (button && activeSlide && activeSlide.dataset.slideButtonLink) {
+          button.setAttribute('href', activeSlide.dataset.slideButtonLink);
+        }
       };
 
+      section.goToSlide = goToSlide;
+
       const start = () => {
-        if (!autoplay) return;
+        if (!autoplay || slides.length <= 1) return;
         window.clearInterval(timer);
         timer = window.setInterval(() => goToSlide(currentIndex + 1), interval);
       };
 
-      dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-          goToSlide(index);
-          start();
+      if (slides.length > 1) {
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            goToSlide(index);
+            start();
+          });
         });
-      });
+        start();
+      }
 
-      start();
+      // Initialize initial slide button link
+      goToSlide(0);
     };
 
     document.querySelectorAll('[data-dv-gold-hero]').forEach((section) => {
       section.dataset.autoplay = '{{ section.settings.autoplay }}';
       section.dataset.interval = '{{ section.settings.autoplay_speed | times: 1000 }}';
       initHero(section);
+    });
+
+    document.addEventListener('shopify:block:select', (event) => {
+      const slide = event.target;
+      if (slide && slide.matches('[data-dv-gold-hero-slide]')) {
+        const parentSection = slide.closest('[data-dv-gold-hero]');
+        if (parentSection && parentSection.goToSlide) {
+          const allSlides = Array.from(parentSection.querySelectorAll('[data-dv-gold-hero-slide]'));
+          const idx = allSlides.indexOf(slide);
+          if (idx !== -1) {
+            parentSection.goToSlide(idx);
+          }
+        }
+      }
     });
   })();
 </script>
@@ -486,6 +525,16 @@
           "id": "image_alt",
           "label": "Image alt text",
           "default": "DV Gold tea hero banner"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Shop Now button link"
+        },
+        {
+          "type": "product",
+          "id": "button_product",
+          "label": "Shop Now button product"
         }
       ]
     }
