@@ -543,3 +543,8 @@ shop-user-avatar,
   border: 0 !important;
   box-sizing: border-box !important;
 }
+
+/* Product Prices Bold Font Weight Across Combo & Individual Product Cards */
+:is(.dv-seasonal-specials__price, .dv-seasonal-specials__product-price, [class*="seasonal-specials__price"], [class*="seasonal-specials__product-price"]) {
+  font-weight: 800 !important;
+}
