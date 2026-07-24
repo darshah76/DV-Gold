@@ -416,6 +416,14 @@ header,
   padding-block-end: 0 !important;
 }
 
+/* Navbar Logo 5px Top and 5px Bottom Padding */
+:is(.header__heading-logo, .header__heading-logo-wrapper, .header__heading-link, .header-logo, .header-logo__image-container, .header-logo__image, .header__heading img, a.header-logo, a.header-logo img, header img, header .logo img, header a img, [class*="header__heading-logo"], [class*="header__heading-link"]) {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  padding-block: 5px !important;
+  box-sizing: border-box !important;
+}
+
 /* Navbar Desktop Logo Height Override (90px height, width auto) */
 @media screen and (min-width: 750px) {
   :is(.header-logo, .header-logo__image-container, .header-logo__image, .header__heading-logo, .header__heading-link, .header__heading img, a.header-logo, a.header-logo img, header img, header .logo img, header a img) {
@@ -426,7 +434,7 @@ header,
     max-width: none !important;
     object-fit: contain !important;
   }
-/* Navbar Navigation Menu Font Weight Bold & Center Alignment */
+}/* Navbar Navigation Menu Font Weight Bold & Center Alignment */
 :is(.header__menu-item, .header__menu a, .header-menu__link, nav.header__inline-menu a, header nav a, .header-menu__item, [class*="header__menu-item"], [class*="header-menu__link"], [class*="header__menu"]) {
   font-weight: 700 !important;
 }
