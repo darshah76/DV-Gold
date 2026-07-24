@@ -175,7 +175,7 @@
     position: relative;
     display: block;
     aspect-ratio: var(--dv-category-mobile-aspect-ratio);
-    padding: clamp(10px, 2vw, 16px);
+    padding: 0 !important;
     background: var(--dv-category-block-card-bg);
     border: 1px solid rgba(255, 255, 255, 0.75);
     border-radius: 2px;
@@ -293,8 +293,55 @@
 
     #{{ section_anchor }} .dv-category__card {
       aspect-ratio: 2 / 3 !important;
-      padding: clamp(6px, 1vw, 12px);
+      padding: 0 !important;
     }
+
+    #{{ section_anchor }} .dv-category__button {
+      min-height: 28px;
+      padding: 6px 10px 5px;
+      font-size: clamp(1rem, 1.25vw, 1.5rem);
+    }
+
+    #{{ section_anchor }} .dv-category__title {
+      margin-top: clamp(18px, 2.5vw, 28px);
+      font-size: clamp(1.4rem, 2vw, 2.2rem);
+    }
+
+    #{{ section_anchor }} .dv-category__connector {
+      position: absolute;
+      top: 50%;
+      left: calc(100% + (clamp(28px, 4vw, 64px) / 2));
+      width: min(var(--dv-category-connector-desktop-length), clamp(28px, 4vw, 64px));
+      height: var(--dv-category-connector-thickness);
+      margin: 0;
+      transform: translate(-50%, -50%);
+      {% if section.settings.connector_style == 'solid' %}
+        background: var(--dv-category-connector-color);
+      {% else %}
+      background-image: repeating-linear-gradient(
+        to right,
+        var(--dv-category-connector-color) 0,
+        var(--dv-category-connector-color) {% if section.settings.connector_style == 'dotted' %}var(--dv-category-connector-thickness){% else %}var(--dv-category-connector-dash-length){% endif %},
+        transparent {% if section.settings.connector_style == 'dotted' %}var(--dv-category-connector-thickness){% else %}var(--dv-category-connector-dash-length){% endif %},
+        transparent calc({% if section.settings.connector_style == 'dotted' %}var(--dv-category-connector-thickness){% else %}var(--dv-category-connector-dash-length){% endif %} + var(--dv-category-connector-gap))
+      );
+      {% endif %}
+    }
+
+    #{{ section_anchor }} .dv-category__item:nth-child(4n) .dv-category__connector {
+      display: none;
+    }
+
+    {% if section.settings.normal_desktop_layout %}
+      #{{ section_anchor }} .dv-category__card-shell {
+        transform: none;
+      }
+
+      #{{ section_anchor }} .dv-category__title,
+      #{{ section_anchor }} .dv-category__connector {
+        display: none;
+      }
+    {% endif %}
   }
 </style>
 
