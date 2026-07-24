@@ -243,27 +243,45 @@ h6, .h6 {
   margin-inline: auto !important;
 }
 
-.shopify-section,
-section,
-[class*="-section"],
-.section,
-.dv-content-section {
+/* Outer Section Wrapper Gets Exactly 40px Top & Bottom Padding */
+.shopify-section {
   padding-block-start: 40px !important;
   padding-block-end: 40px !important;
   padding-top: 40px !important;
   padding-bottom: 40px !important;
 }
 
+/* Prevent Compounding: Reset Inner Nested Section Tags & Containers to 0 Padding */
+.shopify-section section,
+.shopify-section [class*="-section"],
+.shopify-section .dv-content-section,
+.shopify-section .dv-section-container,
+section section,
+section .dv-content-section {
+  padding-block-start: 0 !important;
+  padding-block-end: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 @media screen and (max-width: 749px) {
-  .shopify-section,
-  section,
-  [class*="-section"],
-  .section,
-  .dv-content-section {
+  .shopify-section {
     padding-block-start: 40px !important;
     padding-block-end: 40px !important;
     padding-top: 40px !important;
     padding-bottom: 40px !important;
+  }
+
+  .shopify-section section,
+  .shopify-section [class*="-section"],
+  .shopify-section .dv-content-section,
+  .shopify-section .dv-section-container,
+  section section,
+  section .dv-content-section {
+    padding-block-start: 0 !important;
+    padding-block-end: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
 }
 
