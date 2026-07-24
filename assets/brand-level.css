@@ -636,7 +636,9 @@ shop-user-avatar,
 }
 
 .dv-seasonal-specials__product-card,
-[class*="dv-seasonal-specials__product-card"] {
+.dv-seasonal-specials__product-card *,
+[class*="dv-seasonal-specials__product-card"],
+[class*="dv-seasonal-specials__product-card"] * {
   cursor: pointer !important;
 }
 
