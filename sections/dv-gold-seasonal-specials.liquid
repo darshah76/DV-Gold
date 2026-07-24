@@ -162,120 +162,15 @@
                 %}
 
                 {% assign product_slide_index = product_slide_index | plus: 1 %}
-                <article class="dv-seasonal-specials__product-card" role="listitem" data-dv-seasonal-products-slide data-slide-index="{{ product_slide_index | minus: 1 }}" {{ block.shopify_attributes }}>
-                  <div class="dv-seasonal-specials__product-media" data-dv-media-gallery data-current-index="0">
-                    <a class="dv-seasonal-specials__media-link" href="{{ product_link | default: routes.all_products_collection_url }}" aria-label="{{ product_title | escape }}">
-                      {% if card_product != blank and card_product.images.size > 1 %}
-                        <div class="dv-seasonal-specials__media-track" data-dv-media-track>
-                          {% for img in card_product.images %}
-                            <div class="dv-seasonal-specials__media-slide">
-                              {{
-                                img
-                                | image_url: width: 600
-                                | image_tag:
-                                  loading: 'lazy',
-                                  widths: '180, 260, 360, 480, 600',
-                                  sizes: '(min-width: 990px) 240px, 44vw',
-                                  class: 'dv-seasonal-specials__product-image',
-                                  alt: img.alt | default: product_title
-                              }}
-                            </div>
-                          {% endfor %}
-                        </div>
-                      {% elsif card_product.featured_image != blank %}
-                        <div class="dv-seasonal-specials__media-slide">
-                          {{
-                            card_product.featured_image
-                            | image_url: width: 600
-                            | image_tag:
-                              loading: 'lazy',
-                              widths: '180, 260, 360, 480, 600',
-                              sizes: '(min-width: 990px) 240px, 44vw',
-                              class: 'dv-seasonal-specials__product-image',
-                              alt: card_product.featured_image.alt
-                          }}
-                        </div>
-                      {% else %}
-                        <div class="dv-seasonal-specials__product-placeholder" aria-hidden="true">
-                          {{ 'product-2' | placeholder_svg_tag: 'dv-seasonal-specials__product-placeholder-svg' }}
-                        </div>
-                      {% endif %}
-                    </a>
-
-                    {% if card_product != blank and card_product.images.size > 1 %}
-                      <button type="button" class="dv-seasonal-specials__media-nav dv-seasonal-specials__media-nav--prev" aria-label="Previous image" data-dv-media-prev>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-                      </button>
-                      <button type="button" class="dv-seasonal-specials__media-nav dv-seasonal-specials__media-nav--next" aria-label="Next image" data-dv-media-next>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-                      </button>
-                    {% endif %}
-                  </div>
-
-                  <div class="dv-seasonal-specials__product-content">
-                    {% if product_title != blank %}
-                      <h3 class="dv-seasonal-specials__product-title">{{ product_title }}</h3>
-                    {% endif %}
-                    {% if card_product != blank and card_product.variants.size >= 1 %}
-                      <div class="dv-seasonal-specials__product-variants" role="radiogroup" aria-label="Product options">
-                        {% for variant in card_product.variants %}
-                          {% assign pill_label = variant.title %}
-                          {% if pill_label == 'Default Title' %}
-                            {% assign pill_label = card_product.title %}
-                          {% endif %}
-                          <button
-                            type="button"
-                            class="dv-seasonal-specials__variant-pill{% if variant.id == card_variant.id %} is-active{% endif %}"
-                            data-variant-id="{{ variant.id }}"
-                            data-variant-price="{{ variant.price | money }}"
-                            data-variant-available="{{ variant.available }}"
-                            {% unless variant.available %}disabled{% endunless %}
-                          >
-                            {{ pill_label }}
-                          </button>
-                        {% endfor %}
-                      </div>
-                    {% endif %}
-                    <div class="dv-seasonal-specials__product-footer">
-                      {% if card_variant != blank %}
-                        <span class="dv-seasonal-specials__product-price">{{ card_variant.price | money }}</span>
-                      {% elsif card_product != blank %}
-                        <span class="dv-seasonal-specials__product-price">{{ card_product.price | money }}</span>
-                      {% endif %}
-
-                      {% assign side_btn_label = block.settings.button_label %}
-                      {% if side_btn_label == blank or side_btn_label == '+' %}
-                        {% assign side_btn_label = 'Add to Cart' %}
-                      {% endif %}
-                      {% if side_btn_label != blank %}
-                        {% if block.settings.button_action == 'add_to_cart' and card_variant != blank %}
-                          <form method="post" action="{{ routes.cart_add_url }}" class="dv-seasonal-specials__product-form">
-                            <input type="hidden" name="id" value="{{ card_variant.id }}">
-                            <input type="hidden" name="quantity" value="1">
-                            <button
-                              type="submit"
-                              class="dv-seasonal-specials__product-button"
-                              aria-label="{{ side_btn_label | escape }} {{ product_title | escape }}"
-                              {% unless card_variant.available %}disabled{% endunless %}
-                            >
-                              <span class="dv-btn-text">{{ side_btn_label }}</span>
-                              <span class="dv-btn-icon">+</span>
-                            </button>
-                          </form>
-                        {% else %}
-                          <a
-                            class="dv-seasonal-specials__product-button"
-                            href="{{ product_link | default: routes.all_products_collection_url }}"
-                            aria-label="{{ side_btn_label | escape }} {{ product_title | escape }}"
-                          >
-                            <span class="dv-btn-text">{{ side_btn_label }}</span>
-                            <span class="dv-btn-icon">+</span>
-                          </a>
-                        {% endif %}
-                      {% endif %}
-                    </div>
-                  </div>
-                </article>
+                {% render 'dv-product-card',
+                  card_product: card_product,
+                  card_variant: card_variant,
+                  button_label: block.settings.button_label,
+                  button_action: block.settings.button_action,
+                  product_link: product_link,
+                  slide_index: product_slide_index | minus: 1,
+                  shopify_attributes: block.shopify_attributes
+                %}
               {% endif %}
               {% endfor %}
             </div>
