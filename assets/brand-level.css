@@ -1,4 +1,35 @@
-/* Brand-level design system tokens & typography overrides */
+/* Website Unified Body Background Color */
+body,
+html,
+#MainContent,
+main,
+.page-width,
+.gradient,
+.color-scheme-1,
+.color-scheme-2,
+.color-scheme-3,
+.color-scheme-4,
+.color-scheme-5,
+.color-scheme-6,
+.drawer,
+.menu-drawer,
+.cart-drawer,
+.search-modal,
+.search-modal__content {
+  background-color: #fbf5ef !important;
+}
+
+/* Remove Section Background Colors on Homepage */
+main[data-template="index"] .shopify-section,
+main[data-template="index"] .shopify-section > div,
+main[data-template="index"] section,
+main[data-template="index"] .section-background,
+main[data-template="index"] [class*="section"],
+main[data-template="index"] [class*="-section"],
+main[data-template="index"] [class*="-wrapper"] {
+  background-color: transparent !important;
+  background: transparent !important;
+}
 
 :root {
   /* Semantic brand typography scale */
