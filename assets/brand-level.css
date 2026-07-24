@@ -586,3 +586,10 @@ shop-user-avatar,
   margin-bottom: 8px !important;
   display: block !important;
 }
+
+/* Remove Padding Top from Individual Product Cards Footer */
+.dv-seasonal-specials__product-footer,
+[class*="dv-seasonal-specials__product-footer"] {
+  padding-top: 0 !important;
+  padding-block-start: 0 !important;
+}
