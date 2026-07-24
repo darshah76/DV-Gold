@@ -214,11 +214,12 @@
   #{{ section_anchor }} .dv-all-products__card,
   #{{ section_anchor }} .dv-product-card,
   #{{ section_anchor }} .dv-seasonal-specials__product-card {
-    display: flex;
-    flex: 0 0 min(82vw, var(--dv-all-card-width-desktop, 260px));
-    min-width: min(82vw, var(--dv-all-card-width-desktop, 260px));
-    flex-direction: column;
-    scroll-snap-align: start;
+    display: flex !important;
+    flex: 0 0 min(82vw, var(--dv-all-card-width-desktop, 260px)) !important;
+    min-width: min(82vw, var(--dv-all-card-width-desktop, 260px)) !important;
+    max-width: min(82vw, var(--dv-all-card-width-desktop, 260px)) !important;
+    flex-direction: column !important;
+    scroll-snap-align: start !important;
   }
 
   #{{ section_anchor }} .dv-all-products__media {
