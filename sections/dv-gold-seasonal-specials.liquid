@@ -109,19 +109,21 @@
                             <button
                               type="submit"
                               class="dv-seasonal-specials__button"
-                              aria-label="{{ button_label | escape }} {{ card_title | escape }}"
+                              aria-label="{{ button_label | default: 'Add to Cart' | escape }} {{ card_title | escape }}"
                               {% unless product_variant.available %}disabled{% endunless %}
                             >
-                              +
+                              <span class="dv-btn-text">{{ button_label | default: 'Add to Cart' }}</span>
+                              <span class="dv-btn-icon">+</span>
                             </button>
                           </form>
                         {% else %}
                           <a
                             class="dv-seasonal-specials__button"
                             href="{{ card_link | default: routes.all_products_collection_url }}"
-                            aria-label="{{ button_label | escape }} {{ card_title | escape }}"
+                            aria-label="{{ button_label | default: 'Add to Cart' | escape }} {{ card_title | escape }}"
                           >
-                            +
+                            <span class="dv-btn-text">{{ button_label | default: 'Add to Cart' }}</span>
+                            <span class="dv-btn-icon">+</span>
                           </a>
                         {% endif %}
                       {% endif %}
@@ -215,19 +217,21 @@
                             <button
                               type="submit"
                               class="dv-seasonal-specials__product-button"
-                              aria-label="{{ block.settings.button_label | escape }} {{ product_title | escape }}"
+                              aria-label="{{ block.settings.button_label | default: 'Add to Cart' | escape }} {{ product_title | escape }}"
                               {% unless card_variant.available %}disabled{% endunless %}
                             >
-                              {{ block.settings.button_label }}
+                              <span class="dv-btn-text">{{ block.settings.button_label | default: 'Add to Cart' }}</span>
+                              <span class="dv-btn-icon">+</span>
                             </button>
                           </form>
                         {% else %}
                           <a
                             class="dv-seasonal-specials__product-button"
                             href="{{ product_link | default: routes.all_products_collection_url }}"
-                            aria-label="{{ block.settings.button_label | escape }} {{ product_title | escape }}"
+                            aria-label="{{ block.settings.button_label | default: 'Add to Cart' | escape }} {{ product_title | escape }}"
                           >
-                            {{ block.settings.button_label }}
+                            <span class="dv-btn-text">{{ block.settings.button_label | default: 'Add to Cart' }}</span>
+                            <span class="dv-btn-icon">+</span>
                           </a>
                         {% endif %}
                       {% endif %}
@@ -618,36 +622,89 @@
     margin: 0;
   }
 
+  #{{ section_anchor }} .dv-seasonal-specials__form,
+  #{{ section_anchor }} .dv-seasonal-specials__product-form {
+    margin: 0;
+    display: inline-flex;
+    justify-content: flex-end;
+  }
+
   #{{ section_anchor }} .dv-seasonal-specials__button,
-  #{{ section_anchor }} .dv-seasonal-specials__product-button,
-  #{{ section_anchor }} .dv-seasonal-specials__form button,
-  #{{ section_anchor }} .dv-seasonal-specials__product-form button {
+  #{{ section_anchor }} .dv-seasonal-specials__product-button {
     align-items: center !important;
     appearance: none !important;
     background: var(--dv-seasonal-button-bg) !important;
     border: 0 !important;
-    border-radius: 50% !important;
+    border-radius: 999px !important;
     color: var(--dv-seasonal-button-text) !important;
     cursor: pointer !important;
     display: inline-flex !important;
-    flex: 0 0 38px !important;
+    flex-direction: row-reverse !important;
     font: inherit !important;
-    font-size: clamp(1.3rem, 2vw, 1.7rem) !important;
-    font-weight: 700 !important;
     height: 38px !important;
     width: 38px !important;
     min-height: 38px !important;
     max-height: 38px !important;
     min-width: 38px !important;
     max-width: 38px !important;
-    aspect-ratio: 1 / 1 !important;
     justify-content: center !important;
     line-height: 1 !important;
     padding: 0 !important;
     text-decoration: none !important;
-    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
-    box-shadow: 0 4px 10px rgba(65, 45, 25, 0.18) !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
     box-sizing: border-box !important;
+    box-shadow: 0 4px 10px rgba(65, 45, 25, 0.18) !important;
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                min-width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.35s ease,
+                background-color 0.25s ease,
+                box-shadow 0.25s ease !important;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__button .dv-btn-icon,
+  #{{ section_anchor }} .dv-seasonal-specials__product-button .dv-btn-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: clamp(1.3rem, 2vw, 1.7rem) !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__button .dv-btn-text,
+  #{{ section_anchor }} .dv-seasonal-specials__product-button .dv-btn-text {
+    opacity: 0 !important;
+    max-width: 0 !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    text-transform: uppercase !important;
+    margin-right: 0 !important;
+    transition: opacity 0.25s ease 0.05s, max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1), margin 0.3s ease !important;
+  }
+
+  @media screen and (min-width: 750px) {
+    #{{ section_anchor }} .dv-seasonal-specials__button:hover,
+    #{{ section_anchor }} .dv-seasonal-specials__product-button:hover {
+      width: auto !important;
+      min-width: 135px !important;
+      max-width: 180px !important;
+      padding: 0 16px !important;
+      box-shadow: 0 6px 16px rgba(65, 45, 25, 0.28) !important;
+    }
+
+    #{{ section_anchor }} .dv-seasonal-specials__button:hover .dv-btn-text,
+    #{{ section_anchor }} .dv-seasonal-specials__product-button:hover .dv-btn-text {
+      opacity: 1 !important;
+      max-width: 130px !important;
+      margin-right: 8px !important;
+    }
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__product-dots {

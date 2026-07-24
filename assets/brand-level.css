@@ -525,24 +525,69 @@ shop-user-avatar,
 }
 
 :is(.dv-seasonal-specials__button, .dv-seasonal-specials__product-button, [class*="dv-seasonal-specials__button"], [class*="dv-seasonal-specials__product-button"], .dv-seasonal-specials__form button, .dv-seasonal-specials__product-form button) {
-  border-radius: 50% !important;
-  width: 38px !important;
+  border-radius: 999px !important;
   height: 38px !important;
-  min-width: 38px !important;
-  max-width: 38px !important;
   min-height: 38px !important;
   max-height: 38px !important;
-  aspect-ratio: 1 / 1 !important;
+  width: 38px !important;
+  min-width: 38px !important;
+  max-width: 38px !important;
   padding: 0 !important;
-  font-size: clamp(1.3rem, 2vw, 1.7rem) !important;
-  font-weight: 700 !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  flex: 0 0 38px !important;
+  flex-direction: row-reverse !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
   box-shadow: 0 4px 10px rgba(65, 45, 25, 0.18) !important;
   border: 0 !important;
-  box-sizing: border-box !important;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              min-width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.35s ease,
+              background-color 0.25s ease,
+              box-shadow 0.25s ease !important;
+}
+
+:is(.dv-seasonal-specials__button, .dv-seasonal-specials__product-button, [class*="dv-seasonal-specials__button"], [class*="dv-seasonal-specials__product-button"]) .dv-btn-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: clamp(1.3rem, 2vw, 1.7rem) !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+}
+
+:is(.dv-seasonal-specials__button, .dv-seasonal-specials__product-button, [class*="dv-seasonal-specials__button"], [class*="dv-seasonal-specials__product-button"]) .dv-btn-text {
+  opacity: 0 !important;
+  max-width: 0 !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: uppercase !important;
+  margin-right: 0 !important;
+  transition: opacity 0.25s ease 0.05s, max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1), margin 0.3s ease !important;
+}
+
+@media screen and (min-width: 750px) {
+  :is(.dv-seasonal-specials__button, .dv-seasonal-specials__product-button, [class*="dv-seasonal-specials__button"], [class*="dv-seasonal-specials__product-button"]):hover {
+    width: auto !important;
+    min-width: 135px !important;
+    max-width: 180px !important;
+    padding: 0 16px !important;
+    box-shadow: 0 6px 16px rgba(65, 45, 25, 0.28) !important;
+  }
+
+  :is(.dv-seasonal-specials__button, .dv-seasonal-specials__product-button, [class*="dv-seasonal-specials__button"], [class*="dv-seasonal-specials__product-button"]):hover .dv-btn-text {
+    opacity: 1 !important;
+    max-width: 130px !important;
+    margin-right: 8px !important;
+  }
 }
 
 /* Product Prices Bold Font Weight Across Combo & Individual Product Cards */
