@@ -141,7 +141,7 @@
         "underline_thickness": 2,
         "card_background": "#fbefd9",
         "mobile_aspect_ratio": "1 / 1",
-        "desktop_aspect_ratio": "3 / 2",
+        "desktop_aspect_ratio": "2 / 3",
         "button_background": "#c99739",
         "button_text_color": "#ffffff",
         "max_width": 1180,

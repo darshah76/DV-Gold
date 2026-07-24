@@ -462,4 +462,17 @@ shop-user-avatar,
   padding: 0 !important;
   overflow: hidden !important;
   pointer-events: none !important;
+/* Shop By Category Heading Centering & Desktop 2:3 Card Aspect Ratio */
+.dv-category__heading,
+[class*="dv-category__heading"] {
+  text-align: center !important;
+  margin-inline: auto !important;
+  width: 100% !important;
+}
+
+@media screen and (min-width: 750px) {
+  .dv-category__card,
+  [class*="dv-category__card"] {
+    aspect-ratio: 2 / 3 !important;
+  }
 }
