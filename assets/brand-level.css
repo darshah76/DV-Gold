@@ -85,7 +85,11 @@ main[data-template="index"] [class*="-wrapper"] {
   --brand-home-card-radius: 24px;
   --brand-home-card-radius-mobile: 18px;
 
-  --font-body--family: 'Manrope', sans-serif;
+  --font-body-family: 'Manrope', sans-serif !important;
+  --font-body--family: 'Manrope', sans-serif !important;
+  --font-subheading--family: 'Manrope', sans-serif !important;
+  --font-accent--family: 'Manrope', sans-serif !important;
+  --font-price--family: 'Manrope', sans-serif !important;
   --brand-body-font-size: var(--brand-font-size-body);
   --brand-body-line-height: 1.6;
 
@@ -97,30 +101,58 @@ main[data-template="index"] [class*="-wrapper"] {
   --brand-h6-size: var(--brand-font-size-h6);
 }
 
-/* Universal Typography Rules Across Homepage, Collection, Product Pages */
-:is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .heading, .card__heading, .product-title, .product__title, .collection__title, [class*="__heading"], [class*="-heading"], [class*="__title"], [class*="-title"]) {
-  font-family: var(--brand-home-heading-font) !important;
-}
-
+/* Universal Manrope Body Typography Rules Across Storefront */
+html,
 body,
 p,
 li,
 a,
 span,
 div,
+label,
 input,
 button,
 select,
 textarea,
-.button,
-.cp-card,
-.footer,
-.header,
-.drawer,
-.popover,
+td,
+th,
+dt,
+dd,
+small,
+strong,
+b,
+i,
+em,
+form,
+fieldset,
+table,
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+nav,
+section,
+summary,
 [class*="text"],
-[class*="content"] {
+[class*="content"],
+[class*="card"],
+[class*="button"],
+[class*="link"],
+[class*="item"],
+[class*="nav"],
+[class*="menu"],
+[class*="drawer"],
+[class*="modal"] {
   font-family: 'Manrope', sans-serif !important;
+}
+
+/* Universal Century Gothic Heading Typography Rules Across Storefront */
+:is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .heading, .card__heading, .product-title, .product__title, .collection__title, [class*="__heading"], [class*="-heading"], [class*="__title"], [class*="-title"]) {
+  font-family: var(--brand-home-heading-font) !important;
 }
 
 body {
