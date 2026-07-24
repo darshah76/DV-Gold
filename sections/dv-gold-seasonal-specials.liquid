@@ -199,7 +199,9 @@
                       <div class="dv-seasonal-specials__product-variant">{{ card_variant.title }}</div>
                     {% endif %}
                     <div class="dv-seasonal-specials__product-footer">
-                      {% if card_product != blank %}
+                      {% if card_variant != blank %}
+                        <span class="dv-seasonal-specials__product-price">{{ card_variant.price | money }}</span>
+                      {% elsif card_product != blank %}
                         <span class="dv-seasonal-specials__product-price">{{ card_product.price | money }}</span>
                       {% endif %}
 
@@ -807,7 +809,10 @@
       if (input) input.value = variantId;
 
       const priceElem = card.querySelector('.dv-seasonal-specials__product-price');
-      if (priceElem && variantPrice) priceElem.textContent = variantPrice;
+      if (priceElem && variantPrice) {
+        priceElem.textContent = variantPrice;
+        priceElem.innerHTML = variantPrice;
+      }
 
       const button = card.querySelector('.dv-seasonal-specials__product-button');
       if (button) {
