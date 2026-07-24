@@ -563,8 +563,14 @@ shop-user-avatar,
 }
 
 .dv-promise__heading-accent,
-[class*="dv-promise__heading-accent"] {
-  margin: 22px auto 0 !important;
-  margin-inline: auto !important;
+.dv-seasonal-specials__heading-accent,
+[class*="__heading-accent"],
+[class*="-heading-accent"],
+[class*="heading-accent"] {
   display: block !important;
+  width: clamp(80px, 8vw, 110px) !important;
+  height: 5px !important;
+  margin: 16px auto 0 !important;
+  margin-inline: auto !important;
+  border-radius: 999px !important;
 }
