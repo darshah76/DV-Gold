@@ -90,10 +90,6 @@
                       <h3 class="dv-seasonal-specials__title">{{ card_title }}</h3>
                     {% endif %}
 
-                    {% if selected_product.description != blank %}
-                      <div class="dv-seasonal-specials__description rte">{{ selected_product.description }}</div>
-                    {% endif %}
-
                     <div class="dv-seasonal-specials__purchase-row">
                       <div class="dv-seasonal-specials__prices" aria-label="Price">
                         {% if selected_product.compare_at_price_max > selected_product.price %}
@@ -182,9 +178,6 @@
                   <div class="dv-seasonal-specials__product-content">
                     {% if product_title != blank %}
                       <h3 class="dv-seasonal-specials__product-title">{{ product_title }}</h3>
-                    {% endif %}
-                    {% if card_product.description != blank %}
-                      <div class="dv-seasonal-specials__product-description rte">{{ card_product.description }}</div>
                     {% endif %}
                     <div class="dv-seasonal-specials__product-footer">
                       {% if card_product != blank %}

@@ -482,3 +482,9 @@ shop-user-avatar,
 [class*="dv-category__list"] {
   padding-bottom: 25px !important;
 }
+
+/* Remove Product Descriptions in Seasonal Specials Section */
+.dv-seasonal-specials__description,
+.dv-seasonal-specials__product-description {
+  display: none !important;
+}
