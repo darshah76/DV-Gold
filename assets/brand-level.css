@@ -507,6 +507,7 @@ shop-user-avatar,
   border-radius: var(--brand-home-card-radius, 24px) !important;
   overflow: hidden !important;
   box-shadow: none !important;
+  padding: 0 !important;
 }
 
 .dv-seasonal-specials__product-grid,
