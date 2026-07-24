@@ -43,7 +43,6 @@
           <div
             class="dv-gold-hero__slide{% if forloop.first %} is-active{% endif %}"
             data-dv-gold-hero-slide
-            data-slide-button-link="{{ slide_button_link | escape }}"
             role="group"
             aria-roledescription="slide"
             aria-label="{{ forloop.index }} of {{ slide_count }}"
@@ -76,6 +75,16 @@
                 <p>{{ 'sections.slideshow.name' | t | default: 'Add a hero image' }}</p>
               </div>
             {%- endif -%}
+
+            {%- if section.settings.show_button and section.settings.button_label != blank -%}
+              <a
+                class="dv-gold-hero__button"
+                href="{{ slide_button_link }}"
+                {% if section.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+              >
+                {{ section.settings.button_label | escape }}
+              </a>
+            {%- endif -%}
           </div>
         {%- endfor -%}
       {%- else -%}
@@ -87,17 +96,6 @@
         </div>
       {%- endif -%}
     </div>
-
-    {%- if section.settings.show_button and section.settings.button_label != blank -%}
-      <a
-        class="dv-gold-hero__button"
-        data-dv-gold-hero-button
-        href="{{ button_link | default: routes.all_products_collection_url }}"
-        {% if section.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
-      >
-        {{ section.settings.button_label | escape }}
-      </a>
-    {%- endif -%}
 
     {%- if slide_count > 1 and section.settings.show_dots -%}
       <div class="dv-gold-hero__dots" role="tablist" aria-label="Hero carousel slides">
@@ -336,7 +334,6 @@
       const track = section.querySelector('[data-dv-gold-hero-track]');
       const slides = Array.from(section.querySelectorAll('[data-dv-gold-hero-slide]'));
       const dots = Array.from(section.querySelectorAll('[data-dv-gold-hero-dot]'));
-      const button = section.querySelector('[data-dv-gold-hero-button]');
       if (!track || slides.length === 0) return;
 
       let currentIndex = 0;
@@ -352,11 +349,6 @@
           dot.classList.toggle('is-active', dotIndex === currentIndex);
           dot.setAttribute('aria-selected', dotIndex === currentIndex ? 'true' : 'false');
         });
-
-        const activeSlide = slides[currentIndex];
-        if (button && activeSlide && activeSlide.dataset.slideButtonLink) {
-          button.setAttribute('href', activeSlide.dataset.slideButtonLink);
-        }
       };
 
       section.goToSlide = goToSlide;
@@ -377,7 +369,6 @@
         start();
       }
 
-      // Initialize initial slide button link
       goToSlide(0);
     };
 
