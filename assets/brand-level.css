@@ -385,3 +385,16 @@ header,
   padding-block-end: 0 !important;
 }
 
+/* Navbar Desktop Logo Height Override (90px height, width auto) */
+@media screen and (min-width: 750px) {
+  :is(.header-logo, .header-logo__image-container, .header-logo__image, .header__heading-logo, .header__heading-link, .header__heading img, a.header-logo, a.header-logo img, header img, header .logo img, header a img) {
+    height: 90px !important;
+    max-height: 90px !important;
+    min-height: 90px !important;
+    width: auto !important;
+    max-width: none !important;
+    object-fit: contain !important;
+  }
+}
+
+
