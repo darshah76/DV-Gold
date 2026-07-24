@@ -180,9 +180,13 @@
                     {% if product_title != blank %}
                       <h3 class="dv-seasonal-specials__product-title">{{ product_title }}</h3>
                     {% endif %}
-                    {% if card_product != blank and card_product.variants.size > 1 %}
+                    {% if card_product != blank and card_product.variants.size >= 1 %}
                       <div class="dv-seasonal-specials__product-variants" role="radiogroup" aria-label="Product options">
                         {% for variant in card_product.variants %}
+                          {% assign pill_label = variant.title %}
+                          {% if pill_label == 'Default Title' %}
+                            {% assign pill_label = card_product.title %}
+                          {% endif %}
                           <button
                             type="button"
                             class="dv-seasonal-specials__variant-pill{% if variant.id == card_variant.id %} is-active{% endif %}"
@@ -191,12 +195,10 @@
                             data-variant-available="{{ variant.available }}"
                             {% unless variant.available %}disabled{% endunless %}
                           >
-                            {{ variant.title }}
+                            {{ pill_label }}
                           </button>
                         {% endfor %}
                       </div>
-                    {% elsif card_variant != blank and card_variant.title != 'Default Title' %}
-                      <div class="dv-seasonal-specials__product-variant">{{ card_variant.title }}</div>
                     {% endif %}
                     <div class="dv-seasonal-specials__product-footer">
                       {% if card_variant != blank %}
