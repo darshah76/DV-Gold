@@ -255,3 +255,22 @@ footer,
   padding-inline: 0 !important;
 }
 
+/* Remove bottom padding from footer group sections */
+#shopify-section-sections--21674398515340__footer,
+.shopify-section-group-footer-group,
+.dv-gold-footer-section,
+.footer-section,
+footer.dv-footer,
+.dv-footer {
+  padding-bottom: 0 !important;
+  padding-block-end: 0 !important;
+  margin-bottom: 0 !important;
+  margin-block-end: 0 !important;
+}
+
+/* Hide utilities section in footer */
+[id*="__utilities"],
+.shopify-section-group-footer-group .shopify-section:has(.footer-utilities),
+.footer-utilities {
+  display: none !important;
+}
