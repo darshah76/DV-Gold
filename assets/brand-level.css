@@ -574,3 +574,15 @@ shop-user-avatar,
   margin-inline: auto !important;
   border-radius: 999px !important;
 }
+
+/* Individual Product Cards Selected Variant Display */
+.dv-seasonal-specials__product-variant,
+[class*="dv-seasonal-specials__product-variant"] {
+  color: var(--dv-seasonal-muted, #766352) !important;
+  font-size: clamp(1.2rem, 1.4vw, 1.4rem) !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  margin-top: 2px !important;
+  margin-bottom: 8px !important;
+  display: block !important;
+}

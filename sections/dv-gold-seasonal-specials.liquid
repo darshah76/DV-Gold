@@ -180,6 +180,9 @@
                     {% if product_title != blank %}
                       <h3 class="dv-seasonal-specials__product-title">{{ product_title }}</h3>
                     {% endif %}
+                    {% if card_variant != blank and card_variant.title != 'Default Title' %}
+                      <div class="dv-seasonal-specials__product-variant">{{ card_variant.title }}</div>
+                    {% endif %}
                     <div class="dv-seasonal-specials__product-footer">
                       {% if card_product != blank %}
                         <span class="dv-seasonal-specials__product-price">{{ card_product.price | money }}</span>
@@ -519,8 +522,18 @@
     font-size: var(--dv-product-title-size);
     font-weight: 700;
     line-height: 1.15;
-    margin: 0 0 0.6rem;
+    margin: 0 0 0.3rem;
     text-transform: uppercase;
+  }
+
+  #{{ section_anchor }} .dv-seasonal-specials__product-variant {
+    color: var(--dv-seasonal-muted, #766352);
+    font-family: var(--font-body--family);
+    font-size: clamp(1.2rem, 1.4vw, 1.4rem);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+    opacity: 0.9;
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__product-description {
