@@ -372,12 +372,39 @@ footer.dv-footer,
   display: none !important;
 }
 
-/* Main Navigation Header Padding Removal (Announcement bar uses default 15px padding) */
+/* Header Announcement Bar: 5px Top & Bottom Padding */
+#shopify-section-sections--21674398548108__header_announcements_9jGBFp,
+[id*="__header_announcements"],
+.header-announcements,
+.announcement-bar {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  padding-block: 5px !important;
+  padding-block-start: 5px !important;
+  padding-block-end: 5px !important;
+}
+
+/* Main Header Navbar: 0px Top & Bottom Padding */
+#shopify-section-sections--21674398548108__header_section,
+[id*="__header_section"],
 .header-section,
 .header,
 header,
 .header__wrapper,
 .header__inner {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-block: 0 !important;
+  padding-block-start: 0 !important;
+  padding-block-end: 0 !important;
+}
+
+/* dv_gold_hero_carousel: 0px Top & Bottom Padding */
+#shopify-section-template--21674398515340__dv_gold_hero_carousel,
+[id*="dv_gold_hero_carousel"],
+.dv-hero-carousel,
+.hero-carousel,
+.shopify-section:has(.dv-hero-carousel) {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
   padding-block: 0 !important;
