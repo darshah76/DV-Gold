@@ -964,7 +964,64 @@
       });
     };
 
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let activeTouchGallery = null;
+    let isSwipingMedia = false;
+
+    document.addEventListener('touchstart', (e) => {
+      const gallery = e.target.closest('[data-dv-media-gallery]');
+      if (!gallery) return;
+
+      const track = gallery.querySelector('[data-dv-media-track]');
+      const slides = gallery.querySelectorAll('.dv-seasonal-specials__media-slide');
+      if (!track || slides.length < 2) return;
+
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      activeTouchGallery = gallery;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      if (!activeTouchGallery) return;
+
+      const gallery = activeTouchGallery;
+      activeTouchGallery = null;
+
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
+
+      if (Math.abs(deltaX) > 30 && Math.abs(deltaX) > Math.abs(deltaY)) {
+        isSwipingMedia = true;
+        setTimeout(() => { isSwipingMedia = false; }, 350);
+
+        const track = gallery.querySelector('[data-dv-media-track]');
+        const slides = gallery.querySelectorAll('.dv-seasonal-specials__media-slide');
+        if (!track || slides.length < 2) return;
+
+        let currentIndex = parseInt(gallery.dataset.currentIndex || '0', 10);
+        if (deltaX < 0) {
+          currentIndex = (currentIndex + 1) % slides.length;
+        } else {
+          currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        }
+
+        gallery.dataset.currentIndex = currentIndex;
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      }
+    }, { passive: true });
+
     document.addEventListener('click', (e) => {
+      const link = e.target.closest('.dv-seasonal-specials__media-link');
+      if (link && isSwipingMedia) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+
       const prevBtn = e.target.closest('[data-dv-media-prev]');
       const nextBtn = e.target.closest('[data-dv-media-next]');
 
