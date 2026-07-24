@@ -109,18 +109,19 @@
                             <button
                               type="submit"
                               class="dv-seasonal-specials__button"
+                              aria-label="{{ button_label | escape }} {{ card_title | escape }}"
                               {% unless product_variant.available %}disabled{% endunless %}
                             >
-                              {% if product_variant.available %}
-                                {{ button_label }}
-                              {% else %}
-                                {{ 'products.product.sold_out' | t }}
-                              {% endif %}
+                              +
                             </button>
                           </form>
                         {% else %}
-                          <a class="dv-seasonal-specials__button" href="{{ card_link | default: routes.all_products_collection_url }}">
-                            {{ button_label }}
+                          <a
+                            class="dv-seasonal-specials__button"
+                            href="{{ card_link | default: routes.all_products_collection_url }}"
+                            aria-label="{{ button_label | escape }} {{ card_title | escape }}"
+                          >
+                            +
                           </a>
                         {% endif %}
                       {% endif %}
@@ -363,17 +364,16 @@
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__purchase-row {
-    align-items: end;
+    align-items: center;
     display: flex;
-    flex-wrap: wrap;
-    gap: 18px 24px;
+    gap: 12px;
     justify-content: space-between;
-    margin-top: 24px;
+    margin-top: 18px;
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__prices {
     display: grid;
-    flex: 1 1 170px;
+    flex: 1 1 auto;
     gap: 2px;
     min-width: 0;
   }
@@ -403,23 +403,23 @@
     appearance: none;
     background: var(--dv-seasonal-button-bg);
     border: 0;
-    border-radius: 12px;
+    border-radius: 50%;
     color: var(--dv-seasonal-button-text);
     cursor: pointer;
     display: inline-flex;
     flex: 0 0 auto;
     font: inherit;
-    font-size: var(--dv-product-description-size);
-    font-weight: 800;
+    font-size: var(--dv-add-action-size, 1.5rem);
+    font-weight: 700;
+    height: 38px;
     justify-content: center;
     line-height: 1;
-    min-height: 44px;
-    min-width: 148px;
-    padding: 1.2rem 1.8rem;
-    text-align: center;
+    padding: 0;
     text-decoration: none;
-    text-transform: uppercase;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 38px;
+    min-height: 38px;
+    min-width: 38px;
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__button:hover,
@@ -592,17 +592,7 @@
     text-align: center;
   }
 
-  @media screen and (max-width: 420px) {
-    #{{ section_anchor }} .dv-seasonal-specials__purchase-row {
-      align-items: stretch;
-      flex-direction: column;
-    }
 
-    #{{ section_anchor }} .dv-seasonal-specials__button,
-    #{{ section_anchor }} .dv-seasonal-specials__form {
-      width: 100%;
-    }
-  }
 
   @media screen and (min-width: 750px) {
     #{{ section_anchor }} {
