@@ -548,3 +548,23 @@ shop-user-avatar,
 :is(.dv-seasonal-specials__price, .dv-seasonal-specials__product-price, [class*="seasonal-specials__price"], [class*="seasonal-specials__product-price"]) {
   font-weight: 800 !important;
 }
+
+/* Center Align Section Heading & Accent Underline Line in DV Promise */
+.dv-promise__heading-wrap,
+[class*="dv-promise__heading-wrap"] {
+  text-align: center !important;
+}
+
+.dv-promise__heading,
+[class*="dv-promise__heading"] {
+  text-align: center !important;
+  margin-inline: auto !important;
+  width: 100% !important;
+}
+
+.dv-promise__heading-accent,
+[class*="dv-promise__heading-accent"] {
+  margin: 22px auto 0 !important;
+  margin-inline: auto !important;
+  display: block !important;
+}
