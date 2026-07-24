@@ -213,3 +213,36 @@ h6, .h6 {
     padding-inline: var(--brand-home-container-gutter) !important;
   }
 }
+
+/* Footer Specific Brand Guidelines Rules */
+footer,
+.footer,
+#footer-group,
+.footer-block,
+.footer-block__heading,
+.footer__title {
+  font-family: var(--font-body--family) !important;
+}
+
+:is(footer, .footer, #footer-group, .footer-section) :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .footer-block__heading, .footer__title, [class*="__heading"], [class*="-heading"]) {
+  font-family: var(--brand-home-heading-font) !important;
+  font-size: var(--brand-font-size-h5) !important;
+}
+
+:is(footer, .footer, #footer-group) :is(p, li, a, span, div, .footer-block__details-content, .footer__copyright) {
+  font-size: var(--brand-font-size-body-sm) !important;
+  line-height: var(--brand-body-line-height) !important;
+}
+
+:is(footer, .footer, #footer-group) :is(button, .button, input[type="submit"], .field__button, .newsletter-form__button) {
+  border-radius: 14px !important;
+}
+
+:is(footer, .footer, #footer-group) :is(input[type="text"], input[type="email"], .field__input) {
+  border-radius: 4px !important;
+}
+
+:is(footer, .footer, #footer-group) .page-width {
+  max-width: var(--narrow-page-width) !important;
+}
+
