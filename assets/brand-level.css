@@ -477,3 +477,8 @@ shop-user-avatar,
     padding: 0 !important;
   }
 }
+
+.dv-category__list,
+[class*="dv-category__list"] {
+  padding-bottom: 15px !important;
+}
