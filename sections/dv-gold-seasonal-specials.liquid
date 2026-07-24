@@ -472,18 +472,20 @@
   #{{ section_anchor }} .dv-seasonal-specials__product-card {
     background: var(--dv-seasonal-product-card-bg);
     border: 1px solid rgba(154, 107, 53, 0.18);
-    border-radius: 4px;
+    border-radius: var(--brand-home-card-radius, 24px);
+    overflow: hidden;
     display: flex;
     flex: 0 0 100%;
     flex-direction: column;
     min-width: 100%;
     padding: clamp(18px, 4.5vw, 24px);
     scroll-snap-align: start;
+    box-shadow: 0 14px 28px rgba(65, 45, 25, 0.08);
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__product-media {
     background: #fbf0e1;
-    border-radius: 6px;
+    border-radius: clamp(12px, 2vw, 18px);
     display: block;
     overflow: hidden;
     text-decoration: none;
@@ -520,7 +522,7 @@
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__product-footer {
-    align-items: end;
+    align-items: center;
     display: flex;
     gap: 12px;
     justify-content: space-between;
@@ -539,6 +541,7 @@
     margin: 0;
   }
 
+  #{{ section_anchor }} .dv-seasonal-specials__button,
   #{{ section_anchor }} .dv-seasonal-specials__product-button {
     align-items: center;
     appearance: none;
@@ -550,15 +553,18 @@
     display: inline-flex;
     flex: 0 0 auto;
     font: inherit;
-    font-size: var(--dv-add-action-size);
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
     font-weight: 700;
     height: 38px;
+    width: 38px;
+    min-height: 38px;
+    min-width: 38px;
     justify-content: center;
     line-height: 1;
     padding: 0;
     text-decoration: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    width: 38px;
+    box-shadow: 0 4px 10px rgba(65, 45, 25, 0.18);
   }
 
   #{{ section_anchor }} .dv-seasonal-specials__product-dots {
