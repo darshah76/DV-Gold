@@ -488,3 +488,15 @@ shop-user-avatar,
 .dv-seasonal-specials__product-description {
   display: none !important;
 }
+
+@media screen and (min-width: 750px) {
+  .dv-seasonal-specials__layout,
+  [class*="dv-seasonal-specials__layout"] {
+    grid-template-columns: minmax(0, 20vw) minmax(0, 1fr) !important;
+  }
+  .dv-seasonal-specials__combo-list,
+  [class*="dv-seasonal-specials__combo-list"] {
+    max-width: 20vw !important;
+    width: 100% !important;
+  }
+}
