@@ -70,10 +70,10 @@ main[data-template="index"] [class*="-wrapper"] {
   --brand-home-heading-font-bold: 'Century Gothic Custom Bold', 'Century Gothic Custom', 'Century Gothic', Arial, sans-serif;
 
   /* Layout Rhythm & Spacing */
-  --brand-home-section-padding-top: 30px;
-  --brand-home-section-padding-bottom: 30px;
-  --brand-home-section-padding-top-mobile: 20px;
-  --brand-home-section-padding-bottom-mobile: 28px;
+  --brand-home-section-padding-top: 40px;
+  --brand-home-section-padding-bottom: 40px;
+  --brand-home-section-padding-top-mobile: 40px;
+  --brand-home-section-padding-bottom-mobile: 40px;
   --brand-home-section-margin-top: 0px;
   --brand-home-section-margin-bottom: 0px;
   --brand-home-container-gutter: 68px;
@@ -246,19 +246,26 @@ h6, .h6 {
 .shopify-section,
 section,
 [class*="-section"],
-.section {
-  padding-block-start: var(--brand-home-section-padding-top) !important;
-  padding-block-end: var(--brand-home-section-padding-bottom) !important;
+.section,
+.dv-content-section {
+  padding-block-start: 40px !important;
+  padding-block-end: 40px !important;
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
 }
 
 @media screen and (max-width: 749px) {
   .shopify-section,
   section,
   [class*="-section"],
-  .section {
-    padding-block-start: var(--brand-home-section-padding-top-mobile) !important;
-    padding-block-end: var(--brand-home-section-padding-bottom-mobile) !important;
+  .section,
+  .dv-content-section {
+    padding-block-start: 40px !important;
+    padding-block-end: 40px !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
   }
+}
 
   .page-width,
   .container,
