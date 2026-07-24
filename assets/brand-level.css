@@ -192,34 +192,45 @@ h6, .h6 {
   max-width: 78dvw !important;
 }
 
-/* Section Spacing & Container Width Constraints */
+/* Section Spacing & Container Width Constraints Across Entire Store */
 .page-width,
 .section-width--narrow,
 .container,
 .main-collection,
 .main-product,
 .product-grid-container,
-.dv-footer__inner,
+.main-page,
+.main-blog,
+.main-article,
+.main-cart,
+.main-search,
+.main-account,
+[class*="-container"],
 :is(footer, .footer, #footer-group) .page-width {
-  max-width: var(--narrow-page-width) !important;
+  max-width: 1180px !important;
   margin-inline: auto !important;
 }
 
-.shopify-section {
+.shopify-section,
+section,
+[class*="-section"],
+.section {
   padding-block-start: var(--brand-home-section-padding-top) !important;
   padding-block-end: var(--brand-home-section-padding-bottom) !important;
 }
 
 @media screen and (max-width: 749px) {
-  .shopify-section {
+  .shopify-section,
+  section,
+  [class*="-section"],
+  .section {
     padding-block-start: var(--brand-home-section-padding-top-mobile) !important;
     padding-block-end: var(--brand-home-section-padding-bottom-mobile) !important;
   }
 
   .page-width,
   .container,
-  .product-grid-container,
-  .dv-footer__inner {
+  .product-grid-container {
     padding-inline: var(--brand-home-container-gutter-mobile) !important;
   }
 }
